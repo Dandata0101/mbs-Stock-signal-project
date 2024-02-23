@@ -1,0 +1,8 @@
+yfinance
+openpyxl
+matplotlib
+os
+sys
+pandas
+numpy 
+warnings
