@@ -1,8 +1,7 @@
-# MBS Stock trading singal Project
+# MBS Stock trading signal Project
 ![Author - DanRamirez](https://img.shields.io/badge/Author-DanRamirez-2ea44f?style=for-the-badge)
+![Author - VineethReddy](https://img.shields.io/badge/Author-VineethReddy-2ea44f?style=for-the-badge) <!-- Second Author Badge -->
 ![Python - Version][PYTHON-url]
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
