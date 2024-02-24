@@ -1,6 +1,7 @@
 # MBS Stock trading signal Project
 [![Author - DanRamirez](https://img.shields.io/badge/Author-DanRamirez-2ea44f?style=for-the-badge)](https://github.com/Dandata0101)
 [![Author - VineethReddy](https://img.shields.io/badge/Author-VineethReddy-2ea44f?style=for-the-badge)](https://github.com/VineethReeddyBAAIML)
+[![Author - BahijHaidar](https://img.shields.io/badge/Author-BahijHaidar-2ea44f?style=for-the-badge)](https://github.com/bahijh)
 ![Python - Version][PYTHON-url]
 ### docuementation pending
 
