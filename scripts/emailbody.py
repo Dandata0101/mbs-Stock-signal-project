@@ -17,6 +17,12 @@ email_body = """
     <a href="https://github.com/VineethReeddyBAAIML" target="_blank">
         <img src="https://img.shields.io/badge/Author-VineethReddy-2ea44f?style=for-the-badge" alt="Author - VineethReddy">
     </a>
+    <a href="https://github.com/bahijh" target="_blank">
+        <img src="https://img.shields.io/badge/Author-BahijHaidar-2ea44f?style=for-the-badge" alt="Author - BahijHaidar">
+    </a>
+    <a href="https://github.com/" target="_blank">
+        <img src="https://img.shields.io/badge/Author-LisaFanzy-2ea44f?style=for-the-badge" alt="Author - LisaFanzy">
+    </a>
     <img src="https://img.shields.io/badge/PYTHON-3.11-red?style=for-the-badge&logo=python&logoColor=white" alt="Python - Version">
     <h3>Documentation pending</h3>
 
@@ -25,4 +31,3 @@ email_body = """
 </body>
 </html>
 """
-
