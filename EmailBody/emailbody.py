@@ -1,9 +1,7 @@
 import sys
 import os
 from scripts.yahoofinance import tickerSymbol
-
 stock = tickerSymbol
-print(stock)
 
 email_body = f"""
 <!DOCTYPE html>

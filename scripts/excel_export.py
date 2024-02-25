@@ -26,7 +26,7 @@ excel_files = glob.glob(pattern)
 for file_path in excel_files:
     if os.path.exists(file_path):
         os.remove(file_path)
-        print(f'Deleted: {file_path}')
+        print(f'4.2 Deleted: {file_path}')
 
 #export to excel----------------------------------------------------------
 # Write DataFrame to Excel
@@ -59,4 +59,5 @@ for col in dataframe_to_rows(dfstock, index=True, header=True):
 # Save the changes to the Excel file
 wb.save(excel_path)
 wb.close()
-print('4.2)excel export completed')
+print('4.3)excel export completed')
+print('')

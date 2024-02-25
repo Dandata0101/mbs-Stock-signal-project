@@ -12,7 +12,6 @@ from EmailBody.emailbody import email_body
 
 # Setup and configuration
 warnings.filterwarnings("ignore")
-os.system('cls' if os.name == 'nt' else 'clear')
 masterdir = os.getcwd()
 print(masterdir)
 
