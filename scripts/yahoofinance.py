@@ -7,11 +7,11 @@ warnings.filterwarnings('ignore')
 
 print('')
 print('')
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~starting stock data extraction')
-print('')
+print('1.1) starting stock data extraction')
+
 
 # Define the ticker symbol
-tickerSymbol = 'NFLX'
+tickerSymbol = 'AAPL'
 yrs= 1
 
 # Get data on this ticker
@@ -33,5 +33,5 @@ print(df.dtypes)
 print('~~~~~~~~~~~~~')
 
 print('')
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Extraction completed')
+print('1.2) Extraction completed')
 print('')

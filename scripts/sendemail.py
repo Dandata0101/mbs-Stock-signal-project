@@ -5,7 +5,7 @@ import sys, os
 import warnings
 import base64
 import glob
-from scripts.emailbody import email_body
+from EmailBody.emailbody import email_body
 
 # Setup and configuration
 warnings.filterwarnings("ignore")

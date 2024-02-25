@@ -12,7 +12,7 @@ from scripts.buysellfx import buysellfx
 from scripts.buysellfx import dfstock
 from scripts.yahoofinance import tickerSymbol
 
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~load final dataframe')
+print('3.1) load final dataframe')
 print('')
 print('~~~~~~~~~~~~~')
 print(dfstock.dtypes)
@@ -36,6 +36,6 @@ plt.ylabel('price USD ($)',fontsize=12)
 plt.grid()
 
 print('')
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~export chart image')
+print('3.1) export chart image')
 plt.savefig(current_directory+'/02-charts/chart.png', bbox_inches='tight')
 plt.close()  

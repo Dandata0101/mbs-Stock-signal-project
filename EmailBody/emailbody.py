@@ -24,7 +24,8 @@ email_body = """
         <img src="https://img.shields.io/badge/Author-LisaFanzy-2ea44f?style=for-the-badge" alt="Author - LisaFanzy">
     </a>
     <img src="https://img.shields.io/badge/PYTHON-3.11-red?style=for-the-badge&logo=python&logoColor=white" alt="Python - Version">
-    <h3>Documentation pending</h3>
+    <h3>Documentation and Details</h3>
+    <a href="https://github.com/Dandata0101/mbs-Stock-singal-project" target="_blank">Click here for the project documentation on Github</a>
 
     <p> -----This is a test email sent using the Microsoft Graph API.</p>
     

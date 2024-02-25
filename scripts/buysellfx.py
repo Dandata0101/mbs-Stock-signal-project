@@ -13,12 +13,12 @@ from scripts.yahoofinance import tickerSymbol
 current_directory = os.getcwd()
 print(current_directory)
 
-print('~~~~~~~~~~~~Loading buy/seel function and yahoo finance dataframe')
+print('2.1) Loading buy/seel function and yahoo finance dataframe')
 df = create_dataframe()
 
 #setting long and short paramaters----------------------------------------
 short, long= 5 ,20
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~adding rolling averages')
+print('2.2) adding rolling averages')
 df['close_short']=df['Close'].rolling(window=short).mean()
 df['close_long']=df['Close'].rolling(window=long).mean()
 df.index = pd.to_datetime(df.index)
@@ -27,7 +27,7 @@ x5=df['close_short']
 x20=df['close_long']
 close=df['Close']
 
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~running buy/sell funcntion')
+print('2.3) running buy/sell funcntion')
 # Buy/Sell function-------------------------------------------------------
 def buysellfx(df):
     status = 0
@@ -84,6 +84,6 @@ def buysellfx(df):
 # Adding new columns------------------------------------------------------
 df['pricebuy'], df['pricesell'], df['profit'], df['transdays'] = buysellfx(df)
 
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~function run completed')
+print('2.4) function run completed')
 dfstock=df
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~updated dataframe saved')
+print('2.5) updated dataframe saved')

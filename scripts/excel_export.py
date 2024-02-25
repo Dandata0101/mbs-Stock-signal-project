@@ -9,7 +9,7 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.utils import get_column_letter
 from scripts.buysellfx import dfstock
 
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~prepping chart and excel export')
+print('4.1) prepping chart and excel export')
 # Paths and directory-----------------------------------------------------
 current_directory = os.getcwd()
 
@@ -44,4 +44,4 @@ for col in dataframe_to_rows(dfstock, index=True, header=True):
 # Save the changes to the Excel file
 wb.save(excel_path)
 wb.close()
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~excel export completed')
+print('4.2) excel export completed')
