@@ -1,5 +1,6 @@
 
 import os
+import glob
 import sys
 import pandas as pd
 import numpy as np
@@ -8,14 +9,28 @@ from openpyxl.drawing.image import Image
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.utils import get_column_letter
 from scripts.buysellfx import dfstock
+from scripts.yahoofinance import tickerSymbol
 
 print('4.1) prepping chart and excel export')
 # Paths and directory-----------------------------------------------------
 current_directory = os.getcwd()
 
+# Directory where the files are located
+directory_path = current_directory + '/03-output/'
+pattern = directory_path + '*stock*.xlsx'
+
+# Find all files matching the pattern
+excel_files = glob.glob(pattern)
+
+# Iterate over the list of filepaths & remove each file
+for file_path in excel_files:
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        print(f'Deleted: {file_path}')
+
 #export to excel----------------------------------------------------------
 # Write DataFrame to Excel
-excel_path = current_directory+'/03-output/stock.xlsx'
+excel_path = current_directory+'/03-output/'+tickerSymbol+'_stock.xlsx'
 with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
     dfstock.to_excel(writer, sheet_name='Data', startrow=28, startcol=1)
 
@@ -44,4 +59,4 @@ for col in dataframe_to_rows(dfstock, index=True, header=True):
 # Save the changes to the Excel file
 wb.save(excel_path)
 wb.close()
-print('4.2) excel export completed')
+print('4.2)excel export completed')

@@ -5,6 +5,9 @@ import sys, os
 import warnings
 import base64
 import glob
+import EmailBody.emailbody
+import importlib
+importlib.reload(EmailBody.emailbody)
 from EmailBody.emailbody import email_body
 
 # Setup and configuration
@@ -29,6 +32,7 @@ recipient_emails = recipient_emails_input.split(',')
 email_subject = 'MBS Big Data Stock Project'
 
 # Load the HTML email body from the file
+# Ensure this uses the reloaded email_body
 email_body = email_body
 
 # Get an access token using client credentials

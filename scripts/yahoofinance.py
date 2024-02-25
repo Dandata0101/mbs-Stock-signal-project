@@ -11,7 +11,7 @@ print('1.1) starting stock data extraction')
 
 
 # Define the ticker symbol
-tickerSymbol = 'AAPL'
+tickerSymbol = 'AMZN'
 yrs= 1
 
 # Get data on this ticker

@@ -9,6 +9,7 @@ warnings.filterwarnings('ignore')
 
 from scripts.yahoofinance import create_dataframe
 from scripts.yahoofinance import tickerSymbol
+
 # Paths and directory-----------------------------------------------------
 current_directory = os.getcwd()
 print(current_directory)
