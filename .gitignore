@@ -3,4 +3,5 @@
 **.csv
 **pw-config.ini
 **/.vscode 
+.env
 __pycache__

@@ -5,6 +5,8 @@ import sys, os
 import warnings
 import base64
 import glob
+from dotenv import load_dotenv
+load_dotenv()
 
 def send_email(email_body, recipient_emails):
   
@@ -14,10 +16,10 @@ def send_email(email_body, recipient_emails):
 
     config = configparser.ConfigParser()
     config.read(os.path.join(masterdir, '01-config', 'pw-config.ini'))
-    tenant_id = config.get('msftparam', 'tenant_id')
-    client_id = config.get('msftparam', 'client_id')
-    client_secret = config.get('msftparam', 'client_secret')
-
+    tenant_id = os.getenv('tenant_id')
+    client_id =os.getenv('client_id')
+    client_secret =os.getenv('client_secret') 
+    
     # Set up the variables
     resource_url = 'https://graph.microsoft.com'
     api_version = 'v1.0'
