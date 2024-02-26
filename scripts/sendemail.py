@@ -6,9 +6,8 @@ import warnings
 import base64
 import glob
 
-def send_email(email_body, recipient_emails, email_subject='MBS Big Data Stock Project'):
+def send_email(email_body, recipient_emails):
   
-
     # Setup and configuration
     warnings.filterwarnings("ignore")
     masterdir = os.getcwd()
@@ -54,7 +53,7 @@ def send_email(email_body, recipient_emails, email_subject='MBS Big Data Stock P
     # Construct email_message for Graph API with HTML content, multiple recipients, and attachments
     email_message = {
         "message": {
-            "subject": email_subject,
+            "subject": "MBS Big Data Stock Project",
             "body": {
                 "contentType": "HTML",
                 "content": email_body

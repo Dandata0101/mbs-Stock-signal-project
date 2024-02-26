@@ -21,8 +21,3 @@ Body=generate_email_body(tickerSymbol=stock)
 send=send_email(email_body=Body,recipient_emails=email)
 
 
-if __name__ == "__main__":
-    # Serve the application with Waitress. Use environment variables for configuration.
-    port = int(os.getenv('PORT', '8000'))
-    host = os.getenv('HOST', '0.0.0.0')
-    serve(app, host=host, port=port)
