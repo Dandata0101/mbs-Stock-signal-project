@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBS Stock Signal Project</title>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/styles/style.css">
 </head>
 <body>
+    <h1>Welcome to MBS Stock Analysis</h1>
+    <p>Enter a stock symbol below to analyze its current trading signals and send out an email report.</p>
     
+    <!-- Simple form for submitting a stock symbol to the /stock endpoint -->
+    <form action="/stock" method="get">
+        <label for="stock">Stock Symbol:</label>
+        <input type="text" id="stock" name="stock" required>
+        <button type="submit">Analyze Stock</button>
+    </form>
 </body>
 </html>
