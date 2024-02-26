@@ -44,3 +44,21 @@ def plot_stock_signals(df=None, tickerSymbol=None, chart_directory='static/image
 
 # Example usage (you'll need to define `df` and `tickerSymbol` appropriately)
 # plot_stock_signals(df, tickerSymbol)
+
+# scripts/charts_export.py
+import plotly.graph_objects as go
+
+def new_plot_stock_signals(df=None, tickerSymbol=None):
+    fig = go.Figure()
+
+    # Add traces for the stock close prices, buy signals, and sell signals
+    fig.add_trace(go.Scatter(x=df.index, y=df['Close'], mode='lines', name=tickerSymbol))
+    fig.add_trace(go.Scatter(x=df.index, y=df['pricebuy'], mode='markers', name='Buy signal', marker=dict(color='red', size=10, symbol='triangle-up')))
+    fig.add_trace(go.Scatter(x=df.index, y=df['pricesell'], mode='markers', name='Sell signal', marker=dict(color='green', size=10, symbol='triangle-down')))
+
+    # Update layout
+    fig.update_layout(title=f"{tickerSymbol} Stock Signals", xaxis_title='Date', yaxis_title='Price USD ($)', xaxis_rangeslider_visible=True)
+
+    # Generate HTML div string without full HTML document structure
+    plot_html = fig.to_html(full_html=False)
+    return plot_html
