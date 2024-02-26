@@ -5,8 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} MBS Stock Signal Project</title>
 
+    <!-- Adding some basic styling for the home link -->
+    <style>
+        .home-link {
+            display: inline-block;
+            margin: 20px;
+            padding: 8px;
+            background-color: #f0f0f0;
+            text-decoration: none;
+            color: black;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Home Link -->
+    <a href="/" class="home-link">Home</a>
+
     <h1>Buy/Sell Analysis</h1>
     <img src="{{ url_for('static', filename='images/chart.png') }}" alt="Stock Chart">
 
@@ -15,5 +30,6 @@
         <input type="email" id="email" name="email" required>
 
         <button type="submit">Analyze Stock</button>
+    </form> <!-- Added missing closing tag for form -->
 </body>
 </html>
