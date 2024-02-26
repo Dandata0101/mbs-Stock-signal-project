@@ -9,6 +9,7 @@ from scripts.charts_export import plot_stock_signals
 from scripts.excel_export import export_df_to_excel_with_chart
 from EmailBody.emailbody import generate_email_body
 from scripts.sendemail import send_email
+os.system('cls' if os.name == 'nt' else 'clear')
 
 # Importing waitress for serving the application
 from waitress import serve
@@ -43,7 +44,6 @@ def stock():
             return render_template("stock.html", chart=chart, stock=stock_symbol, data=data)
         except Exception as e:
             return jsonify({'error': str(e)}), 500
-
 
 
 @app.errorhandler(500)
