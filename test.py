@@ -1,3 +1,5 @@
+#testing area for functions
+
 import os
 from scripts.yahoofinance import create_dataframe
 from scripts.buysellfx import buysellfx
