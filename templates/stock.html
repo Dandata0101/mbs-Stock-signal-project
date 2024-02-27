@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} MBS Stock Signal Project</title>
 
-    <!-- Adding some basic styling for the home link and table -->
+    <!-- Adding some basic styling for the home link, table, and chart container -->
     <style>
         .home-link {
             display: inline-block;
@@ -21,7 +21,8 @@
         .stock-data-table {
             width: auto;
             margin-bottom: 20px; /* Adjust as needed */
-            float: right; /* Align table to the right */
+            margin-left: auto; /* This will push the table to the right */
+            margin-right: 0;
         }
 
         table, th, td {
@@ -31,7 +32,11 @@
 
         th, td {
             padding: 5px;
-            text-align: left; /* Or 'right' if you prefer */
+            text-align: right; /* Aligns text to the right */
+        }
+
+        .chart-container {
+            clear: both; /* Ensures that the chart doesn't float next to the table */
         }
     </style>
 </head>
@@ -41,31 +46,39 @@
     <form action="/ty" method="get">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
-        <button type="submit">send details Analysis</button>
+        <button type="submit">Send Details Analysis</button>
     </form>
 
     <h1>Buy/Sell Analysis</h1>
 
-    <!-- Table for displaying stock data -->
-    <table class="stock-data-table">
-        <tr>
-            <th>Open</th>
-            <th>High</th>
-            <th>Low</th>
-            <th>Volume</th>
-        </tr>
-        {% for row in data %}
-        <tr>
-            <td>{{ row['Open'] }}</td>
-            <td>{{ row['High'] }}</td>
-            <td>{{ row['Low'] }}</td>
-            <td>{{ row['Volume'] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <!-- Right-aligned table for displaying stock data -->
+    <div class="stock-data-table">
+        <table>
+            <tr>
+                <td>Open</td>
+                <td>1.45</td>
+            </tr>
+            <tr>
+                <td>High</td>
+                <td>2.5</td>
+            </tr>
+            <tr>
+                <td>Low</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>Close</td>
+                <td>2.4</td>
+            </tr>
+            <tr>
+                <td>Volume</td>
+                <td>40,000,000</td>
+            </tr>
+        </table>
+    </div>
 
     <!-- Chart -->
-    <div>
+    <div class="chart-container">
         {{ chart|safe }}
     </div>
 
