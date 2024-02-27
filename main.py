@@ -30,7 +30,7 @@ def stock():
             last = Last_record(fx)  # Get the last record of the stock data as a dictionary
             chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
             # Ensure 'last' is passed as a list of dictionaries to be compatible with the template
-            data_for_template = [last]  # Wrap 'last' in a list
+            data_for_template = last # Wrap 'last' in a list
 
             return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=data_for_template)
         except Exception as e:
