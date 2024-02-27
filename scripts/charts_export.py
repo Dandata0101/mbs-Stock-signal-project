@@ -62,7 +62,7 @@ def interactive_plot_stock_signals(df=None, tickerSymbol=None):
     fig.add_trace(go.Scatter(x=df.index[df['pricesell'].notnull()], y=df['pricesell'].dropna(), mode='markers', name='Sell Signal', marker=dict(color='red', size=10, symbol='triangle-down')))
 
     # Update layout with width, height, date range slider, and daily interval ticks
-    fig.update_layout(title=f"{tickerSymbol} Stock Signals",
+    fig.update_layout(title=f"{tickerSymbol} Stock Signals Chart",
                       xaxis_title='Date',
                       yaxis_title='Price USD ($)',
                       xaxis=dict(
