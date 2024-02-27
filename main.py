@@ -21,12 +21,12 @@ def stock():
     if request.method == 'GET':
         # Assuming email address might be submitted via a query parameter for simplicity
         email_address = request.args.get('email')
-        email_address=[email_address]
-        
+        email=[email_address]
+
         stock_symbol = request.args.get('stock')
         if not stock_symbol:
             return jsonify({'error': 'Missing required query parameter: stock'}), 400
-        if not email_address:
+        if not email:
             # Handle case where email is not provided
             return jsonify({'error': 'Missing required query parameter: email'}), 400
 
@@ -38,7 +38,7 @@ def stock():
             chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
             body = generate_email_body(tickerSymbol=stock_symbol)
             # Now, use the captured email address
-            email=send_email(email_body=body, recipient_emails=[email_address])
+            email=send_email(email_body=body, recipient_emails=[email])
 
             return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last)
         except Exception as e:
