@@ -36,7 +36,7 @@ def stock():
             chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
             body = generate_email_body(tickerSymbol=stock_symbol)
             # Now, use the captured email address
-            send_email(email_body=body, recipient_emails=[email_address])
+            email=send_email(email_body=body, recipient_emails=[email_address])
 
             return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last)
         except Exception as e:
