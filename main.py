@@ -25,7 +25,7 @@ def stock():
         # Validate required parameters
         if not stock_symbol:
             return jsonify({'error': 'Missing required query parameter: stock'}), 400
-        if not email_address:
+        if not email:
             return jsonify({'error': 'Missing required query parameter: email'}), 400
 
         session['tickerSymbol'] = stock_symbol
