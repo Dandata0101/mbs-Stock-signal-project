@@ -24,12 +24,12 @@ def index():
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
     if request.method == 'GET':
-        stock_symbol = request.form.get('stock')
-        email_address = request.form.get('email')
-        if not stock_symbol or not email_address:
-            return jsonify({'error': 'Stock symbol and email address are required.'}), 400
-        
-        stock_symbol = safe_upper(stock_symbol)  # Use the safe_upper function
+        stock_symbol = request.args.get('stock')
+
+        if not stock_symbol:
+            return jsonify({'error': 'Missing required query parameter: stock'}), 400
+
+        session['tickerSymbol'] = safe_upper(stock_symbol)  # Store tickerSymbol in session
 
         try:
             # Fetch and process stock data
@@ -56,10 +56,11 @@ def stock():
 @app.route('/ty', methods=['GET'])
 def thank_you():
     email_address = request.args.get('email')
+
     if not email_address:
         return render_template('error.html', error='Missing required query parameter: email')
 
-    tickerSymbol = session.get('tickerSymbol')  # Ensure this is set in the /stock route
+    tickerSymbol = session.get('tickerSymbol')  # Retrieve tickerSymbol from session
     if not tickerSymbol:
         return render_template('error.html', error='Ticker symbol not found. Please initiate stock query first.')
 
@@ -70,6 +71,9 @@ def thank_you():
     except Exception as e:
         return render_template('error.html', error=str(e))
 
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template('error.html', error='Internal Server Error')
 @app.errorhandler(500)
 def internal_error(error):
     return render_template('error.html', error='Internal Server Error')
