@@ -32,7 +32,7 @@ def stock():
             body=generate_email_body(tickerSymbol=stock_symbol)
             email=send_email(email_body=body,recipient_emails=email)
 
-            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last)
+            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last,email=email)
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
