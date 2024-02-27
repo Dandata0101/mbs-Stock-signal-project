@@ -68,9 +68,6 @@ def thank_you():
 @app.errorhandler(500)
 def internal_error(error):
     return render_template('error.html', error='Internal Server Error')
-@app.errorhandler(500)
-def internal_error(error):
-    return render_template('error.html', error='Internal Server Error')
 
 if __name__ == '__main__':
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
