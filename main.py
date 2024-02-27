@@ -49,7 +49,7 @@ def stock():
 
 @app.route('/ty', methods=['POST'])
 def send():
-    email_address = request.args.get('email')
+    email_address = request.form.get('email')
     email_address=[email_address]
 
     if not email_address:
