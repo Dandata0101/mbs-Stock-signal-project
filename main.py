@@ -10,6 +10,12 @@ from waitress import serve
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 
+def safe_upper(input_string):
+    """Safely convert a string to uppercase, handling None."""
+    if input_string is None:
+        return None
+    return input_string.upper()
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -17,41 +23,46 @@ def index():
 
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
-    # Adjust for both GET and POST methods
-    stock_symbol = request.form.get('stock')
-    email_address = request.form.get('email')
-    email=[email_address]
+    if request.method == 'POST':
+        stock_symbol = request.form.get('stock')
+        email_address = request.form.get('email')
+        if not stock_symbol or not email_address:
+            return jsonify({'error': 'Stock symbol and email address are required.'}), 400
+        
+        stock_symbol = safe_upper(stock_symbol)  # Use the safe_upper function
 
-    try:
-        # Fetch and process stock data
-        dataf = create_dataframe(stock_symbol)
-        fx = buysellfx(dataf)
-        last_record = Last_record(fx)  # Get the last record of the stock data as a dictionary
-        chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
+        try:
+            # Fetch and process stock data
+            dataf = create_dataframe(stock_symbol)
+            fx = buysellfx(dataf)
+            last_record = Last_record(fx)  # Get the last record of the stock data as a dictionary
+            chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
 
-        # Prepare and send email
-        email_body = generate_email_body(tickerSymbol=stock_symbol)
-        send_email(email_body=email_body, recipient_emails=email)
+            # Prepare and send email
+            email_body = generate_email_body(tickerSymbol=stock_symbol)
+            send_email(email_body=email_body, recipient_emails=[email_address])
 
-        return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record)
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record)
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+    else:
+        # Handle GET request or show a form to submit stock symbol and email
+        return render_template('index.html')
 
 @app.route('/ty', methods=['GET'])
 def thank_you():
     email_address = request.args.get('email')
-
     if not email_address:
         return render_template('error.html', error='Missing required query parameter: email')
 
-    tickerSymbol = session.get('tickerSymbol')  # Retrieve tickerSymbol from session
+    tickerSymbol = session.get('tickerSymbol')  # Make sure to set this in the session elsewhere
     if not tickerSymbol:
         return render_template('error.html', error='Ticker symbol not found. Please initiate stock query first.')
 
     try:
         email_body = generate_email_body(tickerSymbol=tickerSymbol)
         send_email(email_body=email_body, recipient_emails=[email_address])
-        return render_template('ty.html', email_address=[email_address])
+        return render_template('ty.html', email_address=email_address)
     except Exception as e:
         return render_template('error.html', error=str(e))
 
