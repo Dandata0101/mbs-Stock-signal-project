@@ -29,9 +29,7 @@
 </head>
 <body>
     <h1>Buy/sell analysis for {{ stock }}</h1>
-    <div class="chart-container">
-        {{ chart|safe }}
-    </div>
+
     <div class="table-container">
         <table class="stock-data-table">
             <tr>
@@ -65,5 +63,10 @@
             <input type="submit" value="Send Email">
         </form>
     </div>
+    
+    <div class="chart-container">
+        {{ chart|safe }}
+    </div>
+
 </body>
 </html>
