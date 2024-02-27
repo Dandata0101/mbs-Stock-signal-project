@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} MBS Stock Signal Project</title>
-
-    <!-- Adding some basic styling for the home link, table, and chart container -->
     <style>
+        /* Existing styles */
         .home-link {
             display: inline-block;
             margin: 20px;
@@ -16,69 +15,69 @@
             color: black;
             border-radius: 4px;
         }
-
-        /* Style for the stock data table */
+        /* New styles for the layout */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px; /* Adjust as needed for spacing */
+        }
         .stock-data-table {
-            width: auto;
-            margin-bottom: 20px; /* Adjust as needed */
-            margin-left: auto; /* This will push the table to the right */
-            margin-right: 0;
+            margin-left: auto;
+            text-align: right;
         }
-
-        table, th, td {
-            border: 1px solid black;
+        .stock-data-table table {
             border-collapse: collapse;
+            margin-top: 20px; /* Adjust as needed to align with the header */
         }
-
-        th, td {
-            padding: 5px;
-            text-align: right; /* Aligns text to the right */
-        }
-
-        .chart-container {
-            clear: both; /* Ensures that the chart doesn't float next to the table */
+        .stock-data-table td, .stock-data-table th {
+            padding: 8px;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
 <body>
-    <!-- Home Link -->
     <a href="/" class="home-link">Home</a>
     <form action="/ty" method="get">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
-        <button type="submit">Send Details Analysis</button>
+        <button type="submit">send details Analysis</button>
     </form>
 
-    <h1>Buy/Sell Analysis</h1>
+    <!-- Container to hold the header and table side by side -->
+    <div class="container">
+        <!-- Buy/Sell Analysis header -->
+        <h1>Buy/Sell Analysis</h1>
 
-    <!-- Right-aligned table for displaying stock data -->
-    <div class="stock-data-table">
-        <table>
-            <tr>
-                <td>Open</td>
-                <td>1.45</td>
-            </tr>
-            <tr>
-                <td>High</td>
-                <td>2.5</td>
-            </tr>
-            <tr>
-                <td>Low</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>Close</td>
-                <td>2.4</td>
-            </tr>
-            <tr>
-                <td>Volume</td>
-                <td>40,000,000</td>
-            </tr>
-        </table>
+        <!-- Right-aligned table -->
+        <div class="stock-data-table">
+            <table>
+                <tr>
+                    <th>Open</th>
+                    <td>{{ last['Open'] }}</td>
+                </tr>
+                <tr>
+                    <th>High</th>
+                    <td>{{ last['High'] }}</td>
+                </tr>
+                <tr>
+                    <th>Low</th>
+                    <td>{{ last['Low'] }}</td>
+                </tr>
+                <tr>
+                    <th>Close</th>
+                    <td>{{ last['Close'] }}</td>
+                </tr>
+                <tr>
+                    <th>Volume</th>
+                    <td>{{ last['Volume'] }}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <!-- Chart -->
-    <div class="chart-container">
+    <div>
         {{ chart|safe }}
     </div>
 
