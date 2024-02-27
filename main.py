@@ -10,12 +10,6 @@ from waitress import serve
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 
-def safe_upper(input_string):
-    """Safely convert a string to uppercase, handling None."""
-    if input_string is None:
-        return None
-    return input_string.upper()
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -37,7 +31,7 @@ def stock():
             chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
 
             # Set session variable for tickerSymbol
-            session['tickerSymbol'] = safe_upper(stock_symbol)  # Store tickerSymbol in session
+            session['tickerSymbol'] = stock_symbol  # Store tickerSymbol in session
 
             return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record)
         except Exception as e:
