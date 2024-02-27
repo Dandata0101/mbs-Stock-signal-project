@@ -29,14 +29,13 @@ def stock():
             fx = buysellfx(dataf)
             last = Last_record(fx)  # Get the last record of the stock data as a dictionary
             chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
-            # Ensure 'last' is passed as a list of dictionaries to be compatible with the template
-            #data_for_template = last # Wrap 'last' in a list
+            body=generate_email_body(tickerSymbol=stock_symbol)
+            email=send_email(email_body=body,recipient_emails=email)
 
             return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last)
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
-# ... the rest of your code remains unchanged ...
 
 if __name__ == '__main__':
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
