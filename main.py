@@ -20,7 +20,7 @@ def stock():
     if request.method == 'GET':
         stock_symbol = request.args.get('stock')
         email_address = request.args.get('email')
-        email=email_address
+        email=[email_address]
 
         # Validate required parameters
         if not stock_symbol:
@@ -38,7 +38,7 @@ def stock():
 
             # Prepare and send email
             email_body = generate_email_body(tickerSymbol=stock_symbol)
-            email = send_email(email_body=email_body, recipient_emails=[email])
+            email = send_email(email_body=email_body, recipient_emails=email)
 
             return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record)
         except Exception as e:
