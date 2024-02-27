@@ -77,4 +77,4 @@ def interactive_plot_stock_signals(df=None, tickerSymbol=None):
                       height=600) 
 
     # Show the figure
-    fig_html = pio.to_html(fig, full_html=False)
+    return pio.to_html(fig, full_html=False)
