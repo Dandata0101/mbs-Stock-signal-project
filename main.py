@@ -42,8 +42,12 @@ def stock():
             email_body = generate_email_body(tickerSymbol=stock_symbol)
             send_email(email_body=email_body, recipient_emails=[email_address])
 
+            # Set session variable for tickerSymbol
+            session['tickerSymbol'] = stock_symbol
+
             return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record)
         except Exception as e:
+            print(e)  # Print exception to console for debugging
             return jsonify({'error': str(e)}), 500
     else:
         # Handle GET request or show a form to submit stock symbol and email
@@ -55,7 +59,7 @@ def thank_you():
     if not email_address:
         return render_template('error.html', error='Missing required query parameter: email')
 
-    tickerSymbol = session.get('tickerSymbol')  # Make sure to set this in the session elsewhere
+    tickerSymbol = session.get('tickerSymbol')  # Ensure this is set in the /stock route
     if not tickerSymbol:
         return render_template('error.html', error='Ticker symbol not found. Please initiate stock query first.')
 
@@ -68,7 +72,7 @@ def thank_you():
 
 @app.errorhandler(500)
 def internal_error(error):
-    return render_template('error.html', error='Internal Server Error')        
+    return render_template('error.html', error='Internal Server Error')
 
 if __name__ == '__main__':
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
