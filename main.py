@@ -23,7 +23,7 @@ def index():
 
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
-    if request.method == 'POST':
+    if request.method == 'GET':
         stock_symbol = request.form.get('stock')
         email_address = request.form.get('email')
         if not stock_symbol or not email_address:
