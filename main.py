@@ -19,9 +19,14 @@ def index():
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
     if request.method == 'GET':
+        # Assuming email address might be submitted via a query parameter for simplicity
+        email_address = request.args.get('email')
         stock_symbol = request.args.get('stock')
         if not stock_symbol:
             return jsonify({'error': 'Missing required query parameter: stock'}), 400
+        if not email_address:
+            # Handle case where email is not provided
+            return jsonify({'error': 'Missing required query parameter: email'}), 400
 
         session['tickerSymbol'] = stock_symbol
         try:
@@ -29,13 +34,13 @@ def stock():
             fx = buysellfx(dataf)
             last = Last_record(fx)  # Get the last record of the stock data as a dictionary
             chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
-            body=generate_email_body(tickerSymbol=stock_symbol)
-            email=send_email(email_body=body,recipient_emails=email)
+            body = generate_email_body(tickerSymbol=stock_symbol)
+            # Now, use the captured email address
+            send_email(email_body=body, recipient_emails=[email_address])
 
-            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last,email=email)
+            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last)
         except Exception as e:
             return jsonify({'error': str(e)}), 500
-
 
 if __name__ == '__main__':
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
