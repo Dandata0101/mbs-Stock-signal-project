@@ -61,7 +61,7 @@ def thank_you():
     try:
         email_body = generate_email_body(tickerSymbol=tickerSymbol)
         send_email(email_body=email_body, recipient_emails=[email_address])
-        return render_template('ty.html', email_address=email_address)
+        return render_template('ty.html', email_address=[email_address])
     except Exception as e:
         return render_template('error.html', error=str(e))
 
