@@ -1,12 +1,13 @@
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+import plotly.io as pio
+
 import os
 import pandas as pd
 import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
-# Assuming 'buysellfx' script is properly placed in your project structure.
-#from scripts.buysellfx import df
 
 def plot_stock_signals(df=None, tickerSymbol=None, chart_directory='static/images'):
    
@@ -42,23 +43,38 @@ def plot_stock_signals(df=None, tickerSymbol=None, chart_directory='static/image
     plt.savefig(chart_path, bbox_inches='tight')
     plt.close()
 
-# Example usage (you'll need to define `df` and `tickerSymbol` appropriately)
-# plot_stock_signals(df, tickerSymbol)
 
-# scripts/charts_export.py
-import plotly.graph_objects as go
+def interactive_plot_stock_signals(df=None, tickerSymbol=None):
+    # Print data types of the dataframe
+    print('3.1) load final dataframe')
+    print('')
+    print('~~~~~~~~~~~~~')
+    print(df.dtypes)
+    print('~~~~~~~~~~~~~')
+    current_directory = os.getcwd()
 
-def new_plot_stock_signals(df=None, tickerSymbol=None):
+    # Initialize a Plotly figure
     fig = go.Figure()
 
     # Add traces for the stock close prices, buy signals, and sell signals
     fig.add_trace(go.Scatter(x=df.index, y=df['Close'], mode='lines', name=tickerSymbol))
-    fig.add_trace(go.Scatter(x=df.index, y=df['pricebuy'], mode='markers', name='Buy signal', marker=dict(color='red', size=10, symbol='triangle-up')))
-    fig.add_trace(go.Scatter(x=df.index, y=df['pricesell'], mode='markers', name='Sell signal', marker=dict(color='green', size=10, symbol='triangle-down')))
+    fig.add_trace(go.Scatter(x=df.index[df['pricebuy'].notnull()], y=df['pricebuy'].dropna(), mode='markers', name='Buy Signal', marker=dict(color='green', size=10, symbol='triangle-up')))
+    fig.add_trace(go.Scatter(x=df.index[df['pricesell'].notnull()], y=df['pricesell'].dropna(), mode='markers', name='Sell Signal', marker=dict(color='red', size=10, symbol='triangle-down')))
 
-    # Update layout
-    fig.update_layout(title=f"{tickerSymbol} Stock Signals", xaxis_title='Date', yaxis_title='Price USD ($)', xaxis_rangeslider_visible=True)
+    # Update layout with width, height, date range slider, and daily interval ticks
+    fig.update_layout(title=f"{tickerSymbol} Stock Signals",
+                      xaxis_title='Date',
+                      yaxis_title='Price USD ($)',
+                      xaxis=dict(
+                          rangeslider=dict(visible=False),
+                          type='date',
+                          tickmode='auto',  
+                          tickformat='%Y-%m-%d', 
+                          tick0=df.index.min(), 
+                          dtick=86400000.0 
+                      ),
+                      width=1500, 
+                      height=600) 
 
-    # Generate HTML div string without full HTML document structure
-    plot_html = fig.to_html(full_html=False)
-    return plot_html
+    # Show the figure
+    fig_html = pio.to_html(fig, full_html=False)

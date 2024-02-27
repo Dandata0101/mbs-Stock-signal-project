@@ -23,7 +23,10 @@
     <a href="/" class="home-link">Home</a>
 
     <h1>Buy/Sell Analysis</h1>
-    <img src="{{ url_for('static', filename='images/chart.png') }}" alt="Stock Chart">
+    <!-- Inside stock.html where you want to display the chart -->
+    <div>
+        {{ chart|safe }}
+    </div>
 
     <form action="/ty" method="get">
         <label for="email">Email:</label>
