@@ -48,8 +48,9 @@ def stock():
         return render_template('index.html')
 
 @app.route('/ty', methods=['GET'])
-def thank_you():
+def ty():
     email_address = request.args.get('email')
+    email_address=[email_address]
 
     if not email_address:
         return render_template('error.html', error='Missing required query parameter: email')
@@ -60,8 +61,8 @@ def thank_you():
 
     try:
         email_body = generate_email_body(tickerSymbol=tickerSymbol)
-        send_email(email_body=email_body, recipient_emails=[email_address])
-        return render_template('ty.html', email_address=[email_address])
+        send_email(email_body=email_body, recipient_emails=email_address)
+        return render_template('ty.html', email_address=email_address)
     except Exception as e:
         return render_template('error.html', error=str(e))
 
