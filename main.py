@@ -47,8 +47,8 @@ def stock():
         # Handle GET request or show a form to submit stock symbol and email
         return render_template('index.html')
 
-@app.route('/ty', methods=['GET'])
-def ty():
+@app.route('/ty', methods=['POST'])
+def send():
     email_address = request.args.get('email')
     email_address=[email_address]
 
