@@ -27,12 +27,12 @@ def stock():
         try:
             data = create_dataframe(stock_symbol)
             fx = buysellfx(data)
-            last = Last_record(fx)  # Get the last record of the stock data
+            last = Last_record(fx)  # Get the last record of the stock data as a dictionary
             chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
-            # If you are using 'export' somewhere else, include it, otherwise it can be removed
-            # export = export_df_to_excel_with_chart(df=fx, tickerSymbol=stock_symbol)
+            # Ensure 'last' is passed as a list of dictionaries to be compatible with the template
+            data_for_template = [last]  # Wrap 'last' in a list
 
-            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last)
+            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=data_for_template)
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
