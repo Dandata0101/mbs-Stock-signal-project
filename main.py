@@ -29,8 +29,6 @@ def stock():
         if not stock_symbol:
             return jsonify({'error': 'Missing required query parameter: stock'}), 400
 
-        session['tickerSymbol'] = safe_upper(stock_symbol)  # Store tickerSymbol in session
-
         try:
             # Fetch and process stock data
             dataf = create_dataframe(stock_symbol)
@@ -38,12 +36,8 @@ def stock():
             last_record = Last_record(fx)  # Get the last record of the stock data as a dictionary
             chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
 
-            # Prepare and send email
-            email_body = generate_email_body(tickerSymbol=stock_symbol)
-            send_email(email_body=email_body, recipient_emails=[email_address])
-
             # Set session variable for tickerSymbol
-            session['tickerSymbol'] = stock_symbol
+            session['tickerSymbol'] = safe_upper(stock_symbol)  # Store tickerSymbol in session
 
             return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record)
         except Exception as e:
