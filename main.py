@@ -21,6 +21,8 @@ def stock():
     if request.method == 'GET':
         # Assuming email address might be submitted via a query parameter for simplicity
         email_address = request.args.get('email')
+        email_address=[email_address]
+        
         stock_symbol = request.args.get('stock')
         if not stock_symbol:
             return jsonify({'error': 'Missing required query parameter: stock'}), 400
