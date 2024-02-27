@@ -73,7 +73,7 @@ def interactive_plot_stock_signals(df=None, tickerSymbol=None):
                           tick0=df.index.min(), 
                           dtick=86400000.0 
                       ),
-                      width=1500, 
+                      width=1400, 
                       height=600) 
 
     # Show the figure
