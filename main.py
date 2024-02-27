@@ -18,24 +18,9 @@ def index():
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
     # Adjust for both GET and POST methods
-    if request.method == 'POST':
-        stock_symbol = request.form.get('stock')
-        email_address = request.form.get('email')
-    else:  # For GET requests
-        stock_symbol = request.args.get('stock')
-        email_address = request.args.get('email')
-    
-    if not stock_symbol or not email_address:
-        # Provide a more specific message based on missing parameter
-        if not stock_symbol and not email_address:
-            error_message = 'Missing required query parameters: stock and email'
-        elif not stock_symbol:
-            error_message = 'Missing required query parameter: stock'
-        else:
-            error_message = 'Missing required query parameter: email'
-        return jsonify({'error': error_message}), 400
-
-    email = [email_address]
+    stock_symbol = request.form.get('stock')
+    email_address = request.form.get('email')
+    email=[email_address]
 
     try:
         # Fetch and process stock data
