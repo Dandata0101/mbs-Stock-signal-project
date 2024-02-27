@@ -21,18 +21,20 @@
 <body>
     <!-- Home Link -->
     <a href="/" class="home-link">Home</a>
-
-    <h1>Buy/Sell Analysis</h1>
-    <!-- Inside stock.html where you want to display the chart -->
-    <div>
-        {{ chart|safe }}
-    </div>
-
     <form action="/ty" method="get">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
 
         <button type="submit">send details Analysis</button>
     </form> <!-- Added missing closing tag for form -->
+    
+    <h1>Buy/Sell Analysis</h1>
+
+    <!-- Inside stock.html where you want to display the chart -->
+    <div>
+        {{ chart|safe }}
+    </div>
+
+
 </body>
 </html>
