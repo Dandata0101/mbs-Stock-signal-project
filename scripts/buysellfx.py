@@ -55,7 +55,9 @@ def buysellfx(df):
     df['pricesell'] = pricesell
     df['profit'] = profit
     df['transdays'] = transdays
-
+    # Calculate cumulative profit
+    df['cumulative_profit'] = df['profit'].cumsum().fillna(method='ffill')
+    
     print(df.dtypes)
 
     return df

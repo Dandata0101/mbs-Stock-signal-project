@@ -85,7 +85,7 @@ def Last_record(df=None):
         raise ValueError("The input is not a pandas DataFrame.")
     
     # Columns you are interested in
-    cols = ['Open', 'High', 'Low', 'Close','Volume']
+    cols = ['Open', 'High', 'Low', 'Close','Volume','cumulative_profit']
     
     # Check if all specified columns exist in the DataFrame
     missing_cols = [col for col in cols if col not in df.columns]
@@ -102,5 +102,7 @@ def Last_record(df=None):
     formatted_last_record['Low'] = "${:,.2f}".format(last_record_filtered['Low'])
     formatted_last_record['Close'] = "${:,.2f}".format(last_record_filtered['Close'])
     formatted_last_record['Volume'] = "{:,}".format(int(last_record_filtered['Volume']))
+    formatted_last_record['cumulative_profit'] =  "${:,.2f}".format(int(last_record_filtered['cumulative_profit']))
+
     print(formatted_last_record)
     return formatted_last_record
