@@ -2,8 +2,7 @@ from flask import Flask, request, render_template, jsonify, session
 import os
 from scripts.yahoofinance import create_dataframe
 from scripts.buysellfx import buysellfx
-from scripts.charts_export import plot_stock_signals, interactive_plot_stock_signals, Last_record
-from scripts.excel_export import export_df_to_excel_with_chart
+from scripts.charts_export import interactive_plot_stock_signals, Last_record
 from EmailBody.emailbody import generate_email_body
 from scripts.sendemail import send_email
 from waitress import serve
@@ -19,28 +18,28 @@ def index():
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
     if request.method == 'GET':
-        # Assuming email address might be submitted via a query parameter for simplicity
-        email_address = request.args.get('email')
-        email=[email_address]
-
         stock_symbol = request.args.get('stock')
+        email_address = request.args.get('email')
+
+        # Validate required parameters
         if not stock_symbol:
             return jsonify({'error': 'Missing required query parameter: stock'}), 400
-        if not email:
-            # Handle case where email is not provided
+        if not email_address:
             return jsonify({'error': 'Missing required query parameter: email'}), 400
 
         session['tickerSymbol'] = stock_symbol
         try:
+            # Fetch and process stock data
             dataf = create_dataframe(stock_symbol)
             fx = buysellfx(dataf)
-            last = Last_record(fx)  # Get the last record of the stock data as a dictionary
+            last_record = Last_record(fx)  # Get the last record of the stock data as a dictionary
             chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
-            body = generate_email_body(tickerSymbol=stock_symbol)
-            # Now, use the captured email address
-            email=send_email(email_body=body, recipient_emails=email)
 
-            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last)
+            # Prepare and send email
+            email_body = generate_email_body(tickerSymbol=stock_symbol)
+            send_email_result = send_email(email_body=email_body, recipient_emails=[email_address])
+
+            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record)
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
