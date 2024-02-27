@@ -28,7 +28,8 @@
     </style>
 </head>
 <body>
-    <h1>Buy/sell analysis:{{ tickerSymbol }}</h1>
+    <!-- Apply inline style for underlining -->
+    <h1 style="text-decoration: underline;">Buy/sell analysis for {{ tickerSymbol }}</h1>
     <div class="email-form">
         <!-- Adjust the form action to '/stock' and method to 'GET'. If sensitive data, consider using 'POST' -->
         <form action="/stock" method="GET">
