@@ -1,4 +1,8 @@
 from flask import Flask, request, render_template, jsonify, session
+import matplotlib
+matplotlib.use('Agg')  # Use the 'Agg' backend which is non-interactive and does not require a GUI
+import matplotlib.pyplot as plt
+
 import os
 from scripts.yahoofinance import create_dataframe
 from scripts.buysellfx import buysellfx
