@@ -6,52 +6,58 @@
     <title>Stock Analysis Results</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
-        /* Add your custom styles here */
-        .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+        body {
+            margin: 20px;
+        }
+        .chart-container, .table-container, .email-form {
+            margin-bottom: 20px;
         }
         .stock-data-table {
-            margin-left: auto;
+            margin-top: 20px;
             border-collapse: collapse;
             border: 1px solid black;
         }
         th, td {
             border: 1px solid black;
             padding: 8px;
-            text-align: Left;
+            text-align: left;
+        }
+        .email-form {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div>
-            <!-- Your chart and other content goes here -->
-            <h1>Buy/sell analysis</h1>
-            {{ chart|safe }}
-        </div>
-        <!-- Right-aligned table -->
-        <div class="stock-data-table">
-            <table>
-                <tr>
-                    <th>Open</th>
-                    <th>High</th>
-                    <th>Low</th>
-                    <th>Close</th>
-                    <th>Volume</th>
-                </tr>
-                {% if data %}
-                <tr>
-                    <td>{{ data[0]['Open'] }}</td>
-                    <td>{{ data[0]['High'] }}</td>
-                    <td>{{ data[0]['Low'] }}</td>
-                    <td>{{ data[0]['Close'] }}</td>
-                    <td>{{ data[0]['Volume'] }}</td>
-                </tr>
-                {% endif %}
-            </table>
-        </div>
+    <div class="chart-container">
+        <h1>Buy/sell analysis</h1>
+        {{ chart|safe }}
+    </div>
+    <div class="table-container">
+        <table class="stock-data-table">
+            <tr>
+                <th>Open</th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Close</th>
+                <th>Volume</th>
+            </tr>
+            {% if data %}
+            <tr>
+                <td>{{ data['Open'] }}</td>
+                <td>{{ data['High'] }}</td>
+                <td>{{ data['Low'] }}</td>
+                <td>{{ data['Close'] }}</td>
+                <td>{{ data['Volume'] }}</td>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+    <div class="email-form">
+        <form action="/ty" method="get">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <input type="submit" value="Submit">
+        </form>
     </div>
 </body>
 </html>
