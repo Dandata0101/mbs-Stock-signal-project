@@ -27,13 +27,17 @@
         }
     </style>
 </head>
-<div class="email-form">
-    <form action="/ty" method="get">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <input type="submit" value="Submit">
-    </form>
-</div>
+<body>
+    <div class="email-form">
+        <!-- Adjust the form action to '/stock' and method to 'GET'. If sensitive data, consider using 'POST' -->
+        <form action="/stock" method="get">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="stock">Stock Symbol:</label>
+            <input type="text" id="stock" name="stock" required>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 
     <div class="table-container">
         <table class="stock-data-table">
@@ -55,11 +59,9 @@
             {% endif %}
         </table>
     </div>
-    <body>
-        <div class="chart-container">
-            <h1>Buy/sell analysis</h1>
-            {{ chart|safe }}
-        </div>
-
+    <div class="chart-container">
+        <h1>Buy/sell analysis</h1>
+        {{ chart|safe }}
+    </div>
 </body>
 </html>

@@ -17,32 +17,40 @@ def index():
 
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
-    if request.method == 'GET':
+    # Adjust for both GET and POST methods
+    if request.method == 'POST':
+        stock_symbol = request.form.get('stock')
+        email_address = request.form.get('email')
+    else:  # For GET requests
         stock_symbol = request.args.get('stock')
         email_address = request.args.get('email')
-        email=[email_address]
+    
+    if not stock_symbol or not email_address:
+        # Provide a more specific message based on missing parameter
+        if not stock_symbol and not email_address:
+            error_message = 'Missing required query parameters: stock and email'
+        elif not stock_symbol:
+            error_message = 'Missing required query parameter: stock'
+        else:
+            error_message = 'Missing required query parameter: email'
+        return jsonify({'error': error_message}), 400
 
-        # Validate required parameters
-        if not stock_symbol:
-            return jsonify({'error': 'Missing required query parameter: stock'}), 400
-        if not email:
-            return jsonify({'error': 'Missing required query parameter: email'}), 400
+    email = [email_address]
 
-        session['tickerSymbol'] = stock_symbol
-        try:
-            # Fetch and process stock data
-            dataf = create_dataframe(stock_symbol)
-            fx = buysellfx(dataf)
-            last_record = Last_record(fx)  # Get the last record of the stock data as a dictionary
-            chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
+    try:
+        # Fetch and process stock data
+        dataf = create_dataframe(stock_symbol)
+        fx = buysellfx(dataf)
+        last_record = Last_record(fx)  # Get the last record of the stock data as a dictionary
+        chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
 
-            # Prepare and send email
-            email_body = generate_email_body(tickerSymbol=stock_symbol)
-            email = send_email(email_body=email_body, recipient_emails=email)
+        # Prepare and send email
+        email_body = generate_email_body(tickerSymbol=stock_symbol)
+        send_email(email_body=email_body, recipient_emails=email)
 
-            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record)
-        except Exception as e:
-            return jsonify({'error': str(e)}), 500
+        return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
