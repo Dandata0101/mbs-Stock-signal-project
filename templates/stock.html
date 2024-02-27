@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} MBS Stock Signal Project</title>
 
-    <!-- Adding some basic styling for the home link -->
+    <!-- Adding some basic styling for the home link and table -->
     <style>
         .home-link {
             display: inline-block;
@@ -16,6 +16,23 @@
             color: black;
             border-radius: 4px;
         }
+
+        /* Style for the stock data table */
+        .stock-data-table {
+            width: auto;
+            margin-bottom: 20px; /* Adjust as needed */
+            float: right; /* Align table to the right */
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 5px;
+            text-align: left; /* Or 'right' if you prefer */
+        }
     </style>
 </head>
 <body>
@@ -24,17 +41,33 @@
     <form action="/ty" method="get">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
-
         <button type="submit">send details Analysis</button>
-    </form> <!-- Added missing closing tag for form -->
-    
+    </form>
+
     <h1>Buy/Sell Analysis</h1>
 
-    <!-- Inside stock.html where you want to display the chart -->
+    <!-- Table for displaying stock data -->
+    <table class="stock-data-table">
+        <tr>
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Volume</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row['Open'] }}</td>
+            <td>{{ row['High'] }}</td>
+            <td>{{ row['Low'] }}</td>
+            <td>{{ row['Volume'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Chart -->
     <div>
         {{ chart|safe }}
     </div>
-
 
 </body>
 </html>

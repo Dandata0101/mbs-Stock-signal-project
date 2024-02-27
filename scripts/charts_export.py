@@ -78,3 +78,28 @@ def interactive_plot_stock_signals(df=None, tickerSymbol=None):
 
     # Show the figure
     return pio.to_html(fig, full_html=False)
+
+def Last_record(df=None):
+    # Validate if the input is a DataFrame
+    if not isinstance(df, pd.DataFrame):
+        raise ValueError("The input is not a pandas DataFrame.")
+    
+    # Columns you are interested in
+    cols = ['Open', 'High', 'Low', 'Volume']
+    
+    # Check if all specified columns exist in the DataFrame
+    missing_cols = [col for col in cols if col not in df.columns]
+    if missing_cols:
+        raise ValueError(f"Missing columns in DataFrame: {', '.join(missing_cols)}")
+    
+    # Select the last row and filter by the specified columns
+    last_record_filtered = df.iloc[-1][cols]
+    
+    # Format 'Open', 'High', 'Low' as US dollars and 'Volume' with commas
+    formatted_last_record = {}
+    formatted_last_record['Open'] = "${:,.2f}".format(last_record_filtered['Open'])
+    formatted_last_record['High'] = "${:,.2f}".format(last_record_filtered['High'])
+    formatted_last_record['Low'] = "${:,.2f}".format(last_record_filtered['Low'])
+    formatted_last_record['Volume'] = "{:,}".format(int(last_record_filtered['Volume']))
+    print(formatted_last_record)
+    return formatted_last_record
