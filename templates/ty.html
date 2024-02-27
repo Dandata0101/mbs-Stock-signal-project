@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
-
+    <!-- Moving the style inside the head -->
+    <style>
+        .home-link {
+            display: inline-block;
+            margin: 20px;
+            padding: 8px;
+            background-color: #f0f0f0;
+            text-decoration: none;
+            color: black;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
     <h1>Email Sent!!!!!</h1>
-    <!-- Home Button -->
-    <a href="/" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Home</a>
+    <!-- Home Link -->
+    <a href="/" class="home-link">Home</a>
 </body>
 </html>
