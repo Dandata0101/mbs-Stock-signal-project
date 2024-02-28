@@ -1,6 +1,5 @@
 **.DS_Store
 **.venv
-**.csv
 **pw-config.ini
 **/.vscode 
 .env

@@ -1,19 +1,11 @@
 import pandas as pd
 import numpy as np
 import os
-import openpyxl
 from sklearn.ensemble import RandomForestClassifier
 
 def predict_trading_signals(df):
-    # Correctly convert 'Date' column from string to datetime format
-    df['Date'] = pd.to_datetime(df['Date'])  # Corrected line
-    # Set the 'Date' column as the DataFrame's index
+    df['Date'] = pd.to_datetime(df['Date'])
     df.set_index('Date', inplace=True)
-
-    print('~~~~~~~~~~~~~')
-    print('Data types after adjustment:')
-    print(df.dtypes)  # 'Date' will now show as type 'datetime64[ns]' since it's the index
-    print('~~~~~~~~~~~~~')
 
     def add_technical_indicators(df):
         df['close_short'] = df['Close'].rolling(window=5).mean()
@@ -30,15 +22,11 @@ def predict_trading_signals(df):
         return df
 
     def label_data(df):
-        df['Label'] = 0  # Default to 'sell'
-        df.loc[df['close_short'] > df['close_long'], 'Label'] = 1  # 'buy' signal
+        df['Label'] = 0
+        df.loc[df['close_short'] > df['close_long'], 'Label'] = 1
         return df
 
     df = add_technical_indicators(df)
-
-    if df.dropna().empty:
-        print("DataFrame is empty after adding technical indicators.")
-        return pd.DataFrame()
 
     if not pd.api.types.is_datetime64_any_dtype(df.index):
         df.index = pd.to_datetime(df.index, errors='coerce')
@@ -46,58 +34,45 @@ def predict_trading_signals(df):
     train_df = df.loc['2013-01-01':'2019-12-31']
     test_df = df.loc['2020-01-01':]
 
-    if train_df.empty or test_df.empty:
-        print("Training or Test DataFrame is empty after date filtering.")
-        return pd.DataFrame()
-
     train_df = label_data(train_df)
     features = ['close_short', 'close_long', 'RSI', 'MACD', 'Signal_line']
     train_df.dropna(subset=features + ['Label'], inplace=True)
-
-    if train_df.empty:
-        print("Training DataFrame is empty after dropping NaN values.")
-        return pd.DataFrame()
 
     X_train = train_df[features]
     y_train = train_df['Label']
     X_test = test_df[features].dropna()
 
-    if X_train.empty or y_train.empty:
-        print("X_train or y_train is empty. Check your data and preprocessing steps.")
-        return pd.DataFrame()
-
     model = RandomForestClassifier(n_estimators=100, random_state=42)
-    try:
-        model.fit(X_train, y_train)
-    except ValueError as e:
-        print(f"Error fitting model: {e}")
-        return pd.DataFrame()
-
-    if X_test.empty:
-        print("X_test is empty. No data to predict.")
-        return pd.DataFrame()
+    model.fit(X_train, y_train)
 
     predictions = model.predict(X_test)
     test_df.loc[X_test.index, 'Predictions'] = predictions
-    print('~~~~~~~~~~~~~')
-    print('Data types test df:')
-    print(test_df.dtypes)  # 'Date' will now show as type 'datetime64[ns]' since it's the index
-    print('~~~~~~~~~~~~~')
 
-    first_row_vertical = df.iloc[0].to_frame()
+    # Add buy/sell signals and prices
+    def add_signals_and_prices(df):
+        df['Buy_Signal'] = 0
+        df['Sell_Signal'] = 0
+        df['pricebuy'] = np.nan
+        df['pricesell'] = np.nan
+        
+        for i in range(1, len(df)):
+            if df.iloc[i]['Predictions'] == 1 and df.iloc[i]['Close'] > df.iloc[i-1]['Close']:
+                df.at[df.index[i], 'Buy_Signal'] = 1
+                df.at[df.index[i], 'pricebuy'] = df.iloc[i]['Close']
+            elif df.iloc[i]['Predictions'] == 0 and df.iloc[i]['Close'] < df.iloc[i-1]['Close']:
+                df.at[df.index[i], 'Sell_Signal'] = 1
+                df.at[df.index[i], 'pricesell'] = df.iloc[i]['Close']
+        
+        return df
 
-    print('Print the first row vertically')
-    print(first_row_vertical)
+    test_df = add_signals_and_prices(test_df)
 
+    # Reset index to make 'Date' a column
+    test_df.reset_index(inplace=True)
 
-   
-    # Paths and directory
     current_directory = os.getcwd()
-    print(current_directory)
-
-    # Include the directory path in the file name
-    file_path = current_directory + '/01-data/ml_test.csv'
-
-    # Write the DataFrame to an Excel file in the specified directory
+    file_path = os.path.join(current_directory, '01-data', 'ml_test_signals_prices.csv')
     test_df.to_csv(file_path, index=False)
+    
     return test_df
+
