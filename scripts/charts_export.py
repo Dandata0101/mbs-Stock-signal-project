@@ -1,16 +1,35 @@
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import plotly.io as pio
-
 import os
 import pandas as pd
 import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
+def filter_date_range(df):
+    """Filter the DataFrame to include data from Jan 1, 2020, to the present, retaining the 'Date' column."""
+    start_date = pd.to_datetime('2020-01-01').date()  # Use a date for comparison
+    
+    # Ensure 'Date' column is in the correct format and filter out the epoch date if present
+    if 'Date' in df.columns:
+        # Convert 'Date' column to datetime and coerce errors to NaT
+        df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.date
+        # Create a mask to filter out rows with 'Date' at or before the Unix epoch
+        mask = df['Date'] > pd.Timestamp('1970-01-01').date()
+        # Apply the mask to filter the DataFrame
+        df = df[mask]
+        # Set 'Date' column as index
+        df = df.set_index('Date')
+        # Filter based on date range
+        filtered_df = df[df.index >= start_date]
+    else:
+        raise ValueError("DataFrame must have a 'Date' column.")
+    return filtered_df
+
 
 def plot_stock_signals(df=None, tickerSymbol=None, chart_directory='static/images'):
-   
+    df = filter_date_range(df)
     # Print data types of the dataframe
     print('3.1) load final dataframe')
     print('')
@@ -20,20 +39,20 @@ def plot_stock_signals(df=None, tickerSymbol=None, chart_directory='static/image
     current_directory = os.getcwd()
 
     # Plotting chart
-    plt.figure(figsize=(15, 5))
+    plt.figure(figsize=(40, 5))
     plt.plot(df.index, df['Close'].values, label=tickerSymbol)
     plt.plot(df.index, df['pricebuy'].values, color='red', label='Buy signal', marker='^', markersize=12)
     plt.plot(df.index, df['pricesell'].values, color='green', label='Sell signal', marker='v', markersize=12)
 
     # Setting x-axis ticks
     n = 5  # Adjust n as per your data
-    plt.xticks(ticks=df.index[::n], labels=df.index[::n])
+    plt.xticks(ticks=df.index[::n], labels=[date.strftime('%y-%m-%d') for date in df.index[::n]])
     plt.xticks(rotation=-75)
 
     # Adding legend, labels, and grid
     plt.legend()
     plt.xlabel('Date', fontsize=12)
-    plt.ylabel('price USD ($)', fontsize=12)
+    plt.ylabel('Price USD ($)', fontsize=12)
     plt.grid()
 
     # Exporting chart image
@@ -43,8 +62,8 @@ def plot_stock_signals(df=None, tickerSymbol=None, chart_directory='static/image
     plt.savefig(chart_path, bbox_inches='tight')
     plt.close()
 
-
 def interactive_plot_stock_signals(df=None, tickerSymbol=None):
+    df = filter_date_range(df)
     # Print data types of the dataframe
     print('3.1) load final dataframe')
     print('')

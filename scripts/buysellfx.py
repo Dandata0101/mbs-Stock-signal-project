@@ -1,23 +1,18 @@
-import os
 import pandas as pd
 import numpy as np
 import warnings
-from scripts.yahoofinance import create_dataframe
 
-df = create_dataframe() 
-print(df.dtypes)
+# Assuming create_dataframe is defined elsewhere and works correctly
 
 # Suppress warnings
 warnings.filterwarnings('ignore')
 
-# Function to perform the buy/sell logic
 def buysellfx(df):
     short, long = 5, 20
     print('2.2) adding rolling averages')
     df['close_short'] = df['Close'].rolling(window=short).mean()
     df['close_long'] = df['Close'].rolling(window=long).mean()
-    df.index = pd.to_datetime(df.index)
-    df.index = df.index.strftime('%Y-%m-%d')
+    df.index = pd.to_datetime(df.index)  # Convert index to datetime, keep it this way
     
     status = 0
     pricebuy, pricesell, profit, transdays = [], [], [], []
@@ -62,6 +57,4 @@ def buysellfx(df):
 
     return df
 
-# Example usage
-df_modified = buysellfx(df)
-print(df_modified.head())  # Display the first few rows to verify new columns
+# Usage of the function remains the same
