@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import os
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import GridSearchCV
 
 def predict_trading_signals(df):
     df['Date'] = pd.to_datetime(df['Date'])
@@ -28,31 +27,26 @@ def predict_trading_signals(df):
         return df
 
     df = add_technical_indicators(df)
-    df = label_data(df)
+
+    if not pd.api.types.is_datetime64_any_dtype(df.index):
+        df.index = pd.to_datetime(df.index, errors='coerce')
 
     train_df = df.loc['2013-01-01':'2019-12-31']
     test_df = df.loc['2020-01-01':]
 
+    train_df = label_data(train_df)
     features = ['close_short', 'close_long', 'RSI', 'MACD', 'Signal_line']
     train_df.dropna(subset=features + ['Label'], inplace=True)
+
     X_train = train_df[features]
     y_train = train_df['Label']
     X_test = test_df[features].dropna()
 
-    param_grid = {
-        'n_estimators': [100, 200, 300],
-        'max_depth': [None, 10, 20, 30],
-        'min_samples_split': [2, 5, 10],
-        'min_samples_leaf': [1, 2, 4],
-        'max_features': ['auto', 'sqrt']
-    }
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
 
-    rf = RandomForestClassifier(random_state=42)
-    grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2)
-    grid_search.fit(X_train, y_train)
-
-    best_model = grid_search.best_estimator_
-    predictions = best_model.predict(X_test)
+    # Ensure predictions are added to test_df
+    predictions = model.predict(X_test)
     test_df.loc[X_test.index, 'Predictions'] = predictions
 
     def add_signals_and_prices(df):
@@ -61,14 +55,14 @@ def predict_trading_signals(df):
         df['pricebuy'] = np.nan
         df['pricesell'] = np.nan
 
-        last_signal = None
+        last_signal = None  # Track the last signal (buy or sell)
 
         for i in range(1, len(df)):
             current_signal = None
             
             if df.iloc[i]['Predictions'] == 1 and df.iloc[i]['Close'] > df.iloc[i-1]['Close']:
                 current_signal = 'buy'
-            elif df.iloc[i]['Predictions'] == 0 and df.iloc[i]['Close'] < df.iloc[i-1]['Close'] * 0.99:
+            elif df.iloc[i]['Predictions'] == 0 and df.iloc[i]['Close'] < df.iloc[i-1]['Close'] * 0.99: # Sell if current price is 1% less than previous price
                 current_signal = 'sell'
             
             if current_signal and current_signal != last_signal:
@@ -79,12 +73,16 @@ def predict_trading_signals(df):
                     df.at[df.index[i], 'pricesell'] = df.iloc[i]['Close']
                     last_signal = 'sell'
 
+        # Update signals based on prices
         df['Buy_Signal'] = df['pricebuy'].notnull().astype(int)
         df['Sell_Signal'] = df['pricesell'].notnull().astype(int)
 
         return df
 
+
+    # Apply the function to test_df after predictions have been added
     test_df = add_signals_and_prices(test_df)
+    
     # Reset index to make 'Date' a column again if necessary
     test_df.reset_index(inplace=True)
 
