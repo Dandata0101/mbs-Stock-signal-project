@@ -103,8 +103,8 @@ def predict_trading_signals(df):
 
     # Save the processed DataFrame to a CSV file
     current_directory = os.getcwd()
-    file_path = os.path.join(current_directory, '01-data', 'ml_test_signals_prices.csv')
-    test_df.to_csv(file_path, index=False)
+    #file_path = os.path.join(current_directory, '01-data', 'ml_test_signals_prices.csv')
+    #test_df.to_csv(file_path, index=False)
     
     return test_df
 

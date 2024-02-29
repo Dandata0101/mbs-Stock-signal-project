@@ -49,7 +49,7 @@ def calculate_profit(df):
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
 
     # Saving the DataFrame to a CSV file
-    file_path = os.path.join(os.getcwd(), '01-data', 'ml_test_signals_prices_w_profit.csv')
-    df.to_csv(file_path, index=False)
+    #file_path = os.path.join(os.getcwd(), '01-data', 'ml_test_signals_prices_w_profit.csv')
+    #df.to_csv(file_path, index=False)
     
     return df
