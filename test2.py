@@ -11,16 +11,20 @@ from scripts.excel_export import export_df_to_excel_with_chart
 from EmailBody.emailbody import generate_email_body
 from scripts.sendemail import send_email
 
+
 stock='AMZN'
 email=["dan@y-data.co"]
 
 data=create_dataframe(stock)
 
-fx=predict_trading_signals(data)
-profit=calculate_profit(fx)
-#print(profit.dtypes)
-chart = plot_stock_signals(df=profit, tickerSymbol=stock)
-export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock)
-Body=generate_email_body(tickerSymbol=stock)
-send=send_email(email_body=Body,recipient_emails=email)
+fx=buysellfx(data)    
+
+chart=plot_stock_signals(df=fx,tickerSymbol=stock)
+export=export_df_to_excel_with_chart(df=fx,tickerSymbol=stock)
+
+
+#Body=generate_email_body(tickerSymbol=stock)
+#send=send_email(email_body=Body,recipient_emails=email)
+
+last=Last_record(fx)
 

@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
 import plotly.graph_objects as go
 import plotly.io as pio
 import os
@@ -20,22 +21,32 @@ def filter_date_range(df):
         # Apply the mask to filter the DataFrame
         df = df[mask]
         # Set 'Date' column as index
-        df = df.set_index('Date')
+        filtered_df = df.set_index('Date')
         # Filter based on date range
-        filtered_df = df[df.index >= start_date]
+        
+        # Convert 'Close', 'pricebuy', and 'pricesell' columns to integers
+        filtered_df['Close'] = filtered_df['Close'].astype(int)
+        filtered_df['pricebuy'] = filtered_df['pricebuy'].astype(int).replace(0, np.nan)  # Replace 0 with NaN
+        filtered_df['pricesell'] = filtered_df['pricesell'].astype(int).replace(0, np.nan)
+        
     else:
         raise ValueError("DataFrame must have a 'Date' column.")
     return filtered_df
 
 
+
 def plot_stock_signals(df=None, tickerSymbol=None, chart_directory='static/images'):
     df = filter_date_range(df)
-    # Print data types of the dataframe
+    
+    # Log data types of the dataframe
     print('3.1) load final dataframe')
-    print('')
     print('~~~~~~~~~~~~~')
     print(df.dtypes)
     print('~~~~~~~~~~~~~')
+
+    print('first row')
+    first_row_transposed = df.head(1).T
+    print(first_row_transposed)
     current_directory = os.getcwd()
 
     # Plotting chart
@@ -64,7 +75,7 @@ def plot_stock_signals(df=None, tickerSymbol=None, chart_directory='static/image
 
 def interactive_plot_stock_signals(df=None, tickerSymbol=None):
     df = filter_date_range(df)
-    # Print data types of the dataframe
+
     print('3.1) load final dataframe')
     print('')
     print('~~~~~~~~~~~~~')
@@ -72,30 +83,25 @@ def interactive_plot_stock_signals(df=None, tickerSymbol=None):
     print('~~~~~~~~~~~~~')
     current_directory = os.getcwd()
 
-    # Initialize a Plotly figure
     fig = go.Figure()
-
-    # Add traces for the stock close prices, buy signals, and sell signals
     fig.add_trace(go.Scatter(x=df.index, y=df['Close'], mode='lines', name=tickerSymbol))
     fig.add_trace(go.Scatter(x=df.index[df['pricebuy'].notnull()], y=df['pricebuy'].dropna(), mode='markers', name='Buy Signal', marker=dict(color='green', size=10, symbol='triangle-up')))
     fig.add_trace(go.Scatter(x=df.index[df['pricesell'].notnull()], y=df['pricesell'].dropna(), mode='markers', name='Sell Signal', marker=dict(color='red', size=10, symbol='triangle-down')))
 
-    # Update layout with width, height, date range slider, and daily interval ticks
     fig.update_layout(title=f"{tickerSymbol} Stock Signals Chart",
                       xaxis_title='Date',
                       yaxis_title='Price USD ($)',
                       xaxis=dict(
                           rangeslider=dict(visible=False),
                           type='date',
-                          tickmode='auto',  
-                          tickformat='%Y-%m-%d', 
-                          tick0=df.index.min(), 
-                          dtick=86400000.0 
+                          tickmode='auto',
+                          tickformat='%Y-%m-%d',
+                          tick0=df.index.min(),
+                          dtick=86400000.0
                       ),
-                      width=1400, 
-                      height=600) 
+                      width=1400,
+                      height=600)
 
-    # Show the figure
     return pio.to_html(fig, full_html=False)
 
 def Last_record(df=None):
@@ -103,25 +109,24 @@ def Last_record(df=None):
     if not isinstance(df, pd.DataFrame):
         raise ValueError("The input is not a pandas DataFrame.")
     
-    # Columns you are interested in
-    cols = ['Open', 'High', 'Low', 'Close','Volume','cumulative_profit']
+    # Specify columns of interest
+    cols = ['Open', 'High', 'Low', 'Close', 'Volume', 'cumulative_profit']
     
-    # Check if all specified columns exist in the DataFrame
+    # Verify all specified columns exist in the DataFrame
     missing_cols = [col for col in cols if col not in df.columns]
     if missing_cols:
         raise ValueError(f"Missing columns in DataFrame: {', '.join(missing_cols)}")
     
-    # Select the last row and filter by the specified columns
     last_record_filtered = df.iloc[-1][cols]
-    
-    # Format 'Open', 'High', 'Low' as US dollars and 'Volume' with commas
-    formatted_last_record = {}
-    formatted_last_record['Open'] = "${:,.2f}".format(last_record_filtered['Open'])
-    formatted_last_record['High'] = "${:,.2f}".format(last_record_filtered['High'])
-    formatted_last_record['Low'] = "${:,.2f}".format(last_record_filtered['Low'])
-    formatted_last_record['Close'] = "${:,.2f}".format(last_record_filtered['Close'])
-    formatted_last_record['Volume'] = "{:,}".format(int(last_record_filtered['Volume']))
-    formatted_last_record['cumulative_profit'] =  "${:,.2f}".format(int(last_record_filtered['cumulative_profit']))
+
+    formatted_last_record = {
+        'Open': "${:,.2f}".format(last_record_filtered['Open']),
+        'High': "${:,.2f}".format(last_record_filtered['High']),
+        'Low': "${:,.2f}".format(last_record_filtered['Low']),
+        'Close': "${:,.2f}".format(last_record_filtered['Close']),
+        'Volume': "{:,}".format(int(last_record_filtered['Volume'])),
+        'cumulative_profit': "${:,.2f}".format(last_record_filtered['cumulative_profit'])
+    }
 
     print(formatted_last_record)
     return formatted_last_record
