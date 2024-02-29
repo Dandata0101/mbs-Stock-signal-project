@@ -9,7 +9,7 @@ from scripts.excel_export import export_df_to_excel_with_chart
 from EmailBody.emailbody import generate_email_body
 from scripts.sendemail import send_email
 
-stock='AMZN'
+stock='TSLA'
 email=["dan@y-data.co"]
 
 data=create_dataframe(stock)
