@@ -51,10 +51,10 @@ def predict_trading_signals(df):
     X_test = test_df[features].dropna()
 
     param_grid = {
-        'n_estimators': [100,200,300],
-        'max_depth': [None, 10, 20,30],
-        'min_samples_split': [2, 5, 10],
-        'min_samples_leaf': [1, 2, 4],
+        'n_estimators': [100,200],
+        'max_depth': [None, 10, 20],
+        'min_samples_split': [2, 5],
+        'min_samples_leaf': [1, 2,4],
         'max_features': ['auto','sqrt']
     }
 
