@@ -41,8 +41,8 @@ def predict_trading_signals(df):
     df = label_data(df)
 
     # Using a smaller subset of data for the grid search
-    train_df = df.loc['2018-01-01':'2019-12-31']  # Adjust this range based on your dataset
-    test_df = df.loc['2020-01-01':]
+    train_df = df.loc['2015-01-01':'2019-12-31']  # Adjust this range based on your dataset
+    test_df = df.loc['2020-01-01':'2024-02-29']
 
     features = ['close_short', 'close_long', 'RSI', 'MACD', 'Signal_line']
     train_df.dropna(subset=features + ['Label'], inplace=True)

@@ -7,52 +7,51 @@ def calculate_profit(df):
     cumulative_profit = initial_balance
     position = 0  # Tracks the number of shares owned
     df['profit'] = 0.0
-    df['shares_hold'] = 0
-    df['cumulative_profit'] = initial_balance  # Renamed balance to cumulative_profit
+    df['cumulative_profit'] = initial_balance
 
     for i in range(len(df)):
-        if df.iloc[i]['Buy_Signal'] == 1:
-            shares_to_buy = cumulative_profit // df.iloc[i]['pricebuy']
-            if shares_to_buy > 0:  # Proceed only if we can buy at least one share
-                cost = shares_to_buy * df.iloc[i]['pricebuy']
-                cumulative_profit -= cost
+        # Reset profit at the start of each iteration
+        df.at[i, 'profit'] = 0.0
+
+        # Buy logic
+        if df.at[i, 'Buy_Signal'] == 1:
+            shares_to_buy = cumulative_profit // df.at[i, 'pricebuy']
+            if shares_to_buy > 0:
+                cost = shares_to_buy * df.at[i, 'pricebuy']
+                cumulative_profit -= cost  # Subtract the cost from cumulative_profit
                 position += shares_to_buy
-                df.iloc[i, df.columns.get_loc('profit')] = -cost  # Negative because it's a cost
-                df.iloc[i, df.columns.get_loc('cumulative_profit')] = cumulative_profit
-                print(f"Bought {shares_to_buy} shares at {df.iloc[i]['pricebuy']} on index {i}")
+                df.at[i, 'profit'] = -cost
 
-        elif df.iloc[i]['Sell_Signal'] == 1 and position > 0:
-            revenue = position * df.iloc[i]['pricesell']
-            cumulative_profit += revenue
-            print(f"Sold {position} shares at {df.iloc[i]['pricesell']} on index {i}")
-            df.iloc[i, df.columns.get_loc('profit')] = revenue
-            position = 0  # Reset position after selling
-            df.iloc[i, df.columns.get_loc('cumulative_profit')] = cumulative_profit
+        # Sell logic
+        elif df.at[i, 'Sell_Signal'] == 1 and position > 0:
+            revenue = position * df.at[i, 'pricesell']
+            cumulative_profit += revenue  # Add the revenue to cumulative_profit
+            position = 0
+            df.at[i, 'profit'] = revenue
 
-        # Update shares_hold with current position after each transaction
-        df.iloc[i, df.columns.get_loc('shares_hold')] = position
+        # Update cumulative_profit only if there's a transaction
+        df.at[i, 'cumulative_profit'] = cumulative_profit
 
-    # If there are any remaining shares, sell them at the last available price
+        # No need to update 'shares_hold' in this version, unless required for analysis
+
+    # Adjust for final sell-off if any shares remain unsold
     if position > 0:
-        revenue = position * df.iloc[-1]['Close']
+        last_price = df['Close'].values[-1]
+        revenue = position * last_price
         cumulative_profit += revenue
-        print(f"Sold remaining {position} shares at {df.iloc[-1]['Close']} on the last index")
-        df.iloc[-1, df.columns.get_loc('profit')] = revenue
-        df.iloc[-1, df.columns.get_loc('cumulative_profit')] = cumulative_profit
-        position = 0  # Reset position
-    
+        df.at[len(df)-1, 'profit'] = revenue
+
+    # The last row always has the final cumulative profit
+    df.at[len(df)-1, 'cumulative_profit'] = cumulative_profit
+
     df.fillna(0, inplace=True)
-    # Calculate profit for each row
-    df['profit'] = df['cumulative_profit'] - initial_balance
+    # No need to adjust 'profit' column here since it's already set during buy/sell operations
 
     if 'Date' in df.columns:
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
-    else:
-        print("Warning: 'Date' column not found. Skipping date formatting.")
 
-    # Save the DataFrame to a CSV file
-    current_directory = os.getcwd()
-    file_path = os.path.join(current_directory, '01-data', 'ml_test_signals_prices_w_profit.csv')
+    # Saving the DataFrame to a CSV file
+    file_path = os.path.join(os.getcwd(), '01-data', 'ml_test_signals_prices_w_profit.csv')
     df.to_csv(file_path, index=False)
     
     return df
