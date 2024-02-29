@@ -61,7 +61,7 @@ def plot_stock_signals(df=None, tickerSymbol=None, chart_directory='static/image
     plt.xticks(rotation=-75)
 
     # Adding legend, labels, and grid
-    plt.legend()
+    plt.legend(loc='upper left')
     plt.xlabel('Date', fontsize=12)
     plt.ylabel('Price USD ($)', fontsize=12)
     plt.grid()

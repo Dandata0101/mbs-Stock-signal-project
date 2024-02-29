@@ -5,9 +5,8 @@ import matplotlib.pyplot as plt
 
 import os
 from scripts.yahoofinance import create_dataframe
-from scripts.ml_buysellfx import predict_trading_signals
-from scripts.profit_calc import calculate_profit
-from scripts.ml_chart_export import plot_stock_signals, interactive_plot_stock_signals, Last_record
+from scripts.buysellfx import buysellfx
+from scripts.charts_export import plot_stock_signals, interactive_plot_stock_signals, Last_record
 from scripts.excel_export import export_df_to_excel_with_chart
 from EmailBody.emailbody import generate_email_body
 from scripts.sendemail import send_email
@@ -32,12 +31,11 @@ def stock():
         try:
             # Fetch and process stock data
             dataf = create_dataframe(stock_symbol)
-            fx = predict_trading_signals(dataf)
-            profit=calculate_profit(fx)
-            last_record = Last_record(profit)  # Get the last record of the stock data as a dictionary
-            chart = plot_stock_signals(df=profit, tickerSymbol=stock_symbol)
-            chart_html = interactive_plot_stock_signals(df=profit, tickerSymbol=stock_symbol)
-            export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock_symbol)
+            fx = buysellfx(dataf)
+            last_record = Last_record(fx)  # Get the last record of the stock data as a dictionary
+            chart = plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
+            chart_html = interactive_plot_stock_signals(df=fx, tickerSymbol=stock_symbol)
+            export = export_df_to_excel_with_chart(df=fx, tickerSymbol=stock_symbol)
 
             # Set session variable for tickerSymbol
             session['tickerSymbol'] = stock_symbol  # Store tickerSymbol in session
