@@ -32,7 +32,6 @@ def calculate_profit(df):
         # Update cumulative_profit only if there's a transaction
         df.at[i, 'cumulative_profit'] = cumulative_profit
 
-        # No need to update 'shares_hold' in this version, unless required for analysis
 
     # Adjust for final sell-off if any shares remain unsold
     if position > 0:
@@ -45,7 +44,6 @@ def calculate_profit(df):
     df.at[len(df)-1, 'cumulative_profit'] = cumulative_profit
 
     df.fillna(0, inplace=True)
-    # No need to adjust 'profit' column here since it's already set during buy/sell operations
 
     if 'Date' in df.columns:
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
