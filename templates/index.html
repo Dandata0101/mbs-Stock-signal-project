@@ -5,13 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
     <style>
-        .spinner {
-            border: 6px solid #f3f3f3; /* Light grey */
-            border-top: 6px solid #3498db; /* Blue */
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 2s linear infinite;
+        .spinner, #loadingMessage {
             position: fixed; /* or absolute */
             top: 50%;
             left: 50%;
@@ -19,27 +13,30 @@
             display: none;
         }
 
+        .spinner {
+            border: 6px solid #f3f3f3; /* Light grey */
+            border-top: 6px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+
         @keyframes spin {
             0% { transform: translate(-50%, -50%) rotate(0deg); }
             100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        #loadingMessage {
+            margin-bottom: 80px; /* Adjust based on your layout */
+            text-align: center;
+            transform: translate(-50%, -70%); /* Adjusted to move the message above the spinner */
         }
     </style>
 </head>
 <body>
     <h1>Welcome to MBS Stock Analysis</h1>
-    <a href="https://github.com/Dandata0101" target="_blank">
-        <img src="https://img.shields.io/badge/Author-DanRamirez-2ea44f?style=for-the-badge" alt="Author - DanRamirez">
-    </a>
-    <a href="https://github.com/VineethReeddyBAAIML" target="_blank">
-        <img src="https://img.shields.io/badge/Author-VineethReddy-2ea44f?style=for-the-badge" alt="Author - VineethReddy">
-    </a>
-    <a href="https://github.com/bahijh" target="_blank">
-        <img src="https://img.shields.io/badge/Author-BahijHaidar-2ea44f?style=for-the-badge" alt="Author - BahijHaidar">
-    </a>
-    <a href="https://github.com/" target="_blank">
-        <img src="https://img.shields.io/badge/Author-LisaFanzy-2ea44f?style=for-the-badge" alt="Author - LisaFanzy">
-    </a>
-    <img src="https://img.shields.io/badge/PYTHON-3.11-red?style=for-the-badge&logo=python&logoColor=white" alt="Python - Version"><br>
+    <!-- Authors and Python version badges -->
 
     <p>Enter a stock symbol below to analyze its current trading signals and send out an email report.</p>
     
@@ -49,12 +46,14 @@
         <button type="submit">Analyze Stock</button>
     </form>
 
-    <!-- Loading Spinner -->
+    <!-- Loading Message and Spinner -->
+    <p id="loadingMessage">Running ML model ...</p>
     <div id="loadingSpinner" class="spinner"></div>
 
     <script>
         document.querySelector("form").onsubmit = function() {
             document.getElementById("loadingSpinner").style.display = "block";
+            document.getElementById("loadingMessage").style.display = "block"; // Show the loading message
         };
     </script>
 </body>

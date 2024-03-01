@@ -6,49 +6,52 @@ import time
 def calculate_profit(df):
     print("Starting profit calculation...")
     start_time = time.time()
-    
+    balance = [] #contribution from DrChen
     initial_balance = 50000
+    tmp_balance = initial_balance #contribution from DrChen
     cumulative_profit = initial_balance
     position = 0  # Tracks the number of shares owned
-    df['profit'] = 0.0
-    df['cumulative_profit'] = initial_balance
-
+    
     for i in range(len(df)):
         # Reset profit at the start of each iteration
         df.at[i, 'profit'] = 0.0
 
         # Buy logic
         if df.at[i, 'Buy_Signal'] == 1:
-            shares_to_buy = cumulative_profit // df.at[i, 'pricebuy']
+            shares_to_buy = cumulative_profit // df.at[i, 'Open']
             if shares_to_buy > 0:
-                cost = shares_to_buy * df.at[i, 'pricebuy']
-                cumulative_profit -= cost  # Subtract the cost from cumulative_profit
+                cost = shares_to_buy * df.at[i, 'Open']
+                tmp_balance -= cost
+                df.at[i, 'balance'] = tmp_balance
                 position += shares_to_buy
-                df.at[i, 'profit'] = -cost
-
+            else:
+                df.at[i, 'balance'] = tmp_balance
+                # balance.append(tmp_balance)
         # Sell logic
         elif df.at[i, 'Sell_Signal'] == 1 and position > 0:
-            revenue = position * df.at[i, 'pricesell']
-            cumulative_profit += revenue  # Add the revenue to cumulative_profit
-            position = 0
-            df.at[i, 'profit'] = revenue
-
+            if position>0:
+                revenue = position * df.at[i, 'Open']
+                tmp_balance += revenue
+                df.at[i, 'balance'] = tmp_balance
+                position = 0
+            else:
+                df.at[i, 'balance'] = tmp_balance
+        else:
+            df.at[i, 'balance'] = tmp_balance
+            
         # Update cumulative_profit only if there's a transaction
-        df.at[i, 'cumulative_profit'] = cumulative_profit
-
-        if i % 100 == 0:  # Print a message every 100 iterations to track progress
-            print(f"Processed {i}/{len(df)} rows...")
-
+        # df.at[i, 'cumulative_profit'] = cumulative_profit
+        
     # Adjust for final sell-off if any shares remain unsold
     if position > 0:
         last_price = df['Close'].values[-1]
         revenue = position * last_price
-        cumulative_profit += revenue
-        df.at[len(df)-1, 'profit'] = revenue
-
+        tmp_balance += revenue
+        df.at[len(df)-1, 'balance'] = tmp_balance
+    
+    total_profit = df.at[len(df)-1, 'balance'] - initial_balance
+    print('The final profit/loss:', total_profit)
     # The last row always has the final cumulative profit
-    df.at[len(df)-1, 'cumulative_profit'] = cumulative_profit
-
     df.fillna(0, inplace=True)
 
     if 'Date' in df.columns:
@@ -56,5 +59,10 @@ def calculate_profit(df):
 
     elapsed_time = time.time() - start_time
     print(f"Profit calculation completed in {elapsed_time:.2f} seconds.")
-    
+
+    current_directory = os.getcwd()
+    df.to_excel(current_directory+'/01-data/test_export.xlsx')
     return df
+
+    
+
