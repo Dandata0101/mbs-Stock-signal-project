@@ -58,7 +58,9 @@ def calculate_profit(df):
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
 
     elapsed_time = time.time() - start_time
+
     print(f"Profit calculation completed in {elapsed_time:.2f} seconds.")
+    df.rename(columns={'balance': 'Balance'}, inplace=True)
 
     current_directory = os.getcwd()
     df.to_excel(current_directory+'/01-data/test_export.xlsx')

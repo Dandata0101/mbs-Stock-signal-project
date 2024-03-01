@@ -11,6 +11,7 @@ def predict_trading_signals(df):
 
     def add_technical_indicators(df):
         df['VIX']=df['VIX']
+        df['fedrate']=df['fedrate']
         df['VIX_short']= df['VIX'].rolling(window=5).mean()
         df['VIX_long']= df['VIX'].rolling(window=15).mean() 
         df['close_short'] = df['Close'].rolling(window=5).mean()
@@ -37,7 +38,7 @@ def predict_trading_signals(df):
     train_df = df.loc['2015-01-01':'2019-12-31']
     test_df = df.loc['2020-01-01':'2024-02-29']
 
-    features = ['close_short','VIX','VIX_short','VIX_long','close_long', 'RSI', 'MACD', 'Signal_line']
+    features = ['close_short','redrate','VIX','VIX_short','VIX_long','close_long', 'RSI', 'MACD', 'Signal_line']
     train_df.dropna(subset=features + ['Label'], inplace=True)
     X_train = train_df[features]
     y_train = train_df['Label']

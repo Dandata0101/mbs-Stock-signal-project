@@ -19,6 +19,7 @@ fastjsonschema==2.19.1
 Flask==3.0.2
 Flask-WTF==1.2.1
 fonttools==4.49.0
+fredapi==0.5.1
 frozendict==2.4.0
 html5lib==1.1
 idna==3.6
