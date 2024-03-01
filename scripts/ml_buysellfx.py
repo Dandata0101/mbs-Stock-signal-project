@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.model_selection import GridSearchCV
 
 def predict_trading_signals(df):
@@ -9,39 +10,28 @@ def predict_trading_signals(df):
     df.set_index('Date', inplace=True)
 
     def add_technical_indicators(df):
-        # Calculate simple moving averages
         df['close_short'] = df['Close'].rolling(window=5).mean()
         df['close_long'] = df['Close'].rolling(window=15).mean()
-        # Calculate the difference in closing prices
         delta = df['Close'].diff()
-        # Positive gains (up) and losses (down)
         gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
         loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
-        # Calculate the Relative Strength (RS)
         rs = gain / loss
-        # Calculate the Relative Strength Index (RSI)
         df['RSI'] = 100 - (100 / (1 + rs))
-        # Exponential Moving Averages (EMA) for MACD
         df['EMA12'] = df['Close'].ewm(span=12, adjust=False).mean()
         df['EMA26'] = df['Close'].ewm(span=26, adjust=False).mean()
-        # Calculate the Moving Average Convergence Divergence (MACD)
         df['MACD'] = df['EMA12'] - df['EMA26']
-        # Signal line
         df['Signal_line'] = df['MACD'].ewm(span=9, adjust=False).mean()
         return df
 
     def label_data(df):
-        # Create a binary 'Label' column for our machine learning model
         df['Label'] = 0
         df.loc[df['close_short'] > df['close_long'], 'Label'] = 1
         return df
 
-    # Preprocessing
     df = add_technical_indicators(df)
     df = label_data(df)
 
-    # Using a smaller subset of data for the grid search
-    train_df = df.loc['2015-01-01':'2019-12-31']  # Adjust this range based on your dataset
+    train_df = df.loc['2015-01-01':'2019-12-31']
     test_df = df.loc['2020-01-01':'2024-02-29']
 
     features = ['close_short', 'close_long', 'RSI', 'MACD', 'Signal_line']
@@ -49,24 +39,36 @@ def predict_trading_signals(df):
     X_train = train_df[features]
     y_train = train_df['Label']
     X_test = test_df[features].dropna()
+    y_test = test_df.loc[X_test.index, 'Label']  # Ensure y_test is defined for accuracy calculation
 
     param_grid = {
-        'n_estimators': [100,200],
+        'n_estimators': [100, 200],
         'max_depth': [None, 10, 20],
         'min_samples_split': [2, 5],
-        'min_samples_leaf': [1, 2,4],
-        'max_features': ['auto','sqrt']
+        'min_samples_leaf': [1, 2],
+        'max_features': ['auto', 'sqrt']
     }
-
 
     rf = RandomForestClassifier(random_state=42)
     grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2)
     grid_search.fit(X_train, y_train)
 
-    # Extract the best model and make predictions
     best_model = grid_search.best_estimator_
     predictions = best_model.predict(X_test)
     test_df.loc[X_test.index, 'Predictions'] = predictions
+
+    accuracy = accuracy_score(y_test, predictions)
+    precision = precision_score(y_test, predictions)
+    recall = recall_score(y_test, predictions)
+    f1 = f1_score(y_test, predictions)
+    print(f"Model Accuracy: {accuracy}")
+    print(f"Precision: {precision}, Recall: {recall}, F1 Score: {f1}")
+
+    feature_importances = best_model.feature_importances_
+    importance_df = pd.DataFrame({'Feature': features, 'Importance': feature_importances}).sort_values(by='Importance', ascending=False)
+    print("Feature Importances:")
+    print(importance_df)
+
 
     def add_signals_and_prices(df):
         df['Buy_Signal'] = 0
@@ -101,10 +103,10 @@ def predict_trading_signals(df):
     test_df = add_signals_and_prices(test_df)
     test_df.reset_index(inplace=True)  # Reset index to make 'Date' a column again
 
-    # Save the processed DataFrame to a CSV file
-    current_directory = os.getcwd()
-    #file_path = os.path.join(current_directory, '01-data', 'ml_test_signals_prices.csv')
-    #test_df.to_csv(file_path, index=False)
+    # Note: The CSV saving code is commented out. Uncomment and adjust the path as necessary for your use case.
+    # current_directory = os.getcwd()
+    # file_path = os.path.join(current_directory, '01-data', 'ml_test_signals_prices.csv')
+    # test_df.to_csv(file_path, index=False)
     
-    return test_df
+    return test_df, accuracy, precision, recall, f1, feature_importances, importance_df
 

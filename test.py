@@ -12,11 +12,14 @@ from scripts.sendemail import send_email
 stock='AAPL'
 email=["dan@y-data.co"]
 
+
 data=create_dataframe(stock)
 
-fx=predict_trading_signals(data)
-profit=calculate_profit(fx)
-#print(profit.dtypes)
+test_df, accuracy, precision, recall, f1, feature_importances=predict_trading_signals(data)
+print('~~~')
+profit=calculate_profit(test_df)
+
+print(profit.dtypes)
 chart = plot_stock_signals(df=profit, tickerSymbol=stock)
 
 export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock)

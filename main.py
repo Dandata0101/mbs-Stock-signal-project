@@ -31,9 +31,9 @@ def stock():
 
         try:
             # Fetch and process stock data
-            dataf = create_dataframe(stock_symbol)
-            fx = predict_trading_signals(dataf)
-            profit=calculate_profit(fx)
+            data = create_dataframe(stock_symbol)
+            test_df, accuracy, precision, recall, f1, feature_importances,importance_df=predict_trading_signals(data)            
+            profit=calculate_profit(test_df)
             last_record = Last_record(profit)  # Get the last record of the stock data as a dictionary
             chart = plot_stock_signals(df=profit, tickerSymbol=stock_symbol)
             chart_html = interactive_plot_stock_signals(df=profit, tickerSymbol=stock_symbol)
@@ -42,7 +42,7 @@ def stock():
             # Set session variable for tickerSymbol
             session['tickerSymbol'] = stock_symbol  # Store tickerSymbol in session
 
-            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record)
+            return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record,accuracy=accuracy,feature_importances=importance_df.to_dict('records'))
         except Exception as e:
             print(e)  # Print exception to console for debugging
             return jsonify({'error': str(e)}), 500

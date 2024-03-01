@@ -12,7 +12,7 @@
         .chart-container, .table-container, .email-form {
             margin-bottom: 20px;
         }
-        .stock-data-table {
+        .stock-data-table, .accuracy-table {
             margin-top: 20px;
             border-collapse: collapse;
             border: 1px solid black;
@@ -35,13 +35,11 @@
             color: black;
             border-radius: 4px;
         }
-
     </style>
 </head>
 <body>
     <a href="/" class="home-link">Home</a>
     <h1>Buy/sell analysis for {{ stock }}</h1>
-    <!-- New Email Form -->
     
     <form action="/ty" method="get">
         <label for="email">Email:</label>
@@ -70,15 +68,45 @@
             </tr>
             {% else %}
             <tr>
-                <td colspan="5">No data available</td>
+                <td colspan="6">No data available</td>
             </tr>
             {% endif %}
         </table>
     </div>
-
+    
+  
     <div class="chart-container">
         {{ chart|safe }}
     </div>
+
+     <!-- Accuracy Table -->
+     <div class="table-container">
+        <table class="accuracy-table">
+            <tr>
+                <th>Accuracy</th>
+            </tr>
+            <tr>
+                <td>{{ accuracy }}</td>
+            </tr>
+        </table>
+    </div>
+       
+    <table>
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Importance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for feature in feature_importances %}
+            <tr>
+                <td>{{ feature.Feature }}</td>
+                <td>{{ feature.Importance }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>   
+
 
 </body>
 </html>
