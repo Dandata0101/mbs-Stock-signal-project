@@ -1,8 +1,12 @@
 import pandas as pd
 import numpy as np
 import os
+import time
 
 def calculate_profit(df):
+    print("Starting profit calculation...")
+    start_time = time.time()
+    
     initial_balance = 50000
     cumulative_profit = initial_balance
     position = 0  # Tracks the number of shares owned
@@ -32,6 +36,8 @@ def calculate_profit(df):
         # Update cumulative_profit only if there's a transaction
         df.at[i, 'cumulative_profit'] = cumulative_profit
 
+        if i % 100 == 0:  # Print a message every 100 iterations to track progress
+            print(f"Processed {i}/{len(df)} rows...")
 
     # Adjust for final sell-off if any shares remain unsold
     if position > 0:
@@ -48,8 +54,7 @@ def calculate_profit(df):
     if 'Date' in df.columns:
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
 
-    # Saving the DataFrame to a CSV file
-    #file_path = os.path.join(os.getcwd(), '01-data', 'ml_test_signals_prices_w_profit.csv')
-    #df.to_csv(file_path, index=False)
+    elapsed_time = time.time() - start_time
+    print(f"Profit calculation completed in {elapsed_time:.2f} seconds.")
     
     return df
