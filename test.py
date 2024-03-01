@@ -16,7 +16,7 @@ email=["dan@y-data.co"]
 data=create_dataframe(stock)
 
 
-test_df, accuracy, precision, recall, f1, feature_importances,importance_df=predict_trading_signals(data)
+#test_df, accuracy, precision, recall, f1, feature_importances,importance_df=predict_trading_signals(data)
 print('~~~')
 #profit=calculate_profit(test_df)
 
