@@ -1,71 +1,46 @@
 import yfinance as yf
 import datetime
 import pandas as pd
-import numpy as np
 import warnings
 import os
 
 warnings.filterwarnings('ignore')
 
 def create_dataframe(tickerSymbol='MSFT'):
-    # Clear the console
-    os.system('cls' if os.name == 'nt' else 'clear')
+    # Function to clear the console
+    def clear_console():
+        os.system('cls' if os.name == 'nt' else 'clear')
 
+    # Function to fetch stock data
+    def fetch_data(symbol, start_date, end_date):
+        tickerData = yf.Ticker(symbol)
+        df = tickerData.history(start=start_date, end=end_date)
+        df.reset_index(inplace=True)
+        df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
+        if symbol == '^VIX':
+            df = df[['Date', 'Close']].rename(columns={'Close': 'VIX'})
+        return df
+
+    clear_console()
     print('\n\n1.1) Starting stock data extraction')
-
-    # Get data on this ticker
-    tickerData = yf.Ticker(tickerSymbol)
 
     # Define the date range
     end_date = datetime.date.today()  # Today's date
     start_date = datetime.date(2013, 1, 1)  # Start date
 
-    # Fetch the historical data
-    df = tickerData.history(start=start_date, end=end_date)
+    # Fetch stock data for the specified ticker
+    df_stock = fetch_data(tickerSymbol, start_date, end_date)
 
-    # Resetting the index to make 'Date' a column, if it's not already
-    df.reset_index(inplace=True)
+    # Fetch VIX data
+    df_vix = fetch_data('^VIX', start_date, end_date)
 
-    # Convert 'Date' column to string format
-    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
-    df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
-
-    print('~~~~~~~~~~~~~')
-    print('Data types after adjustment:')
-    print(df.dtypes)  # 'Date' will now show as type 'object'
-    print('~~~~~~~~~~~~~')
-
-    return df
-
-def create_dataframeVIX(tickerSymbol='^VIX'):
-    # Clear the console
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-    print('\n\n1.1) Starting stock data extraction')
-
-    # Get data on this ticker
-    tickerData = yf.Ticker(tickerSymbol)
-
-    # Define the date range
-    end_date = datetime.date.today()  # Today's date
-    start_date = datetime.date(2013, 1, 1)  # Start date
-
-    # Fetch the historical data
-    df = tickerData.history(start=start_date, end=end_date)
-
-    # Resetting the index to make 'Date' a column, if it's not already
-    df.reset_index(inplace=True)
-
-    # Convert 'Date' column to string format
-    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
-    df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
+    # Merging the dataframes on the 'Date' column
+    df_merged = pd.merge(df_stock, df_vix, on='Date', how='left')
 
     print('~~~~~~~~~~~~~')
     print('Data types after adjustment:')
-    print(df.dtypes)  # 'Date' will now show as type 'object'
+    print(df_merged.dtypes)
     print('~~~~~~~~~~~~~')
 
-    return df
-
-
+    return df_merged
 
