@@ -46,7 +46,7 @@ def predict_trading_signals(df):
         'max_depth': [None, 10, 20],
         'min_samples_split': [2, 5],
         'min_samples_leaf': [1, 2],
-        'max_features': ['auto', 'sqrt']
+        'max_features': ['auto','sqrt']
     }
 
     rf = RandomForestClassifier(random_state=42)
