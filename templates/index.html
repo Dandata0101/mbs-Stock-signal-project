@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
     <style>
-        .spinner, #loadingMessage {
+        #loadingContainer {
             position: fixed; /* or absolute */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            display: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .spinner {
@@ -20,23 +22,36 @@
             width: 60px;
             height: 60px;
             animation: spin 2s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            display: none; /* Initially hidden */
         }
 
         #loadingMessage {
-            margin-bottom: 80px; /* Adjust based on your layout */
-            text-align: center;
-            transform: translate(-50%, -70%); /* Adjusted to move the message above the spinner */
+            display: none; /* Initially hidden */
+            margin-bottom: 20px; /* Space between message and spinner */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <h1>Welcome to MBS Stock Analysis</h1>
-    <!-- Authors and Python version badges -->
+   
+    <a href="https://github.com/Dandata0101" target="_blank">
+        <img src="https://img.shields.io/badge/Author-DanRamirez-2ea44f?style=for-the-badge" alt="Author - DanRamirez">
+    </a>
+    <a href="https://github.com/VineethReeddyBAAIML" target="_blank">
+        <img src="https://img.shields.io/badge/Author-VineethReddy-2ea44f?style=for-the-badge" alt="Author - VineethReddy">
+    </a>
+    <a href="https://github.com/bahijh" target="_blank">
+        <img src="https://img.shields.io/badge/Author-BahijHaidar-2ea44f?style=for-the-badge" alt="Author - BahijHaidar">
+    </a>
+    <a href="https://github.com/" target="_blank">
+        <img src="https://img.shields.io/badge/Author-LisaFanzy-2ea44f?style=for-the-badge" alt="Author - LisaFanzy">
+    </a>
+    <img src="https://img.shields.io/badge/PYTHON-3.11-red?style=for-the-badge&logo=python&logoColor=white" alt="Python - Version"><br>
 
     <p>Enter a stock symbol below to analyze its current trading signals and send out an email report.</p>
     
@@ -46,13 +61,16 @@
         <button type="submit">Analyze Stock</button>
     </form>
 
-    <!-- Loading Message and Spinner -->
-    <p id="loadingMessage">Running ML model ...</p>
-    <div id="loadingSpinner" class="spinner"></div>
+    <!-- Loading Container -->
+    <div id="loadingContainer">
+        <p id="loadingMessage">Running ML model ...</p>
+        <div class="spinner"></div>
+    </div>
 
     <script>
         document.querySelector("form").onsubmit = function() {
-            document.getElementById("loadingSpinner").style.display = "block";
+            document.getElementById("loadingContainer").style.display = "flex";
+            document.querySelector(".spinner").style.display = "block";
             document.getElementById("loadingMessage").style.display = "block"; // Show the loading message
         };
     </script>
