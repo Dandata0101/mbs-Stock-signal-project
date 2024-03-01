@@ -125,7 +125,7 @@ def Last_record(df=None):
         'Low': "${:,.2f}".format(last_record_filtered['Low']),
         'Close': "${:,.2f}".format(last_record_filtered['Close']),
         'Volume': "{:,}".format(int(last_record_filtered['Volume'])),
-        'balance': "${:,.2f}".format(last_record_filtered['balance'])
+        'Balance': "${:,.2f}".format(last_record_filtered['Balance'])
     }
 
     print(formatted_last_record)
