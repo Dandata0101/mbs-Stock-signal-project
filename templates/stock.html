@@ -12,11 +12,13 @@
         .chart-container, .table-container, .email-form {
             margin-bottom: 20px;
         }
-        .stock-data-table, .accuracy-table {
+        /* Updated styles for tables */
+        .stock-data-table, .accuracy-table, .feature-importance-table {
             margin-top: 20px;
             border-collapse: collapse;
-            width: 100%;
+            width: auto; /* Allows the table to only be as wide as its content */
             border: 1px solid black;
+            table-layout: auto; /* Ensures the columns fit to content */
         }
         th, td {
             border: 1px solid black;
@@ -34,6 +36,10 @@
             text-decoration: none;
             color: black;
             border-radius: 4px;
+        }
+        /* Make sure the container does not center the tables anymore */
+        .table-container {
+            text-align: left; /* Aligns the tables to the left */
         }
     </style>
 </head>
@@ -94,21 +100,24 @@
         </table>
     </div>
     
-    <table>
-        <thead>
-            <tr>
-                <th>Feature</th>
-                <th>Importance</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for feature in feature_importances %}
-            <tr>
-                <td>{{ feature.Feature }}</td>
-                <td>{{ feature.Importance }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>   
-    </table>
+    <div class="table-container">
+        <table class="feature-importance-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Importance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for feature in feature_importances %}
+                <tr>
+                    <td>{{ feature.Feature }}</td>
+                    <td>{{ feature.Importance }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>   
+        </table>
+    </div>
 </body>
 </html>
+

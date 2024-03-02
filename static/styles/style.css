@@ -13,31 +13,30 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    font-size: 1.25rem; /* Base font size for better responsiveness */
+    font-size: 1.25rem;
 }
 
 input, button {
-    font-size: 1rem; /* Adjusted for responsiveness */
+    font-size: 1rem;
     padding: 1rem;
     border-radius: 10px;
-    border: 1px solid #ccc; /* Added for better visibility */
+    border: 1px solid #ccc;
 }
 
 input:focus, button:focus {
-    outline: 2px solid #3498db; /* Focus state for better accessibility */
+    outline: 2px solid #3498db;
     outline-offset: 2px;
 }
 
 button:hover {
-    background-color: #297cb7; /* Darker shade of blue for hover effect */
+    background-color: #297cb7;
     color: #f3f3f3;
     cursor: pointer;
 }
 
-/* Spinner Styles */
 .spinner {
-    border: 6px solid #f3f3f3; /* Light grey */
-    border-top: 6px solid #3498db; /* Blue */
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
     border-radius: 50%;
     width: 60px;
     height: 60px;
@@ -47,7 +46,7 @@ button:hover {
     left: 50%;
     transform: translate(-50%, -50%);
     display: none;
-    z-index: 1000; /* Ensure spinner is above other content */
+    z-index: 1000;
 }
 
 @keyframes spin {
@@ -55,11 +54,38 @@ button:hover {
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    display: inline-block;
+}
+
+.stock-data-table, .accuracy-table {
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid black;
+    table-layout: auto;
+    width: max-content;
+    margin: 0 auto;
+}
+
+/* Specific styles for the accuracy table */
+.accuracy-table {
+    max-width: 600px; /* Adjust this value to match the width of your feature importance table */
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+    word-wrap: break-word;
+}
+
 @media (min-width: 768px) {
     body {
-        font-size: 1.5rem; /* Larger font size for larger screens */
+        font-size: 1.5rem;
     }
     input, button {
-        font-size: 1.25rem; /* Adjust font size for readability on larger screens */
+        font-size: 1.25rem;
     }
 }
