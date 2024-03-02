@@ -45,13 +45,13 @@
         }
         .image-container img {
             max-width: 500px; /* Adjust based on your needs */
+            text-align: center; /* Center the content (the image) within the container */
             height: auto;
         }
         .feature-importance-container {
             display: flex;
-            flex-wrap: wrap;
+            justify-content: center;
             align-items: flex-start;
-            margin-bottom: 20px;
         }
         .table-container:not(:last-child) {
             margin-bottom: 20px;
@@ -71,7 +71,19 @@
         <input type="email" id="email" name="email" required>
         <button type="submit">Send Detailed Analysis</button>
     </form>
-
+    
+    <!-- Accuracy Table -->
+    <div class="table-container accuracy-container">
+        <table class="accuracy-table">
+            <tr>
+                <th>Accuracy</th>
+            </tr>
+            <tr>
+                <td>{{ accuracy }}</td>
+            </tr>
+        </table>
+    </div>
+   
     <!-- Stock Data Table and Chart -->
     <div class="table-container">
         <table class="stock-data-table">
@@ -104,19 +116,10 @@
         {{ chart|safe }}
     </div>
 
-    <!-- Accuracy Table -->
-    <div class="table-container accuracy-container">
-        <table class="accuracy-table">
-            <tr>
-                <th>Accuracy</th>
-            </tr>
-            <tr>
-                <td>{{ accuracy }}</td>
-            </tr>
-        </table>
-    </div>
+
 
     <!-- Feature Importance Table and Confusion Matrix Image -->
+    <h2>Model Performance Details {{ stock }}</h2>
     <div class="feature-importance-container">
         <div class="table-container">
             <table class="feature-importance-table">
@@ -137,7 +140,7 @@
             </table>
         </div>
         
-        <div class="image-container">
+        <div class="image-container" style="margin-left: 80px;"> <!-- Adjust the margin-left value as needed -->
             <img src="{{ url_for('static', filename='images/confusion_matrix.png') }}" alt="Confusion Matrix">
         </div>
     </div>

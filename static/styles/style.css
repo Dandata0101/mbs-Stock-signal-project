@@ -81,6 +81,22 @@ th, td {
     word-wrap: break-word;
 }
 
+.feature-importance-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px; /* Adjust the spacing between table and image */
+}
+
+.feature-importance-table {
+    flex: 1; /* Occupy remaining space */
+    max-width: 600px; /* Adjust as needed */
+}
+
+.image-container {
+    flex: 1; /* Occupy remaining space */
+}
+
 @media (min-width: 768px) {
     body {
         font-size: 1.5rem;
