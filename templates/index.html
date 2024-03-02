@@ -38,6 +38,50 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: .5rem;
+        }
+        
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: .5rem;
+            margin-bottom: 1rem;
+        }
+        
+        button[type="submit"] {
+            padding: .5rem 1rem;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: .25rem;
+            cursor: pointer;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -62,25 +106,51 @@
     <p>Enter a stock symbol below to analyze its current trading signals and send out an email report.</p>
     
     <form action="/stock" method="get">
-        <label for="stock">Stock Symbol:</label>
-        <input type="text" id="stock" name="stock" required>
+        <div class="form-group">
+            <label for="stock">Stock Symbol:</label>
+            <input type="text" id="stock" name="stock" required>
+        </div>
+        
+        <h2>Customize Grid Search Parameters (optional):</h2>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Possible Values</th>
+            </tr>
+            <tr>
+                <td>N Estimators:</td>
+                <td><input type="text" id="n_estimators" name="n_estimators" placeholder="100,200"></td>
+            </tr>
+            <tr>
+                <td>Max Depth:</td>
+                <td><input type="text" id="max_depth" name="max_depth" placeholder="None,10,20"></td>
+            </tr>
+            <tr>
+                <td>Min Samples Split:</td>
+                <td><input type="text" id="min_samples_split" name="min_samples_split" placeholder="2,5"></td>
+            </tr>
+            <tr>
+                <td>Min Samples Leaf:</td>
+                <td><input type="text" id="min_samples_leaf" name="min_samples_leaf" placeholder="1,2"></td>
+            </tr>
+
+        
         <button type="submit">Analyze Stock</button>
     </form>
 
     <!-- Loading Container -->
     <div id="loadingContainer">
         <p id="loadingMessage">Running ML model ...</p>
-        <div class="spinner" aria-hidden="true"></div>
+        <div class="spinner"></div>
     </div>
 
     <script>
         document.querySelector("form").onsubmit = function() {
             document.getElementById("loadingContainer").style.display = "flex";
             document.querySelector(".spinner").style.display = "block";
-            document.getElementById("loadingMessage").style.display = "block"; // Show the loading message
+            document.getElementById("loadingMessage").style.display = "block";
         };
 
-        // Use the pageshow event to ensure the spinner is hidden when the page is loaded from cache
         window.addEventListener('pageshow', function() {
             document.getElementById("loadingContainer").style.display = "none";
             document.querySelector(".spinner").style.display = "none";

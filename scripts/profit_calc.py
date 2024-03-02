@@ -6,6 +6,7 @@ import time
 def calculate_profit(df):
     print("Starting profit calculation...")
     start_time = time.time()
+    Balance=[]
     initial_Balance = 50000
     tmp_Balance = initial_Balance
     position = 0  # Tracks the number of shares owned
@@ -47,8 +48,6 @@ def calculate_profit(df):
     df.insert(df.columns.get_loc('Balance'), 'Position', positions)
     df.drop('profit', axis=1, inplace=True)
     df.rename(columns={'Position': 'Shares_held'}, inplace=True)
-
-
     
     df.fillna(0, inplace=True)
 
