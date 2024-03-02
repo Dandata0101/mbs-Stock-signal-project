@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>Your Page Title</title>
+    <!-- Meta tags to discourage caching -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
     <style>
         #loadingContainer {
-            position: fixed; /* or absolute */
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -37,8 +41,10 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to MBS Stock Analysis</h1>
+    <h1>Welcome to Your Application</h1>
    
+    <!-- Author Links -->
+    <img src="https://img.shields.io/badge/PYTHON-3.11-red?style=for-the-badge&logo=python&logoColor=white" alt="Python - Version"><br>
     <a href="https://github.com/Dandata0101" target="_blank">
         <img src="https://img.shields.io/badge/Author-DanRamirez-2ea44f?style=for-the-badge" alt="Author - DanRamirez">
     </a>
@@ -51,7 +57,7 @@
     <a href="https://github.com/" target="_blank">
         <img src="https://img.shields.io/badge/Author-LisaFanzy-2ea44f?style=for-the-badge" alt="Author - LisaFanzy">
     </a>
-    <img src="https://img.shields.io/badge/PYTHON-3.11-red?style=for-the-badge&logo=python&logoColor=white" alt="Python - Version"><br>
+    <br><br>
 
     <p>Enter a stock symbol below to analyze its current trading signals and send out an email report.</p>
     
@@ -64,7 +70,7 @@
     <!-- Loading Container -->
     <div id="loadingContainer">
         <p id="loadingMessage">Running ML model ...</p>
-        <div class="spinner"></div>
+        <div class="spinner" aria-hidden="true"></div>
     </div>
 
     <script>
@@ -73,6 +79,13 @@
             document.querySelector(".spinner").style.display = "block";
             document.getElementById("loadingMessage").style.display = "block"; // Show the loading message
         };
+
+        // Use the pageshow event to ensure the spinner is hidden when the page is loaded from cache
+        window.addEventListener('pageshow', function() {
+            document.getElementById("loadingContainer").style.display = "none";
+            document.querySelector(".spinner").style.display = "none";
+            document.getElementById("loadingMessage").style.display = "none";
+        });
     </script>
 </body>
 </html>
