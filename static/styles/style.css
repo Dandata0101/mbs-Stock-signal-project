@@ -16,11 +16,23 @@ body {
     font-size: 1.25rem;
 }
 
+label {
+    display: block;
+    margin-bottom: 0.5rem; /* Reduced space between label and input */
+    color: whitesmoke; /* Matches the body text color */
+    cursor: pointer;
+}
+
 input, button {
     font-size: 1rem;
-    padding: 1rem;
+    padding: 0.5rem; /* Adjusted padding for closer alignment */
     border-radius: 10px;
     border: 1px solid #ccc;
+    margin-bottom: 1rem; /* Ensure space between successive fields */
+}
+
+input[type="text"] {
+    width: calc(100% - 1rem); /* Adjust width to fit container */
 }
 
 input:focus, button:focus {
@@ -69,7 +81,6 @@ button:hover {
     margin: 0 auto;
 }
 
-/* Specific styles for the accuracy table */
 .accuracy-table {
     max-width: 600px; /* Adjust this value to match the width of your feature importance table */
 }
@@ -101,7 +112,13 @@ th, td {
     body {
         font-size: 1.5rem;
     }
+    
     input, button {
         font-size: 1.25rem;
+        padding: 0.75rem; /* Larger padding for larger screens */
+    }
+
+    label {
+        margin-bottom: 0.25rem; /* Slightly reduce bottom margin for labels on larger screens */
     }
 }

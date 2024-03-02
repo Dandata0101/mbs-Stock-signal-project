@@ -46,10 +46,11 @@
         label {
             display: block;
             margin-bottom: .5rem;
+            width: 150px; /* Adjust width as needed */
         }
-        
-        input[type="text"], input[type="email"] {
-            width: 100%;
+
+        input[type="text"] {
+            width: calc(100% - 170px); /* Adjust width to leave space for label */
             padding: .5rem;
             margin-bottom: 1rem;
         }
@@ -81,11 +82,16 @@
 
         th {
             background-color: #f2f2f2;
+            width: 150px; /* Adjusted width for column */
+        }
+
+        td {
+            width: 250px; /* Adjusted width for column */
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to Your Application</h1>
+    <h1>Buy/Sell Signal Analysis</h1>
    
     <!-- Author Links -->
     <img src="https://img.shields.io/badge/PYTHON-3.11-red?style=for-the-badge&logo=python&logoColor=white" alt="Python - Version"><br>
@@ -103,38 +109,44 @@
     </a>
     <br><br>
 
-    <p>Enter a stock symbol below to analyze its current trading signals and send out an email report.</p>
+    <h2>Enter a stock symbol below to analyze its current trading signals and send out an email report:</h2>
     
     <form action="/stock" method="get">
-        <div class="form-group">
-            <label for="stock">Stock Symbol:</label>
-            <input type="text" id="stock" name="stock" required>
-        </div>
-        
-        <h2>Customize Grid Search Parameters (optional):</h2>
-        <table>
+        <table style="width: auto; margin: 0; border-collapse: collapse;">
             <tr>
-                <th>Parameter</th>
-                <th>Possible Values</th>
+                <td style="padding: 0;"><label for="stock">Stock Symbol:</label></td>
+                <td style="padding: 0;"><input type="text" id="stock" name="stock" placeholder="add your stock (i.e. MSFT)" required style="width: 100%;"></td>
             </tr>
-            <tr>
-                <td>N Estimators:</td>
-                <td><input type="text" id="n_estimators" name="n_estimators" placeholder="100,200"></td>
-            </tr>
-            <tr>
-                <td>Max Depth:</td>
-                <td><input type="text" id="max_depth" name="max_depth" placeholder="None,10,20"></td>
-            </tr>
-            <tr>
-                <td>Min Samples Split:</td>
-                <td><input type="text" id="min_samples_split" name="min_samples_split" placeholder="2,5"></td>
-            </tr>
-            <tr>
-                <td>Min Samples Leaf:</td>
-                <td><input type="text" id="min_samples_leaf" name="min_samples_leaf" placeholder="1,2"></td>
-            </tr>
+        </table>
+    </form>
+    
+    <h2>Customize Grid Search Parameters (optional):</h2>
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th style="padding-right: 0;">Parameter</th>
+            <th style="padding-left: 5px;">Possible Values</th>
+        </tr>
+        <tr>
+            <td style="padding-right: 0;">N Estimators:</td>
+            <td style="padding-left: 5px;"><input type="text" id="n_estimators" name="n_estimators" placeholder="100,200" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <td style="padding-right: 0;">Max Depth:</td>
+            <td style="padding-left: 5px;"><input type="text" id="max_depth" name="max_depth" placeholder="None,10,20" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <td style="padding-right: 0;">Min Samples Split:</td>
+            <td style="padding-left: 5px;"><input type="text" id="min_samples_split" name="min_samples_split" placeholder="2,5" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <td style="padding-right: 0;">Min Samples Leaf:</td>
+            <td style="padding-left: 5px;"><input type="text" id="min_samples_leaf" name="min_samples_leaf" placeholder="1,2" style="width: 100%;"></td>
+        </tr>
+    </table>
 
         
+        
+        <!-- Analyze Stock button within the form -->
         <button type="submit">Analyze Stock</button>
     </form>
 
