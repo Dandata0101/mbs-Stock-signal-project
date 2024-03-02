@@ -110,7 +110,7 @@ def Last_record(df=None):
         raise ValueError("The input is not a pandas DataFrame.")
     
     # Specify columns of interest
-    cols = ['Open', 'High', 'Low', 'Close', 'Volume', 'balance']
+    cols = ['Open', 'High', 'Low', 'Close', 'Volume', 'Balance']
     
     # Verify all specified columns exist in the DataFrame
     missing_cols = [col for col in cols if col not in df.columns]
