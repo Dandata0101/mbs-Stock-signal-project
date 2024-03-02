@@ -36,6 +36,20 @@
             border-radius: 4px;
         }
     </style>
+    <script>
+    window.onload = function() {
+        // Add a history entry for the home page when the stock.html page loads
+        window.history.pushState({ path: "/" }, "", "/");
+    
+        // Listen for the popstate event, which is triggered by pressing the back button
+        window.onpopstate = function(event) {
+            // Navigate to the home page when the back button is pressed
+            if (event.state && event.state.path === "/") {
+                window.location.href = "/";
+            }
+        };
+    };
+    </script>
 </head>
 <body>
     <a href="/" class="home-link">Home</a>
@@ -73,7 +87,6 @@
             {% endif %}
         </table>
     </div>
-    
   
     <div class="chart-container">
         {{ chart|safe }}
@@ -90,7 +103,7 @@
             </tr>
         </table>
     </div>
-       
+    
     <table>
         <thead>
             <tr>
@@ -106,7 +119,5 @@
             </tr>
             {% endfor %}
         </tbody>   
-
-
 </body>
 </html>
