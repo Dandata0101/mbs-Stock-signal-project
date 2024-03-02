@@ -2,23 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta viewport="width=device-width, initial-scale=1.0">
     <title>Stock Analysis Results</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
         body {
             margin: 20px;
         }
-        .chart-container, .table-container, .email-form {
+        .chart-container, .email-form {
             margin-bottom: 20px;
         }
-        /* Updated styles for tables */
         .stock-data-table, .accuracy-table, .feature-importance-table {
             margin-top: 20px;
             border-collapse: collapse;
-            width: auto; /* Allows the table to only be as wide as its content */
+            width: auto;
             border: 1px solid black;
-            table-layout: auto; /* Ensures the columns fit to content */
+            table-layout: auto;
         }
         th, td {
             border: 1px solid black;
@@ -37,27 +36,43 @@
             color: black;
             border-radius: 4px;
         }
-        /* Make sure the container does not center the tables anymore */
-        .table-container {
-            text-align: left; /* Aligns the tables to the left */
+        .flex-row {
+            display: flex;
+            align-items: flex-start;
+        }
+        .accuracy-container, .image-container {
+            margin-right: 20px;
+        }
+        .image-container img {
+            max-width: 500px; /* Adjust based on your needs */
+            height: auto;
+        }
+        .feature-importance-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .table-container:not(:last-child) {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <script>
-    // Set a flag in session storage when the stock.html page is loaded
     sessionStorage.setItem("fromStockPage", "true");
     </script>
 
     <a href="/" class="home-link">Home</a>
     <h1>Buy/sell analysis for {{ stock }}</h1>
     
-    <form action="/ty" method="get">
+    <form action="/ty" method="get" class="email-form">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
         <button type="submit">Send Detailed Analysis</button>
     </form>
 
+    <!-- Stock Data Table and Chart -->
     <div class="table-container">
         <table class="stock-data-table">
             <tr>
@@ -84,12 +99,13 @@
             {% endif %}
         </table>
     </div>
-  
+
     <div class="chart-container">
         {{ chart|safe }}
     </div>
 
-    <div class="table-container">
+    <!-- Accuracy Table -->
+    <div class="table-container accuracy-container">
         <table class="accuracy-table">
             <tr>
                 <th>Accuracy</th>
@@ -99,25 +115,32 @@
             </tr>
         </table>
     </div>
-    
-    <div class="table-container">
-        <table class="feature-importance-table">
-            <thead>
-                <tr>
-                    <th>Feature</th>
-                    <th>Importance</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for feature in feature_importances %}
-                <tr>
-                    <td>{{ feature.Feature }}</td>
-                    <td>{{ feature.Importance }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>   
-        </table>
+
+    <!-- Feature Importance Table and Confusion Matrix Image -->
+    <div class="feature-importance-container">
+        <div class="table-container">
+            <table class="feature-importance-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Importance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feature in feature_importances %}
+                    <tr>
+                        <td>{{ feature.Feature }}</td>
+                        <td>{{ feature.Importance }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>   
+            </table>
+        </div>
+        
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='images/confusion_matrix.png') }}" alt="Confusion Matrix">
+        </div>
     </div>
+
 </body>
 </html>
-

@@ -4,6 +4,10 @@ import os
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.model_selection import GridSearchCV
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+
 
 def predict_trading_signals(df):
     df['Date'] = pd.to_datetime(df['Date'])
@@ -73,6 +77,16 @@ def predict_trading_signals(df):
     print("Feature Importances:")
     print(importance_df)
 
+     # After calculating accuracy, precision, recall, f1
+    current_directory = os.getcwd()
+
+    cm = confusion_matrix(y_test, predictions)
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues")
+    plt.title('Confusion Matrix')
+    plt.xlabel('Predicted Label')
+    plt.ylabel('True Label')
+    plt.savefig(current_directory+'/static/images/confusion_matrix.png')
+    plt.close()
 
     def add_signals_and_prices(df):
         df['Buy_Signal'] = 0
