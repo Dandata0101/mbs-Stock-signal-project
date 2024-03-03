@@ -11,7 +11,7 @@
     <style>
         #loadingContainer {
             position: fixed;
-            top: 35%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
@@ -46,11 +46,9 @@
         label {
             display: block;
             margin-bottom: .5rem;
-            width: 150px; /* Adjust width as needed */
         }
 
-        input[type="text"] {
-            width: calc(100% - 170px); /* Adjust width to leave space for label */
+        input[type="text"], input[type="email"] {
             padding: .5rem;
             margin-bottom: 1rem;
         }
@@ -82,11 +80,16 @@
 
         th {
             background-color: #f2f2f2;
-            width: 150px; /* Adjusted width for column */
         }
 
-        td {
-            width: 250px; /* Adjusted width for column */
+        /* Added style for flash messages */
+        .flash-message {
+            padding: 10px;
+            background-color: #f44336; /* Red for error messages */
+            color: white;
+            margin-bottom: 15px;
+            text-align: center;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -107,12 +110,22 @@
         <img src="https://img.shields.io/badge/Author-LisaFanzy-2ea44f?style=for-the-badge" alt="Author - LisaFanzy">
     </a>
     <br>
-
     <img src="https://img.shields.io/badge/PYTHON-3.11-red?style=for-the-badge&logo=python&logoColor=white" alt="Python - Version">
     <a href="https://github.com/Dandata0101/mbs-Stock-singal-project">    
         <img alt="GitHub stars" src="https://img.shields.io/github/stars/Dandata0101/mbs-Stock-singal-project?style=social">
     </a>
-    <br> <br>
+    <br><br>
+
+    <!-- Flash Messages Section -->
+    <div id="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
 
     <form action="/stock" method="get">
         <h2>Enter a stock symbol below to analyze its current trading signals and send out an email report:</h2>
@@ -126,35 +139,34 @@
         <h2>Customize Grid Search Parameters (optional):</h2>
         <table style="width: 100%; border-collapse: collapse;">
             <tr>
-                <th style="padding-right: 0;">Parameter</th>
-                <th style="padding-left: 5px;">Possible Values</th>
+                <th>Parameter</th>
+                <th>Possible Values</th>
             </tr>
             <tr>
-                <td style="padding-right: 0;">N Estimators:</td>
-                <td style="padding-left: 5px;"><input type="text" id="n_estimators" name="n_estimators" placeholder="100,200" style="width: 100%;"></td>
+                <td>N Estimators:</td>
+                <td><input type="text" id="n_estimators" name="n_estimators" placeholder="100,200" style="width: 100%;"></td>
             </tr>
             <tr>
-                <td style="padding-right: 0;">Max Depth:</td>
-                <td style="padding-left: 5px;"><input type="text" id="max_depth" name="max_depth" placeholder="None,10,20" style="width: 100%;"></td>
+                <td>Max Depth:</td>
+                <td><input type="text" id="max_depth" name="max_depth" placeholder="None,10,20" style="width: 100%;"></td>
             </tr>
             <tr>
-                <td style="padding-right: 0;">Min Samples Split:</td>
-                <td style="padding-left: 5px;"><input type="text" id="min_samples_split" name="min_samples_split" placeholder="2,5" style="width: 100%;"></td>
+                <td>Min Samples Split:</td>
+                <td><input type="text" id="min_samples_split" name="min_samples_split" placeholder="2,5" style="width: 100%;"></td>
             </tr>
             <tr>
-                <td style="padding-right: 0;">Min Samples Leaf:</td>
-                <td style="padding-left: 5px;"><input type="text" id="min_samples_leaf" name="min_samples_leaf" placeholder="1,2" style="width: 100%;"></td>
+                <td>Min Samples Leaf:</td>
+                <td><input type="text" id="min_samples_leaf" name="min_samples_leaf" placeholder="1,2" style="width: 100%;"></td>
             </tr>
         </table>
 
-        <!-- Analyze Stock button within the form -->
         <button type="submit">Analyze Stock</button>
     </form>
 
     <!-- Loading Container -->
     <div id="loadingContainer">
-        <p id="loadingMessage">Running ML model ...</p>
         <div class="spinner"></div>
+        <p id="loadingMessage">...Running ML model</p>
     </div>
 
     <script>

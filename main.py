@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify, session
+from flask import Flask, request, render_template, jsonify, session, url_for, flash, redirect
 import matplotlib
 matplotlib.use('Agg')  # Use 'Agg' backend for non-interactive plots
 import os
@@ -17,11 +17,11 @@ app.config['SECRET_KEY'] = 'your_secret_key_here'
 @app.route('/')
 @app.route('/index')
 def index():
+    # This is where the index page is rendered. Make sure to include logic in the template to display flash messages.
     return render_template('index.html', title='Home - MBS Stock Analysis')
 
 def parse_grid_search_params(request):
     """Parse grid search parameters from the request, providing defaults if necessary."""
-
     def parse_list(value, convert_func, default):
         """Parse a comma-separated string into a list, applying a conversion function, with a default."""
         if value:
@@ -31,7 +31,7 @@ def parse_grid_search_params(request):
             except ValueError:
                 return default
         return default
-    
+
     def parse_max_features(value, default):
         """Parse the max_features parameter to ensure it's a valid list of strings."""
         valid_options = ['auto', 'sqrt', 'log2']
@@ -54,13 +54,20 @@ def parse_grid_search_params(request):
 def stock():
     stock_symbol = request.values.get('stock')
     if not stock_symbol:
-        return jsonify({'error': 'Missing required query parameter: stock'}), 400
+        flash('Missing required query parameter: stock', 'error')
+        return redirect(url_for('index'))
 
     param_grid = parse_grid_search_params(request)
-    
+
     try:
         data = create_dataframe(stock_symbol)
-        test_df, accuracy, precision, recall, f1, feature_importances, importance_df,metrics_df = predict_trading_signals(data, param_grid=param_grid)
+               # Check if the data is empty, indicating an incorrect stock symbol
+        
+        if data.empty:
+            flash('Incorrect stock symbol, please provide a valid symbol', 'error')
+            return redirect(url_for('index'))
+        
+        test_df, accuracy, precision, recall, f1, feature_importances, importance_df, metrics_df = predict_trading_signals(data, param_grid=param_grid)
         profit = calculate_profit(test_df)
         last_record = Last_record(profit)
         chart_html = interactive_plot_stock_signals(df=profit, tickerSymbol=stock_symbol)
@@ -69,12 +76,12 @@ def stock():
         return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
     except Exception as e:
         print(e)  # For debugging
-        return jsonify({'error': str(e)}), 500
+        flash(f'Error: {str(e)}', 'error')  # Flash the error message
+        return redirect(url_for('index'))  # Redirect to the index page
 
 @app.route('/ty', methods=['GET'])
 def thank_you():
     email_address = request.args.get('email')
-
     if not email_address:
         return render_template('error.html', error='Missing required query parameter: email')
 
@@ -85,7 +92,7 @@ def thank_you():
     try:
         email_body = generate_email_body(tickerSymbol=tickerSymbol)
         send_email(email_body=email_body, recipient_emails=[email_address])
-        return render_template('ty.html', email_address=[email_address])
+        return render_template('ty.html', email_address=email_address)
     except Exception as e:
         return render_template('error.html', error=str(e))
 
