@@ -99,8 +99,16 @@ def predict_trading_signals(df, param_grid=None):
     recall = recall_score(y_test, predictions, zero_division=1)
     f1 = f1_score(y_test, predictions, zero_division=1)
 
+    # Create a DataFrame for metrics
+    metrics_df = pd.DataFrame({'Metric': ['Accuracy', 'Precision', 'Recall', 'F1 Score'],'Score': [accuracy, precision, recall, f1]})
+
     feature_importances = best_model.feature_importances_
     importance_df = pd.DataFrame({'Feature': features, 'Importance': feature_importances}).sort_values(by='Importance', ascending=False)
+    
+    # Export to CSV
+    current_directory = os.getcwd()
+    metrics_df.to_csv(current_directory + '/01-data/accuracy_export.csv', index=False)
+    importance_df.to_csv(current_directory + '/01-data/feature_export.csv', index=False)
 
     current_directory = os.getcwd()
     cm = confusion_matrix(y_test, predictions)
@@ -114,4 +122,4 @@ def predict_trading_signals(df, param_grid=None):
     test_df = add_signals_and_prices(test_df)
     test_df.reset_index(inplace=True)  # Reset index to make 'Date' a column again
 
-    return test_df, accuracy, precision, recall, f1, feature_importances, importance_df
+    return test_df, accuracy, precision, recall, f1, feature_importances, importance_df,metrics_df

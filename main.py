@@ -60,7 +60,7 @@ def stock():
     
     try:
         data = create_dataframe(stock_symbol)
-        test_df, accuracy, precision, recall, f1, feature_importances, importance_df = predict_trading_signals(data, param_grid=param_grid)
+        test_df, accuracy, precision, recall, f1, feature_importances, importance_df,metrics_df = predict_trading_signals(data, param_grid=param_grid)
         profit = calculate_profit(test_df)
         last_record = Last_record(profit)
         chart_html = interactive_plot_stock_signals(df=profit, tickerSymbol=stock_symbol)

@@ -2,7 +2,7 @@
 
 import os
 from scripts.yahoofinance import create_dataframe
-from scripts.ml_buysellfxold import predict_trading_signals
+from scripts.ml_buysellfx import predict_trading_signals
 from scripts.ml_chart_export import plot_stock_signals,interactive_plot_stock_signals,Last_record
 from scripts.profit_calc import calculate_profit
 from scripts.excel_export import export_df_to_excel_with_chart
@@ -16,7 +16,7 @@ email=["dan@y-data.co"]
 data=create_dataframe(stock)
 
 
-test_df, accuracy, precision, recall, f1, feature_importances,importance_df=predict_trading_signals(data)
+test_df, accuracy, precision, recall, f1, feature_importances,importance_df,metrics_df=predict_trading_signals(data)
 print('~~~')
 profit=calculate_profit(test_df)
 
