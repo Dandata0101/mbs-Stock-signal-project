@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBS Stock Buy/Sell Signal Project</title>
+    <!-- Meta tags to discourage caching -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <style>
+        #loadingContainer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .spinner {
+            border: 6px solid #f3f3f3; /* Light grey */
+            border-top: 6px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+            display: none; /* Initially hidden */
+        }
+
+        #loadingMessage {
+            display: none; /* Initially hidden */
+            margin-bottom: 20px; /* Space between message and spinner */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: .5rem;
+            width: 150px; /* Adjust width as needed */
+        }
+
+        input[type="text"] {
+            width: calc(100% - 170px); /* Adjust width to leave space for label */
+            padding: .5rem;
+            margin-bottom: 1rem;
+        }
+        
+        button[type="submit"] {
+            padding: .5rem 1rem;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: .25rem;
+            cursor: pointer;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            width: 150px; /* Adjusted width for column */
+        }
+
+        td {
+            width: 250px; /* Adjusted width for column */
+        }
+    </style>
+</head>
+<body>
+    <h1>Buy/Sell Signal Analysis</h1>
+   
+    <!-- Author Links -->
+    <img src="https://img.shields.io/badge/PYTHON-3.11-red?style=for-the-badge&logo=python&logoColor=white" alt="Python - Version"><br>
+    <a href="https://github.com/Dandata0101" target="_blank">
+        <img src="https://img.shields.io/badge/Author-DanRamirez-2ea44f?style=for-the-badge" alt="Author - DanRamirez">
+    </a>
+    <a href="https://github.com/VineethReeddyBAAIML" target="_blank">
+        <img src="https://img.shields.io/badge/Author-VineethReddy-2ea44f?style=for-the-badge" alt="Author - VineethReddy">
+    </a>
+    <a href="https://github.com/bahijh" target="_blank">
+        <img src="https://img.shields.io/badge/Author-BahijHaidar-2ea44f?style=for-the-badge" alt="Author - BahijHaidar">
+    </a>
+    <a href="https://github.com/" target="_blank">
+        <img src="https://img.shields.io/badge/Author-LisaFanzy-2ea44f?style=for-the-badge" alt="Author - LisaFanzy">
+    </a>
+    <br><br>
+
+    <form action="/stock" method="get">
+        <h2>Enter a stock symbol below to analyze its current trading signals and send out an email report:</h2>
+        <table style="width: auto; margin: 0; border-collapse: collapse;">
+            <tr>
+                <td style="padding: 0;"><label for="stock">Stock Symbol:</label></td>
+                <td style="padding: 0;"><input type="text" id="stock" name="stock" placeholder="add your stock (i.e. MSFT)" required style="width: 100%;"></td>
+            </tr>
+        </table>
+
+        <h2>Customize Grid Search Parameters (optional):</h2>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <th style="padding-right: 0;">Parameter</th>
+                <th style="padding-left: 5px;">Possible Values</th>
+            </tr>
+            <tr>
+                <td style="padding-right: 0;">N Estimators:</td>
+                <td style="padding-left: 5px;"><input type="text" id="n_estimators" name="n_estimators" placeholder="100,200" style="width: 100%;"></td>
+            </tr>
+            <tr>
+                <td style="padding-right: 0;">Max Depth:</td>
+                <td style="padding-left: 5px;"><input type="text" id="max_depth" name="max_depth" placeholder="None,10,20" style="width: 100%;"></td>
+            </tr>
+            <tr>
+                <td style="padding-right: 0;">Min Samples Split:</td>
+                <td style="padding-left: 5px;"><input type="text" id="min_samples_split" name="min_samples_split" placeholder="2,5" style="width: 100%;"></td>
+            </tr>
+            <tr>
+                <td style="padding-right: 0;">Min Samples Leaf:</td>
+                <td style="padding-left: 5px;"><input type="text" id="min_samples_leaf" name="min_samples_leaf" placeholder="1,2" style="width: 100%;"></td>
+            </tr>
+        </table>
+
+        <!-- Analyze Stock button within the form -->
+        <button type="submit">Analyze Stock</button>
+    </form>
+
+    <!-- Loading Container -->
+    <div id="loadingContainer">
+        <p id="loadingMessage">Running ML model ...</p>
+        <div class="spinner"></div>
+    </div>
+
+    <script>
+        document.querySelector("form").onsubmit = function() {
+            document.getElementById("loadingContainer").style.display = "flex";
+            document.querySelector(".spinner").style.display = "block";
+            document.getElementById("loadingMessage").style.display = "block";
+        };
+
+        window.addEventListener('pageshow', function() {
+            document.getElementById("loadingContainer").style.display = "none";
+            document.querySelector(".spinner").style.display = "none";
+            document.getElementById("loadingMessage").style.display = "none";
+        });
+    </script>
+</body>
+</html>

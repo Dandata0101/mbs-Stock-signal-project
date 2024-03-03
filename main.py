@@ -71,6 +71,24 @@ def stock():
         print(e)  # For debugging
         return jsonify({'error': str(e)}), 500
 
+@app.route('/ty', methods=['GET'])
+def thank_you():
+    email_address = request.args.get('email')
+
+    if not email_address:
+        return render_template('error.html', error='Missing required query parameter: email')
+
+    tickerSymbol = session.get('tickerSymbol')  # Retrieve tickerSymbol from session
+    if not tickerSymbol:
+        return render_template('error.html', error='Ticker symbol not found. Please initiate stock query first.')
+
+    try:
+        email_body = generate_email_body(tickerSymbol=tickerSymbol)
+        send_email(email_body=email_body, recipient_emails=[email_address])
+        return render_template('ty.html', email_address=[email_address])
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+
 # Additional routes and error handlers...
 
 if __name__ == '__main__':
