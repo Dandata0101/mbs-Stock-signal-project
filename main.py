@@ -85,14 +85,15 @@ def thank_you():
     if not email_address:
         return render_template('error.html', error='Missing required query parameter: email')
 
-    tickerSymbol = session.get('tickerSymbol')  # Retrieve tickerSymbol from session
+    tickerSymbol = session.get('tickerSymbol')
     if not tickerSymbol:
         return render_template('error.html', error='Ticker symbol not found. Please initiate stock query first.')
 
     try:
         email_body = generate_email_body(tickerSymbol=tickerSymbol)
         send_email(email_body=email_body, recipient_emails=[email_address])
-        return render_template('ty.html', email_address=email_address)
+        flash('Email sent successfully!', 'success') 
+        return redirect(request.referrer or url_for('index'))   # Redirect the user where you want them to see the flash message
     except Exception as e:
         return render_template('error.html', error=str(e))
 
