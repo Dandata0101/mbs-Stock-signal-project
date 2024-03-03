@@ -64,8 +64,10 @@ def create_dataframe(tickerSymbol='MSFT'):
     df_merged = pd.merge(df_stock, df_vix, on='Date', how='left')
     df_merged = pd.merge(df_merged, df_fedrate, on='Date', how='left')
 
+    current_directory = os.getcwd()
     # Forward fill the 'fedrate' column to propagate the last valid observation forward
     df_merged['fedrate'] = df_merged['fedrate'].fillna(method='ffill')
+    df_merged.to_excel(current_directory + '/01-data/input_YahooFin.xlsx', index=False)
 
     print('~~~~~~~~~~~~~')
     print('Data types after adjustment:')

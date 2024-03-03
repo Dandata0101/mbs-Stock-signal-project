@@ -82,14 +82,23 @@
             background-color: #f2f2f2;
         }
 
-        /* Added style for flash messages */
+        /* Neutral style for flash messages */
         .flash-message {
             padding: 10px;
-            background-color: #f44336; /* Red for error messages */
             color: white;
             margin-bottom: 15px;
             text-align: center;
             border-radius: 4px;
+        }
+
+        /* Specific style for error messages */
+        .flash-message.error {
+            background-color: #f44336; /* Red */
+        }
+
+        /* Specific style for success messages */
+        .flash-message.success {
+            background-color: #4CAF50; /* Green */
         }
     </style>
 </head>
@@ -180,6 +189,24 @@
             document.getElementById("loadingContainer").style.display = "none";
             document.querySelector(".spinner").style.display = "none";
             document.getElementById("loadingMessage").style.display = "none";
+        });
+
+        // Script to fade out success messages
+        document.addEventListener('DOMContentLoaded', function() {
+            const successMessages = document.querySelectorAll('.flash-message.success');
+            
+            successMessages.forEach(function(msg) {
+                setTimeout(function() {
+                    let fadeEffect = setInterval(function() {
+                        if (msg.style.opacity > 0) {
+                            msg.style.opacity -= 0.05;
+                        } else {
+                            clearInterval(fadeEffect);
+                            msg.style.display = 'none';
+                        }
+                    }, 100);
+                }, 2000);
+            });
         });
     </script>
 </body>
