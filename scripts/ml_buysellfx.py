@@ -107,8 +107,9 @@ def predict_trading_signals(df, param_grid=None):
     
     # Export to CSV
     current_directory = os.getcwd()
-    metrics_df.to_csv(current_directory + '/01-data/accuracy_export.csv', index=False)
-    importance_df.to_csv(current_directory + '/01-data/feature_export.csv', index=False)
+    metrics_df.to_excel(current_directory + '/01-data/accuracy_export.xlsx', index=False)
+    importance_df.to_excel(current_directory + '/01-data/feature_export.xlsx', index=False)
+
 
     current_directory = os.getcwd()
     cm = confusion_matrix(y_test, predictions)

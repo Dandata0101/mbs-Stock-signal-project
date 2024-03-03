@@ -6,68 +6,75 @@ from openpyxl.drawing.image import Image
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.utils import get_column_letter
 
-
 def filter_date_range(df):
     """Filter the DataFrame to include data from Jan 1, 2020, to the present, retaining the 'Date' column."""
-    start_date = pd.to_datetime('2020-01-01').date()  # Use a date for comparison
-    # Ensure 'Date' column is in the correct format and filter out the epoch date if present
+    start_date = pd.to_datetime('2020-01-01').date()
     if 'Date' in df.columns:
-        # Convert 'Date' column to datetime and coerce errors to NaT
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.date
-        # Create a mask to filter out rows with 'Date' at or before the Unix epoch
-        mask = df['Date'] > pd.Timestamp('1970-01-01').date()
-        # Apply the mask to filter the DataFrame
-        df = df[mask]
-        # Set 'Date' column as index
-        df = df.set_index('Date')
-        # Filter based on date range
-        filtered_df = df[df.index >= start_date]
+        mask = df['Date'] >= start_date
+        filtered_df = df[mask].copy()
     else:
         raise ValueError("DataFrame must have a 'Date' column.")
     return filtered_df
 
 
+def autofit_columns_for_all_sheets(workbook):
+    """Adjust column widths to fit content for all sheets in the workbook."""
+    for sheet_name in workbook.sheetnames:
+        worksheet = workbook[sheet_name]
+        column_widths = {}
+        for row in worksheet.iter_rows():
+            for cell in row:
+                if cell.value:
+                    # Calculate the max length of content in each column
+                    column_widths[cell.column_letter] = max(
+                        column_widths.get(cell.column_letter, 0), 
+                        len(str(cell.value))
+                    )
+        for column, width in column_widths.items():
+            adjusted_width = (width + 2) * 1.1  # Adjust the width slightly to avoid cutting off text
+            worksheet.column_dimensions[column].width = adjusted_width
+
 def export_df_to_excel_with_chart(df=None, tickerSymbol=None, output_directory='03-output', 
-                                  chart_path='static/images/chart.png'):
+                                  chart_path='static/images/chart.png', stats_csv_path='model_stats.csv'):
     print('4.1) Prepping chart and excel export')
 
-    df=filter_date_range(df)
+    df = filter_date_range(df)
     current_directory = os.getcwd()
     directory_path = os.path.join(current_directory, output_directory)
     pattern = os.path.join(directory_path, '*stock*.xlsx')
 
-    # Find all files matching the pattern and delete them
     excel_files = glob.glob(pattern)
     for file_path in excel_files:
         if os.path.exists(file_path):
             os.remove(file_path)
             print(f'4.2 Deleted: {file_path}')
 
-    # Export to Excel
     excel_path = os.path.join(directory_path, f'{tickerSymbol}_stock.xlsx')
-    with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
-        df.to_excel(writer, sheet_name='Data', startrow=28, startcol=1)
+    stats_df = pd.read_excel(os.path.join(current_directory, '01-data', 'accuracy_export.xlsx'))
+    features_df = pd.read_excel(os.path.join(current_directory, '01-data', 'feature_export.xlsx'))
 
-    # Load workbook and worksheet
+    with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
+        df.to_excel(writer, sheet_name='Data', startrow=28, startcol=1,index=False)
+        stats_df.to_excel(writer, sheet_name='model_stats', startrow=4, startcol=2,index=False)
+        features_df.to_excel(writer, sheet_name='model_stats', startrow=10, startcol=2,index=False)
+
     wb = load_workbook(excel_path)
     ws = wb['Data']
 
-    # Load and insert the image
-    img = Image(os.path.join(current_directory, chart_path))
+    img = Image(chart_path)
     ws.add_image(img, 'B2')
     ws.sheet_view.showGridLines = False
 
-    # Autofit columns for the DataFrame
-    for col in dataframe_to_rows(df, index=True, header=True):
-        for idx, cell in enumerate(col, 1):
-            column_letter = get_column_letter(idx + 1)
-            current_width = ws.column_dimensions[column_letter].width
-            content_width = len(str(cell)) * 1.2
-            if current_width is None or content_width > current_width:
-                ws.column_dimensions[column_letter].width = content_width
+    # Ensure gridlines are removed from the 'model_stats' sheet as well
+    ws_stats = wb['model_stats']
+    stats_img = Image(current_directory+'/static/images/confusion_matrix.png')  # Ensure this path is correct
+    ws_stats.add_image(stats_img, 'F3')
+    ws_stats.sheet_view.showGridLines = False
 
-    # Save the changes to the Excel file
+    # Auto-fit columns in all sheets
+    autofit_columns_for_all_sheets(wb)
+
     wb.save(excel_path)
     wb.close()
     print('4.3) Excel export completed')
-    print('')
