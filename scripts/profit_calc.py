@@ -59,6 +59,6 @@ def calculate_profit(df):
 
     # Export to Excel
     current_directory = os.getcwd()
-    df.to_excel(current_directory + '/01-data/test_export.xlsx', index=False)
+    df.to_excel(current_directory + '/01-data/profitCalc_export.xlsx', index=False)
 
     return df

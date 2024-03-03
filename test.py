@@ -23,5 +23,5 @@ print(profit.dtypes)
 chart = plot_stock_signals(df=profit, tickerSymbol=stock)
 
 export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock)
-Body=generate_email_body(tickerSymbol=stock)
-send=send_email(email_body=Body,recipient_emails=email)
+#Body=generate_email_body(tickerSymbol=stock)
+#send=send_email(email_body=Body,recipient_emails=email)
