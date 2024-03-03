@@ -93,7 +93,7 @@ def thank_you():
         email_body = generate_email_body(tickerSymbol=tickerSymbol)
         send_email(email_body=email_body, recipient_emails=[email_address])
         flash('Email sent successfully!', 'success') 
-        return redirect(request.referrer or url_for('index'))   # Redirect the user where you want them to see the flash message
+        return redirect(url_for('index'))   # Redirect the user where you want them to see the flash message
     except Exception as e:
         return render_template('error.html', error=str(e))
 
