@@ -82,7 +82,3 @@ def send_email(email_body, recipient_emails):
     else:
         print('Error sending email:', response.text)
 
-# Example usage:
-# email_body = "<p>This is a test email body.</p>"  # This should be generated or passed as an argument
-# recipient_emails = ["example@example.com"]
-# send_email(email_body, recipient_emails)
