@@ -141,42 +141,42 @@
         <table style="width: auto; margin: 0; border-collapse: collapse;">
             <tr>
                 <td style="padding: 0;"><label for="stock">Stock Symbol:</label></td>
-                <td style="padding: 0;"><input type="text" id="stock" name="stock" placeholder="add your stock (i.e. MSFT)" required style="width: 100%;"></td>
+                <td style="padding: 5;"><input type="text" id="stock" name="stock" placeholder="add your stock (i.e. MSFT)" required style="width: 90%;"></td>
             </tr>
-        </table>
 
-        <tr>
-            <td>Close Short Window:</td>
-            <td><input type="text" id="close_short_window" name="close_short_window" placeholder="5 (default)" style="width: 100%;"></td>
-        </tr>
-        <tr>
-            <td>Close Long Window:</td>
-            <td><input type="text" id="close_long_window" name="close_long_window" placeholder="25 (default)" style="width: 100%;"></td>
-        </tr>    
 
-        <h2>Customize Grid Search Parameters (optional):</h2>
-        <table style="width: 100%; border-collapse: collapse;">
-            <tr>
-                <th>Parameter</th>
-                <th>Possible Values</th>
-            </tr>
-            <tr>
-                <td>N Estimators:</td>
-                <td><input type="text" id="n_estimators" name="n_estimators" placeholder="100,200" style="width: 100%;"></td>
-            </tr>
-            <tr>
-                <td>Max Depth:</td>
-                <td><input type="text" id="max_depth" name="max_depth" placeholder="None,10,20" style="width: 100%;"></td>
-            </tr>
-            <tr>
-                <td>Min Samples Split:</td>
-                <td><input type="text" id="min_samples_split" name="min_samples_split" placeholder="2,5" style="width: 100%;"></td>
-            </tr>
-            <tr>
-                <td>Min Samples Leaf:</td>
-                <td><input type="text" id="min_samples_leaf" name="min_samples_leaf" placeholder="1,2" style="width: 100%;"></td>
-            </tr>
-        </table>
+            <table style="width: 100%; border-collapse: collapse;">
+                <h2>Customize Grid Search Parameters (optional):</h2>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Values</th>
+                </tr>
+                <tr>
+                    <td>Close Short Window</td>
+                    <td><input type="text" id="close_short_window" name="close_short_window" placeholder="5 (default)" style="width: 100%;"></td>
+                </tr>
+                <tr>
+                    <td>Close Long Window</td>
+                    <td><input type="text" id="close_long_window" name="close_long_window" placeholder="25 (default)" style="width: 100%;"></td>
+                </tr>
+                <tr>
+                    <td>N Estimators:</td>
+                    <td><input type="text" id="n_estimators" name="n_estimators" placeholder="100,200 (default)" style="width: 100%;"></td>
+                </tr>
+                <tr>
+                    <td>Max Depth:</td>
+                    <td><input type="text" id="max_depth" name="max_depth" placeholder="None,10,20 (default)" style="width: 100%;"></td>
+                </tr>
+                <tr>
+                    <td>Min Samples Split:</td>
+                    <td><input type="text" id="min_samples_split" name="min_samples_split" placeholder="2,5 (default)" style="width: 100%;"></td>
+                </tr>
+                <tr>
+                    <td>Min Samples Leaf:</td>
+                    <td><input type="text" id="min_samples_leaf" name="min_samples_leaf" placeholder="1,2 (default)" style="width: 100%;"></td>
+                </tr>
+            </table>
+            
 
         <button type="submit">Analyze Stock</button>
     </form>
