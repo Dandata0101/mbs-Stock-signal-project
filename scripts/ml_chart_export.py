@@ -104,6 +104,37 @@ def interactive_plot_stock_signals(df=None, tickerSymbol=None):
 
     return pio.to_html(fig, full_html=False)
 
+
+def first_buy_record(df=None):
+    # Validate if the input is a DataFrame
+    if not isinstance(df, pd.DataFrame):
+        raise ValueError("The input is not a pandas DataFrame.")
+    
+    # Specify columns of interest
+    cols = ['Open', 'High', 'Low', 'Close', 'Volume', 'Balance']
+    
+    # Verify all specified columns exist in the DataFrame
+    missing_cols = [col for col in cols if col not in df.columns]
+    if missing_cols:
+        raise ValueError(f"Missing columns in DataFrame: {', '.join(missing_cols)}")
+    
+    Buys_record_filtered = df[df['Buy_Signal'] == 1] 
+    First_Buy_record_filtered = Buys_record_filtered.iloc[0][cols]
+
+    formatted_First_Buy_record = {
+        'Open': "${:,.2f}".format(First_Buy_record_filtered['Open']),
+        'High': "${:,.2f}".format(First_Buy_record_filtered['High']),
+        'Low': "${:,.2f}".format(First_Buy_record_filtered['Low']),
+        'Close': "${:,.2f}".format(First_Buy_record_filtered['Close']),
+        'Volume': "{:,}".format(int(First_Buy_record_filtered['Volume'])),
+        'Balance': "${:,.2f}".format(First_Buy_record_filtered['Balance'])
+    }
+
+    print('--------First Buy-----------')
+    print(formatted_First_Buy_record)
+    print('')
+    return formatted_First_Buy_record
+
 def Last_record(df=None):
     # Validate if the input is a DataFrame
     if not isinstance(df, pd.DataFrame):
@@ -127,6 +158,8 @@ def Last_record(df=None):
         'Volume': "{:,}".format(int(last_record_filtered['Volume'])),
         'Balance': "${:,.2f}".format(last_record_filtered['Balance'])
     }
-
+    
+    print('--------LastTransaction-----------')
     print(formatted_last_record)
+    print('')
     return formatted_last_record
