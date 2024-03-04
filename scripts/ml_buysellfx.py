@@ -8,17 +8,20 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
 import seaborn as sns
 
-def predict_trading_signals(df, param_grid=None):
+def predict_trading_signals(df,close_short_window=5, close_long_window=25, param_grid=None):
     df['Date'] = pd.to_datetime(df['Date'])
     df.set_index('Date', inplace=True)
+
+    print(close_short_window)
+    print(close_long_window)
 
     def add_technical_indicators(df):
         df['VIX'] = df['VIX']
         df['fedrate'] = df['fedrate']
         df['VIX_short'] = df['VIX'].rolling(window=5).mean()
         df['VIX_long'] = df['VIX'].rolling(window=15).mean() 
-        df['close_short'] = df['Close'].rolling(window=5).mean()
-        df['close_long'] = df['Close'].rolling(window=15).mean()
+        df['close_short'] = df['Close'].rolling(window=close_short_window).mean()
+        df['close_long'] = df['Close'].rolling(window=close_long_window).mean()
         delta = df['Close'].diff()
         gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
         loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
@@ -28,6 +31,8 @@ def predict_trading_signals(df, param_grid=None):
         df['EMA26'] = df['Close'].ewm(span=26, adjust=False).mean()
         df['MACD'] = df['EMA12'] - df['EMA26']
         df['Signal_line'] = df['MACD'].ewm(span=9, adjust=False).mean()
+
+      
         return df
 
     def label_data(df):

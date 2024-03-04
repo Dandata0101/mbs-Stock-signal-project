@@ -17,8 +17,13 @@ app.config['SECRET_KEY'] = 'your_secret_key_here'
 @app.route('/')
 @app.route('/index')
 def index():
+
+    default_params = {
+        'close_short_window': 5,
+        'close_long_window': 25,
+    }
     # This is where the index page is rendered. Make sure to include logic in the template to display flash messages.
-    return render_template('index.html', title='Home - MBS Stock Analysis')
+    return render_template('index.html', title='Home - MBS Stock Analysis',default_params=default_params)
 
 def parse_grid_search_params(request):
     """Parse grid search parameters from the request, providing defaults if necessary."""
@@ -48,7 +53,11 @@ def parse_grid_search_params(request):
         'max_features': parse_max_features(request.values.get('max_features'), ['auto', 'sqrt'])
     }
 
-    return param_grid
+    # Parsing additional model parameters
+    close_short_window = request.values.get('close_short_window', default=5, type=int)
+    close_long_window = request.values.get('close_long_window', default=25, type=int)
+
+    return param_grid,close_short_window, close_long_window
 
 @app.route('/stock', methods=['GET', 'POST'])
 def stock():
@@ -57,7 +66,9 @@ def stock():
         flash('Missing required query parameter: stock', 'error')
         return redirect(url_for('index'))
 
-    param_grid = parse_grid_search_params(request)
+    # Adjusted to use the new parsing function
+    param_grid, close_short_window, close_long_window = parse_grid_search_params(request)
+
 
     try:
         data = create_dataframe(stock_symbol)
@@ -67,7 +78,7 @@ def stock():
             flash('Incorrect stock symbol, please provide a valid symbol', 'error')
             return redirect(url_for('index'))
         
-        test_df, accuracy, precision, recall, f1, feature_importances, importance_df, metrics_df = predict_trading_signals(data, param_grid=param_grid)
+        test_df, accuracy, precision, recall, f1, feature_importances, importance_df, metrics_df = predict_trading_signals(data, param_grid=param_grid,close_short_window=close_short_window,close_long_window=close_long_window)
         profit = calculate_profit(test_df)
         firstbuy=first_buy_record(profit)
         lastrecord = Last_record(profit)
@@ -75,6 +86,7 @@ def stock():
         export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock_symbol)
 
         return render_template("stock.html", chart=chart_html, stock=stock_symbol,firstbuy=firstbuy,lastrecord=lastrecord, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
+    
     except Exception as e:
         print(e)  # For debugging
         flash(f'Error: {str(e)}', 'error')  # Flash the error message
