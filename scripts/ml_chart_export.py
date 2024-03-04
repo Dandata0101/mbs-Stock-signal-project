@@ -111,7 +111,7 @@ def first_buy_record(df=None):
         raise ValueError("The input is not a pandas DataFrame.")
     
     # Specify columns of interest
-    cols = ['Open', 'High', 'Low', 'Close', 'Volume', 'Balance']
+    cols = ['Date','Open', 'High', 'Low', 'Close', 'Volume', 'Balance']
     
     # Verify all specified columns exist in the DataFrame
     missing_cols = [col for col in cols if col not in df.columns]
@@ -120,8 +120,10 @@ def first_buy_record(df=None):
     
     Buys_record_filtered = df[df['Buy_Signal'] == 1] 
     First_Buy_record_filtered = Buys_record_filtered.iloc[0][cols]
+    formatted_date = First_Buy_record_filtered['Date']
 
     formatted_First_Buy_record = {
+        'Date': formatted_date,
         'Open': "${:,.2f}".format(First_Buy_record_filtered['Open']),
         'High': "${:,.2f}".format(First_Buy_record_filtered['High']),
         'Low': "${:,.2f}".format(First_Buy_record_filtered['Low']),
@@ -135,13 +137,15 @@ def first_buy_record(df=None):
     print('')
     return formatted_First_Buy_record
 
+
+
 def Last_record(df=None):
     # Validate if the input is a DataFrame
     if not isinstance(df, pd.DataFrame):
         raise ValueError("The input is not a pandas DataFrame.")
     
     # Specify columns of interest
-    cols = ['Open', 'High', 'Low', 'Close', 'Volume', 'Balance']
+    cols = ['Date','Open', 'High', 'Low', 'Close', 'Volume', 'Balance']
     
     # Verify all specified columns exist in the DataFrame
     missing_cols = [col for col in cols if col not in df.columns]
@@ -149,8 +153,10 @@ def Last_record(df=None):
         raise ValueError(f"Missing columns in DataFrame: {', '.join(missing_cols)}")
     
     last_record_filtered = df.iloc[-1][cols]
+    formatted_date = last_record_filtered['Date']
 
     formatted_last_record = {
+        'Date': formatted_date,
         'Open': "${:,.2f}".format(last_record_filtered['Open']),
         'High': "${:,.2f}".format(last_record_filtered['High']),
         'Low': "${:,.2f}".format(last_record_filtered['Low']),

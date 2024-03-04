@@ -156,6 +156,7 @@
             <h3>First Buy Transaction</h3>
             <table class="first-buy-data-table">
                 <tr>
+                    <th>Date</th>
                     <th>Open</th>
                     <th>High</th>
                     <th>Low</th>
@@ -165,6 +166,7 @@
                 </tr>
                 {% if firstbuy %}
                 <tr>
+                    <td>{{ firstbuy['Date'] }}</td> 
                     <td>{{ firstbuy['Open'] }}</td>
                     <td>{{ firstbuy['High'] }}</td>
                     <td>{{ firstbuy['Low'] }}</td>
@@ -185,6 +187,7 @@
             <h3>Last Transaction</h3>
             <table class="last-record-data-table">
                 <tr>
+                    <th>Date</th> 
                     <th>Open</th>
                     <th>High</th>
                     <th>Low</th>
@@ -194,6 +197,7 @@
                 </tr>
                 {% if lastrecord %}
                 <tr>
+                    <td>{{ lastrecord['Date'] }}</td> 
                     <td>{{ lastrecord['Open'] }}</td>
                     <td>{{ lastrecord['High'] }}</td>
                     <td>{{ lastrecord['Low'] }}</td>

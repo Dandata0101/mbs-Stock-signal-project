@@ -45,7 +45,7 @@ def create_dataframe(tickerSymbol='MSFT'):
     print('\n\n1.1) Starting stock data extraction')
 
     # Define the date range
-    end_date = datetime.date.today()  # Today's date
+    end_date = datetime.date(2024, 3, 1)  # Today's date
     start_date = datetime.date(2013, 1, 1)  # Start date
 
 
