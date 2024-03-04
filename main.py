@@ -83,6 +83,9 @@ def stock():
         chart_html = interactive_plot_stock_signals(df=profit, tickerSymbol=stock_symbol)
         export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock_symbol)
 
+        # Set the tickerSymbol in session here
+        session['tickerSymbol'] = stock_symbol
+
         return render_template("stock.html", chart=chart_html, stock=stock_symbol,firstbuy=firstbuy,lastrecord=lastrecord, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
     
     except Exception as e:
