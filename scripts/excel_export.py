@@ -17,7 +17,6 @@ def filter_date_range(df):
         raise ValueError("DataFrame must have a 'Date' column.")
     return filtered_df
 
-
 def autofit_columns_for_all_sheets(workbook):
     """Adjust column widths to fit content for all sheets in the workbook."""
     for sheet_name in workbook.sheetnames:

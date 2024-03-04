@@ -37,7 +37,6 @@ def create_dataframe(tickerSymbol='MSFT'):
         current_directory = os.getcwd()
         
         print(current_directory)
-        #fedrate_df.to_excel(current_directory+'/01-data/test01_fedrate_export.xlsx')
         
         return fedrate_df
  
@@ -47,8 +46,6 @@ def create_dataframe(tickerSymbol='MSFT'):
     # Define the date range
     end_date = datetime.date(2024, 3, 1)  # Today's date
     start_date = datetime.date(2013, 1, 1)  # Start date
-
-
 
     # Fetch stock data for the specified ticker
     df_stock = fetch_data(tickerSymbol, start_date, end_date)
@@ -64,8 +61,8 @@ def create_dataframe(tickerSymbol='MSFT'):
     df_merged = pd.merge(df_stock, df_vix, on='Date', how='left')
     df_merged = pd.merge(df_merged, df_fedrate, on='Date', how='left')
 
-    current_directory = os.getcwd()
     # Forward fill the 'fedrate' column to propagate the last valid observation forward
+    current_directory = os.getcwd()
     df_merged['fedrate'] = df_merged['fedrate'].fillna(method='ffill')
     df_merged.to_excel(current_directory + '/01-data/input_YahooFin.xlsx', index=False)
 

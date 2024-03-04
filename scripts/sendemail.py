@@ -23,7 +23,7 @@ def send_email(email_body, recipient_emails):
     # Set up the variables
     resource_url = 'https://graph.microsoft.com'
     api_version = 'v1.0'
-    user_email = 'mbs-bigdata-delivery@y-data.fr'  # Replace with the actual sender email
+    user_email = 'mbs-bigdata-delivery@y-data.fr'  
 
     # Get an access token using client credentials
     token_url = f'https://login.microsoftonline.com/{tenant_id}/oauth2/token'

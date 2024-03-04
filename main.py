@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, jsonify, session, url_for, flash, redirect
 import matplotlib
-matplotlib.use('Agg')  # Use 'Agg' backend for non-interactive plots
+matplotlib.use('Agg') 
 import os
 from scripts.yahoofinance import create_dataframe
 from scripts.ml_buysellfx import predict_trading_signals
@@ -22,7 +22,6 @@ def index():
         'close_short_window': 5,
         'close_long_window': 25,
     }
-    # This is where the index page is rendered. Make sure to include logic in the template to display flash messages.
     return render_template('index.html', title='Home - MBS Stock Analysis',default_params=default_params)
 
 def parse_grid_search_params(request):
@@ -69,11 +68,10 @@ def stock():
     # Adjusted to use the new parsing function
     param_grid, close_short_window, close_long_window = parse_grid_search_params(request)
 
-
     try:
         data = create_dataframe(stock_symbol)
-               # Check if the data is empty, indicating an incorrect stock symbol
         
+        # Check if the data is empty, indicating an incorrect stock symbol
         if data.empty:
             flash('Incorrect stock symbol, please provide a valid symbol', 'error')
             return redirect(url_for('index'))
@@ -109,8 +107,6 @@ def thank_you():
         return redirect( url_for('index'))   # Redirect the user where you want them to see the flash message
     except Exception as e:
         return render_template('error.html', error=str(e))
-
-# Additional routes and error handlers...
 
 if __name__ == '__main__':
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']

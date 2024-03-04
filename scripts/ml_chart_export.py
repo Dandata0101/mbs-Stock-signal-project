@@ -14,15 +14,10 @@ def filter_date_range(df):
     
     # Ensure 'Date' column is in the correct format and filter out the epoch date if present
     if 'Date' in df.columns:
-        # Convert 'Date' column to datetime and coerce errors to NaT
         df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.date
-        # Create a mask to filter out rows with 'Date' at or before the Unix epoch
         mask = df['Date'] > pd.Timestamp('1970-01-01').date()
-        # Apply the mask to filter the DataFrame
         df = df[mask]
-        # Set 'Date' column as index
         filtered_df = df.set_index('Date')
-        # Filter based on date range
         
         # Convert 'Close', 'pricebuy', and 'pricesell' columns to integers
         filtered_df['Close'] = filtered_df['Close'].astype(int)
@@ -32,8 +27,6 @@ def filter_date_range(df):
     else:
         raise ValueError("DataFrame must have a 'Date' column.")
     return filtered_df
-
-
 
 def plot_stock_signals(df=None, tickerSymbol=None, chart_directory='static/images'):
     df = filter_date_range(df)
@@ -104,7 +97,6 @@ def interactive_plot_stock_signals(df=None, tickerSymbol=None):
 
     return pio.to_html(fig, full_html=False)
 
-
 def first_buy_record(df=None):
     # Validate if the input is a DataFrame
     if not isinstance(df, pd.DataFrame):
@@ -136,8 +128,6 @@ def first_buy_record(df=None):
     print(formatted_First_Buy_record)
     print('')
     return formatted_First_Buy_record
-
-
 
 def Last_record(df=None):
     # Validate if the input is a DataFrame

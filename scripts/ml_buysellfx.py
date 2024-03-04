@@ -32,7 +32,6 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=25, param
         df['MACD'] = df['EMA12'] - df['EMA26']
         df['Signal_line'] = df['MACD'].ewm(span=9, adjust=False).mean()
 
-      
         return df
 
     def label_data(df):
@@ -114,7 +113,6 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=25, param
     current_directory = os.getcwd()
     metrics_df.to_excel(current_directory + '/01-data/accuracy_export.xlsx', index=False)
     importance_df.to_excel(current_directory + '/01-data/feature_export.xlsx', index=False)
-
 
     current_directory = os.getcwd()
     cm = confusion_matrix(y_test, predictions)
