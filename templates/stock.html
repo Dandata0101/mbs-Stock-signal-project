@@ -8,25 +8,35 @@
     <style>
         body {
             margin: 20px;
+            background-color: #fff;
+            color: #333;
         }
+        
         .chart-container, .email-form {
             margin-bottom: 20px;
         }
+        
         .first-buy-data-table, .last-record-data-table, .accuracy-table, .feature-importance-table {
             margin-top: 20px;
             border-collapse: collapse;
-            width: auto;
-            border: 1px solid black;
-            table-layout: auto;
+            width: 100%;
+            margin-bottom: 20px;
         }
+        
+        .accuracy-table, .feature-importance-table {
+            margin-right: 20px;
+        }
+    
         th, td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
+    
         .email-form {
             margin-top: 20px;
         }
+        
         .home-link {
             display: inline-block;
             margin: 20px 0;
@@ -36,35 +46,53 @@
             color: black;
             border-radius: 4px;
         }
-        .accuracy-container, .image-container {
-            margin-right: 20px;
-            margin-top: -20px;     
+        
+        .model-details-container {
+            width: 100%;
         }
-        .image-container img {
-            max-width: 800px;
-            text-align: left;
-            height: auto;
-        }
-        .feature-importance-container {
+        
+        .performance-matrix-container {
             display: flex;
-            justify-content: space-around; /* Adjusted to space-around for tighter spacing */
             align-items: flex-start;
         }
+    
+        .tables-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    
+        .accuracy-container {
+            align-self: flex-start;
+        }
+    
+        .image-container {
+            text-align: center;
+            margin-left: 20px; /* Adjust as necessary for spacing */
+            max-width: 500px; /* Adjust as necessary for your image size */
+            flex-grow: 1;
+        }
+    
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+    
         .flash-messages .success, .flash-messages .error {
             padding: 10px;
             margin-bottom: 20px;
             border-radius: 5px;
+            color: #fff;
         }
+    
         .flash-messages .success {
-            background-color: #e8f5e9;
-            border: 1px solid #4CAF50;
-            color: green;
+            background-color: #4CAF50;
         }
+    
         .flash-messages .error {
-            background-color: #ffdddd;
-            border: 1px solid #f44336;
-            color: red;
+            background-color: #f44336;
         }
+    
         button[type="submit"] {
             padding: .5rem 1rem;
             color: #fff;
@@ -73,18 +101,24 @@
             border-radius: .25rem;
             cursor: pointer;
         }
+    
         button[type="submit"]:hover {
             background-color: #0056b3;
         }
-        .tables-side-by-side {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-        .table-container {
-            flex: 1;
-            min-width: 100px; /* Adjust this value as needed */
-            margin: 10px; /* Adds some space between the tables */
+    
+        @media (max-width: 768px) {
+            .performance-matrix-container {
+                flex-direction: column;
+            }
+    
+            .image-container {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+    
+            .image-container img {
+                max-width: 100%;
+            }
         }
     </style>
 
@@ -114,18 +148,7 @@
         <button type="submit">Send Detailed Analysis</button>
     </form>
     
-    <!-- Accuracy Table -->
-    <div class="table-container accuracy-container">
-        <table class="accuracy-table">
-            <tr>
-                <th>Accuracy</th>
-            </tr>
-            <tr>
-                <td>{{ accuracy }}</td>
-            </tr>
-        </table>
-    </div>
-    
+
     <!-- Stock Data Tables Side by Side -->
     <div class="tables-side-by-side">
         <!-- First Buy Transaction Table -->
@@ -191,32 +214,43 @@
         {{ chart|safe }}
     </div>
 
-    <!-- Feature Importance Table and Confusion Matrix Image -->
+<!-- Model Performance Details Section -->
+<div class="model-details-container">
     <h2>Model Performance Details {{ stock }}</h2>
-    <div class="feature-importance-container">
-        <div class="table-container">
-            <table class="feature-importance-table">
-                <thead>
+    <div class="performance-matrix-container">
+        <div class="tables-container">
+            <div class="accuracy-table-container">
+                <table class="accuracy-table">
                     <tr>
-                        <th>Feature</th>
-                        <th>Importance</th>
+                        <th>Accuracy</th>
+                        <td>{{ accuracy }}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for feature in feature_importances %}
-                    <tr>
-                        <td>{{ feature.Feature }}</td>
-                        <td>{{ feature.Importance }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>   
-            </table>
+                </table>
+            </div>
+            <div class="feature-importance-table-container">
+                <table class="feature-importance-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Importance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for feature in feature_importances %}
+                        <tr>
+                            <td>{{ feature.Feature }}</td>
+                            <td>{{ feature.Importance }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>   
+                </table>
+            </div>
         </div>
-        
-        <div class="image-container" style="margin-left: 10px;">
+        <div class="image-container">
             <img src="{{ url_for('static', filename='images/confusion_matrix.png') }}" alt="Confusion Matrix">
-        </div>
+        </div>    
     </div>
+</div>
 
     <!-- JavaScript for Flash Message Fade Effect -->
     <script>

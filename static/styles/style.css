@@ -18,21 +18,21 @@ body {
 
 label {
     display: block;
-    margin-bottom: 0.5rem; /* Reduced space between label and input */
-    color: whitesmoke; /* Matches the body text color */
+    margin-bottom: 0.5rem;
+    color: whitesmoke;
     cursor: pointer;
 }
 
 input, button {
     font-size: 1rem;
-    padding: 0.5rem; /* Adjusted padding for closer alignment */
+    padding: 0.5rem;
     border-radius: 10px;
     border: 1px solid #ccc;
-    margin-bottom: 1rem; /* Ensure space between successive fields */
+    margin-bottom: 1rem;
 }
 
 input[type="text"] {
-    width: calc(100% - 1rem); /* Adjust width to fit container */
+    width: calc(100% - 1rem);
 }
 
 input:focus, button:focus {
@@ -96,7 +96,7 @@ th, td {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 20px; /* Adjust the spacing between table and image */
+    gap: 20px;
 }
 
 .feature-importance-table {
@@ -104,21 +104,40 @@ th, td {
     max-width: 600px; /* Adjust as needed */
 }
 
+/* Updated styles for performance matrix */
+.performance-matrix-container {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    gap: 20px; /* Creates space between the table and image */
+    width: 100%; /* Container takes full width */
+}
+.accuracy-table {
+    /* Ensure the table does not exceed the width of its content */
+    width: auto;
+}
+
 .image-container {
-    flex: 1; /* Occupy remaining space */
+    /* Container for the confusion matrix image */
+    display: flex;
+    justify-content: center; /* Center the image within its container */
+}
+
+.image-container img {
+    max-width: 100%; /* Ensures the image is responsive */
+    height: auto; /* Maintain the aspect ratio of the image */
 }
 
 @media (min-width: 768px) {
     body {
         font-size: 1.5rem;
     }
-    
+
     input, button {
         font-size: 1.25rem;
-        padding: 0.75rem; /* Larger padding for larger screens */
+        padding: 0.75rem;
     }
 
     label {
-        margin-bottom: 0.25rem; /* Slightly reduce bottom margin for labels on larger screens */
+        margin-bottom: 0.25rem;
     }
 }
