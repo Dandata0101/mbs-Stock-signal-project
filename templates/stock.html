@@ -12,7 +12,7 @@
         .chart-container, .email-form {
             margin-bottom: 20px;
         }
-        .stock-data-table, .accuracy-table, .feature-importance-table {
+        .first-buy-data-table, .last-record-data-table, .accuracy-table, .feature-importance-table {
             margin-top: 20px;
             border-collapse: collapse;
             width: auto;
@@ -36,25 +36,19 @@
             color: black;
             border-radius: 4px;
         }
-        .flex-row {
-            display: flex;
-            align-items: flex-start;
-        }
         .accuracy-container, .image-container {
             margin-right: 20px;
+            margin-top: -20px;     
         }
         .image-container img {
-            max-width: 500px;
-            text-align: center;
+            max-width: 800px;
+            text-align: left;
             height: auto;
         }
         .feature-importance-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-around; /* Adjusted to space-around for tighter spacing */
             align-items: flex-start;
-        }
-        .table-container:not(:last-child) {
-            margin-bottom: 20px;
         }
         .flash-messages .success, .flash-messages .error {
             padding: 10px;
@@ -71,7 +65,6 @@
             border: 1px solid #f44336;
             color: red;
         }
-
         button[type="submit"] {
             padding: .5rem 1rem;
             color: #fff;
@@ -80,11 +73,21 @@
             border-radius: .25rem;
             cursor: pointer;
         }
-        
         button[type="submit"]:hover {
             background-color: #0056b3;
         }
+        .tables-side-by-side {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .table-container {
+            flex: 1;
+            min-width: 100px; /* Adjust this value as needed */
+            margin: 10px; /* Adds some space between the tables */
+        }
     </style>
+
 </head>
 <body>
     <script>
@@ -122,33 +125,66 @@
             </tr>
         </table>
     </div>
-   
-    <!-- Stock Data Table and Chart -->
-    <div class="table-container">
-        <table class="stock-data-table">
-            <tr>
-                <th>Open</th>
-                <th>High</th>
-                <th>Low</th>
-                <th>Close</th>
-                <th>Volume</th>
-                <th>Balance</th> 
-            </tr>
-            {% if data %}
-            <tr>
-                <td>{{ data['Open'] }}</td>
-                <td>{{ data['High'] }}</td>
-                <td>{{ data['Low'] }}</td>
-                <td>{{ data['Close'] }}</td>
-                <td>{{ data['Volume'] }}</td>
-                <td>{{ data['Balance'] }}</td> 
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="6">No data available</td>
-            </tr>
-            {% endif %}
-        </table>
+    
+    <!-- Stock Data Tables Side by Side -->
+    <div class="tables-side-by-side">
+        <!-- First Buy Transaction Table -->
+        <div class="table-container">
+            <h3>First Buy Transaction</h3>
+            <table class="first-buy-data-table">
+                <tr>
+                    <th>Open</th>
+                    <th>High</th>
+                    <th>Low</th>
+                    <th>Close</th>
+                    <th>Volume</th>
+                    <th>Balance</th>
+                </tr>
+                {% if firstbuy %}
+                <tr>
+                    <td>{{ firstbuy['Open'] }}</td>
+                    <td>{{ firstbuy['High'] }}</td>
+                    <td>{{ firstbuy['Low'] }}</td>
+                    <td>{{ firstbuy['Close'] }}</td>
+                    <td>{{ firstbuy['Volume'] }}</td>
+                    <td>{{ firstbuy['Balance'] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">No data available</td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+
+        <!-- Last Transaction Table -->
+        <div class="table-container">
+            <h3>Last Transaction</h3>
+            <table class="last-record-data-table">
+                <tr>
+                    <th>Open</th>
+                    <th>High</th>
+                    <th>Low</th>
+                    <th>Close</th>
+                    <th>Volume</th>
+                    <th>Balance</th>
+                </tr>
+                {% if lastrecord %}
+                <tr>
+                    <td>{{ lastrecord['Open'] }}</td>
+                    <td>{{ lastrecord['High'] }}</td>
+                    <td>{{ lastrecord['Low'] }}</td>
+                    <td>{{ lastrecord['Close'] }}</td>
+                    <td>{{ lastrecord['Volume'] }}</td>
+                    <td>{{ lastrecord['Balance'] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">No data available</td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
     </div>
 
     <div class="chart-container">
@@ -177,7 +213,7 @@
             </table>
         </div>
         
-        <div class="image-container" style="margin-left: 80px;">
+        <div class="image-container" style="margin-left: 10px;">
             <img src="{{ url_for('static', filename='images/confusion_matrix.png') }}" alt="Confusion Matrix">
         </div>
     </div>

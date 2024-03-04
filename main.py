@@ -5,7 +5,7 @@ import os
 from scripts.yahoofinance import create_dataframe
 from scripts.ml_buysellfx import predict_trading_signals
 from scripts.profit_calc import calculate_profit
-from scripts.ml_chart_export import plot_stock_signals, interactive_plot_stock_signals, Last_record
+from scripts.ml_chart_export import plot_stock_signals, interactive_plot_stock_signals,first_buy_record, Last_record
 from scripts.excel_export import export_df_to_excel_with_chart
 from EmailBody.emailbody import generate_email_body
 from scripts.sendemail import send_email
@@ -69,11 +69,12 @@ def stock():
         
         test_df, accuracy, precision, recall, f1, feature_importances, importance_df, metrics_df = predict_trading_signals(data, param_grid=param_grid)
         profit = calculate_profit(test_df)
-        last_record = Last_record(profit)
+        firstbuy=first_buy_record(profit)
+        lastrecord = Last_record(profit)
         chart_html = interactive_plot_stock_signals(df=profit, tickerSymbol=stock_symbol)
         export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock_symbol)
 
-        return render_template("stock.html", chart=chart_html, stock=stock_symbol, data=last_record, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
+        return render_template("stock.html", chart=chart_html, stock=stock_symbol,firstbuy=firstbuy,lastrecord=lastrecord, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
     except Exception as e:
         print(e)  # For debugging
         flash(f'Error: {str(e)}', 'error')  # Flash the error message
