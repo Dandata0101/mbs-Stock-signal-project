@@ -83,4 +83,4 @@ wcwidth==0.2.13
 webencodings==0.5.1
 Werkzeug==3.0.1
 WTForms==3.1.2
-yfinance==0.2.36
+yfinance==0.2.37

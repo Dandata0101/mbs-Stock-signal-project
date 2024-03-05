@@ -9,7 +9,7 @@ from scripts.excel_export import export_df_to_excel_with_chart
 from EmailBody.emailbody import generate_email_body
 from scripts.sendemail import send_email
 
-stock='NFLX'
+stock='ABNB'
 email=["dan@y-data.co"]
 
 data=create_dataframe(stock)
@@ -17,12 +17,11 @@ test_df, accuracy, precision, recall, f1, feature_importances,importance_df,metr
 profit=calculate_profit(test_df)
 
 chart = plot_stock_signals(df=profit, tickerSymbol=stock)
-
 firstbuy=first_buy_record(df=profit)
 Last_transaction=Last_record(df=profit)
 export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock)
 
-#Body=generate_email_body(tickerSymbol=stock)
-#send=send_email(email_body=Body,recipient_emails=email)
+Body=generate_email_body(tickerSymbol=stock)
+send=send_email(email_body=Body,recipient_emails=email)
 
 
