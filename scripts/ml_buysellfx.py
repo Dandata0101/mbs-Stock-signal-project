@@ -2,10 +2,9 @@ import pandas as pd
 import numpy as np
 import os
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score,confusion_matrix
 import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix
 import seaborn as sns
 
 def predict_trading_signals(df,close_short_window=5, close_long_window=25, param_grid=None):
@@ -15,7 +14,7 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=25, param
     print(close_short_window)
     print(close_long_window)
 
-    def add_technical_indicators(df):
+    def add_indicators(df):
         df['VIX'] = df['VIX']
         df['fedrate'] = df['fedrate']
         df['VIX_short'] = df['VIX'].rolling(window=5).mean()
@@ -68,7 +67,7 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=25, param
 
         return df
 
-    df = add_technical_indicators(df)
+    df = add_indicators(df)
     df = label_data(df)
 
     train_df = df.loc['2015-01-01':'2019-12-31']
