@@ -13,7 +13,9 @@ stock='TEAM'
 email=["dan@y-data.co"]
 
 df,company_details=create_dataframe(tickerSymbol=stock)
-company_name = company_details['CompanyName'].iloc[0]
+print('marketcap:',company_details['marketCap'])
+
+company_name=company_details['longName']
 
 print('CompanyName:',company_name)
 

@@ -20,13 +20,8 @@ def fetch_data(symbol, start_date, end_date):
 def fetch_company_details(tickerSymbol):
     tickerData = yf.Ticker(tickerSymbol)
     info = tickerData.info
-    details = {
-        'CompanyName': info.get('longName'),
-        'usinessSummary': info.get('longBusinessSummary'),
-        'Full-timeEmployees': info.get('fullTimeEmployees'),
-        'MarketCap': info.get('marketCap')
-    }
-    company_details = pd.DataFrame(details, index=[0])
+
+    company_details = info
     return company_details
 
 def create_dataframe(tickerSymbol='MSFT'):

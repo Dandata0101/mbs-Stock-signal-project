@@ -14,13 +14,26 @@ from waitress import serve
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 
+# Define the format_number function
+def format_USD(value):
+    return "${:,.0f}".format(value)
+
+def format_number_commas(value):
+    return "{:,.0f}".format(value)
+
+# Register the filter with the app
+app.template_filter('format_USD')(format_USD)
+app.template_filter('format_number_commas')(format_number_commas)
+
+
+
 @app.route('/')
 @app.route('/index')
 def index():
 
     default_params = {
         'close_short_window': 5,
-        'close_long_window': 25,
+        'close_long_window': 20,
     }
     return render_template('index.html', title='Home - MBS Stock Analysis',default_params=default_params)
 
@@ -71,13 +84,13 @@ def stock():
     try:
         df,company_details=create_dataframe(stock_symbol)
         data=df
-        codetails=company_details
-        company_name = company_details['CompanyName'].iloc[0]
 
         # Check if the data is empty, indicating an incorrect stock symbol
-        if data.empty:
+        if data.empty or 'longName' not in company_details:
             flash('Incorrect stock symbol, please provide a valid symbol', 'error')
             return redirect(url_for('index'))
+        
+        company_name=company_details['longName']
         
         test_df, accuracy, precision, recall, f1, feature_importances, importance_df, metrics_df = predict_trading_signals(data, param_grid=param_grid,close_short_window=close_short_window,close_long_window=close_long_window)
         profit = calculate_profit(test_df)
@@ -87,10 +100,10 @@ def stock():
         export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock_symbol)
 
         # Set the tickerSymbol in session here
-        session['tickerSymbol'] = stock_symbol
+        session['tickerSymbol'] = stock_symbol  
         session['company_name'] = company_name
 
-        return render_template("stock.html", chart=chart_html,company_name=company_name, stock=stock_symbol,firstbuy=firstbuy,lastrecord=lastrecord, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
+        return render_template("stock.html", chart=chart_html,company_name=company_name,company_details=company_details, stock=stock_symbol,firstbuy=firstbuy,lastrecord=lastrecord, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
     
     except Exception as e:
         print(e)  # For debugging

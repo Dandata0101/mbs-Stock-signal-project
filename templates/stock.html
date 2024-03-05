@@ -125,12 +125,35 @@
 </head>
 <body>
     <script>
-    sessionStorage.setItem("fromStockPage", "true");
+        sessionStorage.setItem("fromStockPage", "true");
     </script>
-
-    <a href="/" class="home-link">Home</a>
-    <h1>Buy/sell analysis for {{ company_name }}</h1>
     
+     <h1>Buy/sell analysis for {{ company_name }}</h1>
+    
+     <!-- Author Links -->
+    <a href="https://github.com/Dandata0101" target="_blank">
+        <img src="https://img.shields.io/badge/Author-DanRamirez-2ea44f?style=for-the-badge" alt="Author - DanRamirez">
+    </a>
+    <a href="https://github.com/VineethReeddyBAAIML" target="_blank">
+        <img src="https://img.shields.io/badge/Author-VineethReddy-2ea44f?style=for-the-badge" alt="Author - VineethReddy">
+    </a>
+    <a href="https://github.com/bahijh" target="_blank">
+        <img src="https://img.shields.io/badge/Author-BahijHaidar-2ea44f?style=for-the-badge" alt="Author - BahijHaidar">
+    </a>
+    <a href="https://github.com/" target="_blank">
+        <img src="https://img.shields.io/badge/Author-LisaFanzy-2ea44f?style=for-the-badge" alt="Author - LisaFanzy">
+    </a>
+    <b>
+    <img src="https://img.shields.io/badge/PYTHON-3.11-red?style=for-the-badge&logo=python&logoColor=white" alt="Python - Version">
+ 
+  
+    <script>
+        sessionStorage.setItem("fromStockPage", "true");
+    </script>
+    <br>
+
+   <a href="/" class="home-link">Home</a>
+
     <!-- Flash Messages Section -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -148,79 +171,107 @@
         <button type="submit">Send Detailed Analysis</button>
     </form>
     
-
-    <!-- Stock Data Tables Side by Side -->
-    <div class="tables-side-by-side">
-        <!-- First Buy Transaction Table -->
-        <div class="table-container">
-            <h3>First Buy Transaction</h3>
-            <table class="first-buy-data-table">
-                <tr>
-                    <th>Date</th>
-                    <th>Open</th>
-                    <th>High</th>
-                    <th>Low</th>
-                    <th>Close</th>
-                    <th>Volume</th>
-                    <th>Balance</th>
-                </tr>
-                {% if firstbuy %}
-                <tr>
-                    <td>{{ firstbuy['Date'] }}</td> 
-                    <td>{{ firstbuy['Open'] }}</td>
-                    <td>{{ firstbuy['High'] }}</td>
-                    <td>{{ firstbuy['Low'] }}</td>
-                    <td>{{ firstbuy['Close'] }}</td>
-                    <td>{{ firstbuy['Volume'] }}</td>
-                    <td>{{ firstbuy['Balance'] }}</td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="6">No data available</td>
-                </tr>
-                {% endif %}
-            </table>
-        </div>
-
-        <!-- Last Transaction Table -->
-        <div class="table-container">
-            <h3>Last Transaction</h3>
-            <table class="last-record-data-table">
-                <tr>
-                    <th>Date</th> 
-                    <th>Open</th>
-                    <th>High</th>
-                    <th>Low</th>
-                    <th>Close</th>
-                    <th>Volume</th>
-                    <th>Balance</th>
-                </tr>
-                {% if lastrecord %}
-                <tr>
-                    <td>{{ lastrecord['Date'] }}</td> 
-                    <td>{{ lastrecord['Open'] }}</td>
-                    <td>{{ lastrecord['High'] }}</td>
-                    <td>{{ lastrecord['Low'] }}</td>
-                    <td>{{ lastrecord['Close'] }}</td>
-                    <td>{{ lastrecord['Volume'] }}</td>
-                    <td>{{ lastrecord['Balance'] }}</td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="6">No data available</td>
-                </tr>
-                {% endif %}
-            </table>
-        </div>
+<!-- Company Info, First Buy Transaction, and Last Transaction Tables Side by Side -->
+<div class="tables-side-by-side">
+    <!-- Company Info Table -->
+    <div class="table-container">
+        <h3>Company info</h3>
+        <table class="company-details">
+            <tr>
+                <th>Sector</th>
+                <th>City</th> 
+                <th>Country</th>
+                <th># of FTE</th>
+                <th>MarketCap</th>
+            </tr>
+            {% if company_details %}
+            <tr>
+                <td>{{ company_details['sector'] }}</td>
+                <td>{{ company_details['city'] }}</td> 
+                <td>{{ company_details['country'] }}</td> 
+                <td>{{ company_details['fullTimeEmployees']| format_number_commas }}</td>
+                <td>{{ company_details['marketCap']| format_USD }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">No data available</td>
+            </tr>
+            {% endif %}
+        </table>
     </div>
 
     <div class="chart-container">
         {{ chart|safe }}
     </div>
 
+    <!-- First Buy Transaction Table reintroduced -->
+    <div class="table-container">
+        <h3>First Buy Transaction</h3>
+        <table class="company-details">
+            <tr>
+                <th>Date</th>
+                <th>Open</th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Close</th>
+                <th>Volume</th>
+                <th>Balance</th>
+            </tr>
+            {% if firstbuy %}
+            <tr>
+                <td>{{ firstbuy['Date'] }}</td>
+                <td>{{ firstbuy['Open'] }}</td>
+                <td>{{ firstbuy['High'] }}</td>
+                <td>{{ firstbuy['Low'] }}</td>
+                <td>{{ firstbuy['Close'] }}</td>
+                <td>{{ firstbuy['Volume'] }}</td>
+                <td>{{ firstbuy['Balance'] }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">No data available</td>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+
+    <!-- Adjusted Last Transaction Table to match Company Info Table Style -->
+    <div class="table-container">
+        <h3>Last Transaction</h3>
+        <table class="company-details"> <!-- Use same class for styling consistency -->
+            <tr>
+                <th>Date</th>
+                <th>Open</th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Close</th>
+                <th>Volume</th>
+                <th>Balance</th>
+            </tr>
+            {% if lastrecord %}
+            <tr>
+                <td>{{ lastrecord['Date'] }}</td>
+                <td>{{ lastrecord['Open'] }}</td>
+                <td>{{ lastrecord['High'] }}</td>
+                <td>{{ lastrecord['Low'] }}</td>
+                <td>{{ lastrecord['Close'] }}</td>
+                <td>{{ lastrecord['Volume'] }}</td>
+                <td>{{ lastrecord['Balance'] }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">No data available</td>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+</div>
+
+<div class="spacer" style="height: 20px;"></div>
+
 <!-- Model Performance Details Section -->
-<div class="model-details-container">
-    <h2>Model Performance Details {{ company_name }}</h2>
+<div class="model-details-container" style="margin-top: 20px;">
+    <h2>Model Performance Details {{ stock }}</h2>
     <div class="performance-matrix-container">
         <div class="tables-container">
             <div class="accuracy-table-container">
