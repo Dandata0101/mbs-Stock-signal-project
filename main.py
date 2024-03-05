@@ -67,7 +67,7 @@ def parse_grid_search_params(request):
 
     # Parsing additional model parameters
     close_short_window = request.values.get('close_short_window', default=5, type=int)
-    close_long_window = request.values.get('close_long_window', default=25, type=int)
+    close_long_window = request.values.get('close_long_window', default=20, type=int)
 
     return param_grid,close_short_window, close_long_window
 
