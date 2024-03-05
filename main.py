@@ -49,7 +49,7 @@ def parse_grid_search_params(request):
         'max_depth': parse_list(request.values.get('max_depth'), lambda x: None if x.lower() == 'none' else int(x), [None, 10, 20]),
         'min_samples_split': parse_list(request.values.get('min_samples_split'), int, [2, 5]),
         'min_samples_leaf': parse_list(request.values.get('min_samples_leaf'), int, [1, 2]),
-        'max_features': parse_max_features(request.values.get('max_features'), ['auto', 'sqrt'])
+        'max_features': parse_max_features(request.values.get('max_features'), ['sqrt'])
     }
 
     # Parsing additional model parameters
