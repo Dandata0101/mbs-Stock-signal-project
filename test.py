@@ -13,11 +13,16 @@ stock='TEAM'
 email=["dan@y-data.co"]
 
 df,company_details=create_dataframe(tickerSymbol=stock)
-print('marketcap:',company_details['marketCap'])
-
 company_name=company_details['longName']
-
+print('~~~~~~~~~~~~~~~~~~~~~~~~~')
+print('testing py exceution')
+print('~~~~~~~~~~~~~~~~~~~~~~~~~')
+print('')
+print('~~~~~~~~~~~~~~~~~~~~~~~~~')
+print('Stock Symbol:',stock)
 print('CompanyName:',company_name)
+print('~~~~~~~~~~~~~~~~~~~~~~~~~')
+print('')
 
 test_df, accuracy, precision, recall, f1, feature_importances,importance_df,metrics_df=predict_trading_signals(df)
 profit=calculate_profit(test_df)
@@ -25,9 +30,12 @@ profit=calculate_profit(test_df)
 chart = plot_stock_signals(df=profit, tickerSymbol=stock)
 firstbuy=first_buy_record(df=profit)
 Last_transaction=Last_record(df=profit)
+
+#Final analysis delivered to the 03-out directory
 export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock)
 
-Body=generate_email_body(tickerSymbol=company_name)
-send=send_email(email_body=Body,recipient_emails=email)
+#requirs a MSFT Secret key to run, comment out this section when testing 
+#Body=generate_email_body(tickerSymbol=company_name)
+#send=send_email(email_body=Body,recipient_emails=email)
 
 
