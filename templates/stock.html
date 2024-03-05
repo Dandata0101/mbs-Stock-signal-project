@@ -129,7 +129,7 @@
     </script>
 
     <a href="/" class="home-link">Home</a>
-    <h1>Buy/sell analysis for {{ stock }}</h1>
+    <h1>Buy/sell analysis for {{ company_name }}</h1>
     
     <!-- Flash Messages Section -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -220,7 +220,7 @@
 
 <!-- Model Performance Details Section -->
 <div class="model-details-container">
-    <h2>Model Performance Details {{ stock }}</h2>
+    <h2>Model Performance Details {{ company_name }}</h2>
     <div class="performance-matrix-container">
         <div class="tables-container">
             <div class="accuracy-table-container">

@@ -3,72 +3,51 @@ import datetime
 import pandas as pd
 import warnings
 import os
-from fredapi import Fred
 
 warnings.filterwarnings('ignore')
 
+def fetch_data(symbol, start_date, end_date):
+    tickerData = yf.Ticker(symbol)
+    df = tickerData.history(start=start_date, end=end_date)
+    df.reset_index(inplace=True)
+    df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
+    if symbol == '^VIX':
+        df = df[['Date', 'Close']].rename(columns={'Close': 'VIX'})
+    elif symbol == '^DJI':
+        df = df[['Date', 'Close']].rename(columns={'Close': 'DJI'})
+    return df
+
+def fetch_company_details(tickerSymbol):
+    tickerData = yf.Ticker(tickerSymbol)
+    info = tickerData.info
+    details = {
+        'CompanyName': info.get('longName'),
+        'usinessSummary': info.get('longBusinessSummary'),
+        'Full-timeEmployees': info.get('fullTimeEmployees'),
+        'MarketCap': info.get('marketCap')
+    }
+    company_details = pd.DataFrame(details, index=[0])
+    return company_details
+
 def create_dataframe(tickerSymbol='MSFT'):
-    # Function to clear the console
-    def clear_console():
-        os.system('cls' if os.name == 'nt' else 'clear')
+    print('1.1) Starting stock data extraction')
 
-    # Function to fetch stock data
-    def fetch_data(symbol, start_date, end_date):
-        tickerData = yf.Ticker(symbol)
-        df = tickerData.history(start=start_date, end=end_date)
-        df.reset_index(inplace=True)
-        df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
-        if symbol == '^VIX':
-            df = df[['Date', 'Close']].rename(columns={'Close': 'VIX'})
-        return df
-    
-    def fedrate(start_date, end_date, fedkey):        
-        # Initialize Fred with the provided API key
-        fred = Fred(api_key=fedkey)
-        
-        # Fetch the Federal Funds Effective Rate data
-        federal_funds_rate = fred.get_series('FEDFUNDS', observation_start=start_date, observation_end=end_date)
-        
-        # Convert the Series into a DataFrame and rename the columns
-        fedrate_df = federal_funds_rate.to_frame(name='fedrate')
-        fedrate_df.reset_index(inplace=True)
-        fedrate_df.rename(columns={'index': 'Date'}, inplace=True)
-        fedrate_df['Date'] = pd.to_datetime(fedrate_df['Date']).dt.strftime('%Y-%m-%d')
-        current_directory = os.getcwd()
-        
-        print(current_directory)
-        
-        return fedrate_df
- 
-    clear_console()
-    print('\n\n1.1) Starting stock data extraction')
+    end_date = datetime.date.today()
+    start_date = datetime.date(2013, 1, 1)
 
-    # Define the date range
-    end_date = datetime.date(2024, 3, 1)  # Today's date
-    start_date = datetime.date(2013, 1, 1)  # Start date
-
-    # Fetch stock data for the specified ticker
     df_stock = fetch_data(tickerSymbol, start_date, end_date)
-
-    # Fetch VIX data
     df_vix = fetch_data('^VIX', start_date, end_date)
+    df_dji = fetch_data('^DJI', start_date, end_date)
 
-    # Fetch Fed Rate data
-    fedkey = os.getenv('fedkey')  
-    df_fedrate = fedrate(start_date, end_date,fedkey=fedkey)
-
-    # Merging the dataframes on the 'Date' column
+    # Merge stock data, VIX data, and DJI data
     df_merged = pd.merge(df_stock, df_vix, on='Date', how='left')
-    df_merged = pd.merge(df_merged, df_fedrate, on='Date', how='left')
+    df_merged = pd.merge(df_merged, df_dji, on='Date', how='left')
 
-    # Forward fill the 'fedrate' column to propagate the last valid observation forward
     current_directory = os.getcwd()
-    df_merged['fedrate'] = df_merged['fedrate'].fillna(method='ffill')
     df_merged.to_excel(current_directory + '/01-data/input_YahooFin.xlsx', index=False)
 
-    print('~~~~~~~~~~~~~')
-    print('Data types after adjustment:')
-    print(df_merged.dtypes)
-    print('~~~~~~~~~~~~~')
+    # Fetch and return company details as well
+    company_details = fetch_company_details(tickerSymbol)
     
-    return df_merged
+    return df_merged, company_details
+

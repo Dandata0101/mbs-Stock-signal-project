@@ -81,7 +81,7 @@ def interactive_plot_stock_signals(df=None, tickerSymbol=None):
     fig.add_trace(go.Scatter(x=df.index[df['pricebuy'].notnull()], y=df['pricebuy'].dropna(), mode='markers', name='Buy Signal', marker=dict(color='green', size=10, symbol='triangle-up')))
     fig.add_trace(go.Scatter(x=df.index[df['pricesell'].notnull()], y=df['pricesell'].dropna(), mode='markers', name='Sell Signal', marker=dict(color='red', size=10, symbol='triangle-down')))
 
-    fig.update_layout(title=f"{tickerSymbol} Stock Signals Chart",
+    fig.update_layout(title=f"Stock Signals Chart",
                       xaxis_title='Date',
                       yaxis_title='Price USD ($)',
                       xaxis=dict(

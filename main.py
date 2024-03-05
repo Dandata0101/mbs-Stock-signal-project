@@ -69,8 +69,11 @@ def stock():
     param_grid, close_short_window, close_long_window = parse_grid_search_params(request)
 
     try:
-        data = create_dataframe(stock_symbol)
-        
+        df,company_details=create_dataframe(stock_symbol)
+        data=df
+        codetails=company_details
+        company_name = company_details['CompanyName'].iloc[0]
+
         # Check if the data is empty, indicating an incorrect stock symbol
         if data.empty:
             flash('Incorrect stock symbol, please provide a valid symbol', 'error')
@@ -85,8 +88,9 @@ def stock():
 
         # Set the tickerSymbol in session here
         session['tickerSymbol'] = stock_symbol
+        session['company_name'] = company_name
 
-        return render_template("stock.html", chart=chart_html, stock=stock_symbol,firstbuy=firstbuy,lastrecord=lastrecord, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
+        return render_template("stock.html", chart=chart_html,company_name=company_name, stock=stock_symbol,firstbuy=firstbuy,lastrecord=lastrecord, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
     
     except Exception as e:
         print(e)  # For debugging
