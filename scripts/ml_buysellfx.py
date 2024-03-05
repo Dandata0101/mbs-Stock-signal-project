@@ -72,7 +72,7 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=25, param
     df = label_data(df)
 
     train_df = df.loc['2015-01-01':'2019-12-31']
-    test_df = df.loc['2020-01-01':'2024-03-01']
+    test_df = df.loc['2020-01-01':'2024-02-29']
 
     features = ['close_short', 'DJI', 'VIX', 'VIX_short', 'VIX_long', 'close_long', 'RSI', 'MACD', 'Signal_line']
     train_df.dropna(subset=features + ['Label'], inplace=True)
