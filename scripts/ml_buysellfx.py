@@ -11,8 +11,9 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=25, param
     df['Date'] = pd.to_datetime(df['Date'])
     df.set_index('Date', inplace=True)
 
-    print(close_short_window)
-    print(close_long_window)
+    print('slected close short window:',close_short_window)
+    print('selected close long windwo:',close_short_window)
+
 
     def add_indicators(df):
         df['VIX'] = df['VIX']
