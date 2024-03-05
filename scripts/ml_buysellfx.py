@@ -86,7 +86,7 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=25, param
             'max_depth': [None, 10, 20],
             'min_samples_split': [2, 5],
             'min_samples_leaf': [1, 2],
-            'max_features': ['auto', 'sqrt']
+            'max_features': ['sqrt']
         }
 
     rf = RandomForestClassifier(random_state=42)
@@ -96,6 +96,12 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=25, param
     best_model = grid_search.best_estimator_
     predictions = best_model.predict(X_test)
     test_df.loc[X_test.index, 'Predictions'] = predictions
+
+    best_model_params = best_model.get_params()
+    params_df = pd.DataFrame([best_model_params])
+    params_df=params_df.transpose()
+    params_df.reset_index(inplace=True)  
+    params_df.columns = ['Parameter', 'Value'] 
 
     accuracy = accuracy_score(y_test, predictions)
     precision = precision_score(y_test, predictions, zero_division=1)
@@ -110,6 +116,7 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=25, param
     
     # Export to CSV
     current_directory = os.getcwd()
+    params_df.to_excel(current_directory + '/01-data/bestmodel_export.xlsx', index=False)
     metrics_df.to_excel(current_directory + '/01-data/accuracy_export.xlsx', index=False)
     importance_df.to_excel(current_directory + '/01-data/feature_export.xlsx', index=False)
 
