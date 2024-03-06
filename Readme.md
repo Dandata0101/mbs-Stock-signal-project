@@ -8,10 +8,10 @@
 ## Table of Content
 1. [Summary and Used Case](https://github.com/Dandata0101/mbs-Stock-singal-project#Summary-and-Used-Case)
 2. [Application Structure](https://github.com/Dandata0101/mbs-Stock-singal-project#Application-Structure)
+3. [Interface and Output](https://github.com/Dandata0101/mbs-Stock-singal-project#Interface-and-Output)
 3. [Data Retrival](https://github.com/Dandata0101/mbs-Stock-singal-project#Data-Retrival)
-4. [Model Build](https://github.com/Dandata0101/mbs-Stock-singal-project#Model-Build)
-5. [Interface and Output](https://github.com/Dandata0101/mbs-Stock-singal-project#Interface-and-Output)
-5. [Local Testing](https://github.com/Dandata0101/mbs-Stock-singal-project#Local-Testing)
+5. [Model Build](https://github.com/Dandata0101/mbs-Stock-singal-project#Model-Build)
+6. [Local Testing](https://github.com/Dandata0101/mbs-Stock-singal-project#Local-Testing)
 
 ## Summary and Used Case
 We designed and implemented an algorithm trading platform that can run on any stock. This algorithm is adaptable, choosing between long or short positions and customizable hyperparameters to maximize profitability based on historical market conditions. The solution's core is a machine learning model based on a random forest classification model for grid search cross-validation using the Yahoo Finance Python Package to retrieve stock data. 
@@ -33,6 +33,15 @@ For our MBS Project assignment, we will run a stock predictor algorithm concentr
 6. [email body :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/EmailBody)
 7. [Send email :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py)
  
+## Interface and Output
+
+### Output Locations
+[Data output :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/01-data)
+
+[Final Report output :file_folder::green_book:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/03-output)
+
+
+  
  
 ## Data Retrival
 
@@ -71,11 +80,16 @@ def create_dataframe(tickerSymbol='MSFT'):
 
 ## Model Build
 
+```python:
+    rf = RandomForestClassifier(random_state=42)
+    grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2)
+    grid_search.fit(X_train, y_train)
+    print('Parms used:',param_grid)
 
-## Interface and Output
-
-### Locations
-  
+    best_model = grid_search.best_estimator_
+    predictions = best_model.predict(X_test)
+    test_df.loc[X_test.index, 'Predictions'] = predictions
+```
 
 ## Local Testing
 
@@ -121,8 +135,6 @@ export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock)
 Body=generate_email_body(tickerSymbol=company_name)
 send=send_email(email_body=Body,recipient_emails=email)
 ```
-
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
