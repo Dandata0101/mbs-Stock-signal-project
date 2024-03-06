@@ -40,7 +40,7 @@ For our project, Python files **2.** and **3.** are our core delivery.
 ### Interface :globe_with_meridians:
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Home.png" alt="Home" style="width:2200;height:400;"> 
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/results1.png" alt="Results1" style="width:2200;height:400;"> 
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-imagesresults2.png" alt="Results2" style="width:2200;height:400;"> 
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/results2.png" alt="Results2" style="width:2200;height:400;"> 
 
 
 ### Output Locations
@@ -53,11 +53,11 @@ For our project, Export **2.** is  key deliverable to review the performance of 
 3. [Feature Importance :robot: ](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/feature_export.xlsx)
 4. [Grid Search Best Model :robot: ](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/bestmodel_export.xlsx)
 
+This directory has the combined output of Signal charts, full data ouput and model performance in excel
 
 [Final Report output :file_folder::green_book:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/03-output)
 
 
- 
 ## Data Retrival
 
 ```python:
