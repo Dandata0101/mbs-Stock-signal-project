@@ -7,12 +7,12 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def predict_trading_signals(df,close_short_window=5, close_long_window=25, param_grid=None):
+def predict_trading_signals(df,close_short_window=5, close_long_window=20, param_grid=None):
     df['Date'] = pd.to_datetime(df['Date'])
     df.set_index('Date', inplace=True)
 
     print('slected close short window:',close_short_window)
-    print('selected close long windwo:',close_short_window)
+    print('selected close long windwow:',close_long_window)
 
 
     def add_indicators(df):
@@ -93,6 +93,7 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=25, param
     rf = RandomForestClassifier(random_state=42)
     grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2)
     grid_search.fit(X_train, y_train)
+    print('Parms used:',param_grid)
 
     best_model = grid_search.best_estimator_
     predictions = best_model.predict(X_test)
