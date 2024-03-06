@@ -13,15 +13,13 @@
 5. [Interface and Output](https://github.com/Dandata0101/mbs-Stock-singal-project#Interface-and-Output)
 5. [Local Testing](https://github.com/Dandata0101/mbs-Stock-singal-project#Local-Testing)
 
-
-
 ## Summary and Used Case
-We designed and implemented an algorithm trading strategy that can run on any stock. This algorithm is tailored to be adaptable in its approach, choosing between long or short positions to maximize profitability based on the current market conditions. The core of the solution lies in the development of a machine learning model based on a random forest classification model that stands for grid search cross-validation by using Yahoo Finance Python Package. 
-The solution will take place through a running stock predictor algorithm which is concentrated on a single trading target that is Atlassian, a software publisher based in Australia, and will be hosted on a website, thereby providing a platform for online access and interaction with the trading system.
+We designed and implemented an algorithm trading platform that can run on any stock. This algorithm is adaptable, choosing between long or short positions and customizable hyperparameters to maximize profitability based on historical market conditions. The solution's core is a machine learning model based on a random forest classification model for grid search cross-validation using the Yahoo Finance Python Package to retrieve stock data. 
+
+For our MBS Project assignment, we will run a stock predictor algorithm concentrated on a single trading target: **Atlassian**, a software publisher based in Australia. The algorithm will be hosted online, providing a platform for online access and interaction with the trading system. For testing purposes, we will provide steps to run individual custom Python packages for this project and how to run our Flask application locally.
 
 ## Application Structure
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:500px;height: 300px;"> 
-
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:600px;height: 400px;"> 
 
 ### Python Packages
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Packages" style="width:2530px;height: 250px;"> 
@@ -31,11 +29,9 @@ The solution will take place through a running stock predictor algorithm which i
 ## Model Build
 
 
-
 ## Interface and Output
 
 ### Locations
-
 
 ## Local Testing
 
