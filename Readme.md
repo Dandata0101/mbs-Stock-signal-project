@@ -26,6 +26,10 @@ For our MBS Project assignment, we will run a stock predictor algorithm concentr
 
 ### Custom Python Packages :snake:
 1.[Yahoo Finance Dataframe](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/yahoofinance.py) :dollar: 
+2. [ML Buy/Sell Signal](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_buysellfx.py) :robot:
+3. [Profit Calculation](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/profit_calc.py) :robot::chart:
+4. [Chart and Excel export](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_chart_export.py) :chart_with_upwards_trend:
+ 
 
 ## Data Retrival
 
