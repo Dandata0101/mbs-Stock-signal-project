@@ -22,7 +22,7 @@ For our MBS Project assignment, we will run a stock predictor algorithm concentr
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:600px;height: 400px;"> 
 
 ### Python Packages
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Packages" style="width:2530px;height:120;"> 
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Packages" style="width:2400;height:100;"> 
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/script_dir.png" alt="script" style="width:220px;height: 140px;"> 
 
 ## Data Retrival
@@ -66,8 +66,8 @@ def create_dataframe(tickerSymbol='MSFT'):
 ## Interface and Output
 
 ### Locations
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/data_output.png" alt="data" style="width:250px;height: 140px;">
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Final_output.png" alt="final" style="width:250px;height: 140px;">  
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/data_output.png" alt="data" style="width:220;height: 140px;">
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Final_output.png" alt="final" style="width:220px;height: 140px;">  
 
 ## Local Testing
 
