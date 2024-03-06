@@ -83,10 +83,10 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=25, param
 
     if param_grid is None:
         param_grid = {
-            'n_estimators': [100, 200],
-            'max_depth': [None, 10, 20],
-            'min_samples_split': [2, 5],
-            'min_samples_leaf': [1, 2],
+            'n_estimators': [200],
+            'max_depth': [20],
+            'min_samples_split': [2],
+            'min_samples_leaf': [2],
             'max_features': ['sqrt']
         }
 
