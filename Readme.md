@@ -18,7 +18,7 @@
 ## Summary and Used Case
 
 ## Application Structure
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:900px;height: 300px;"> 
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:700px;height: 300px;"> 
 
 
 ## Data Retrival
