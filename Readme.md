@@ -36,7 +36,11 @@ For our project, Python files **2.** and **3.** are our core delivery.
 7. [Send email :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py)
  
 ## Interface and Output
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Home" style="width:2200;height:400;"> 
+
+### Interface :globe_with_meridians:
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Home.png" alt="Home" style="width:2200;height:400;"> 
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/results1.png" alt="Results1" style="width:2200;height:400;"> 
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-imagesresults2.png" alt="Results2" style="width:2200;height:400;"> 
 
 
 ### Output Locations
