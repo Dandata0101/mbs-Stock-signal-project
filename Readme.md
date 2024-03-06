@@ -22,7 +22,7 @@ For our MBS Project assignment, we will run a stock predictor algorithm concentr
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:600px;height: 400px;"> 
 
 ### :snake: Python Packages
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Packages" style="width:2200;height:100;"> 
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Packages" style="width:2200;height:400;"> 
 
 [Script Directory :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/scripts)
 1. [Yahoo Finance Dataframe :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/yahoofinance.py)
