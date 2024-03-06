@@ -20,7 +20,7 @@ We designed and implemented an algorithm trading strategy that can run on any st
 The solution will take place through a running stock predictor algorithm which is concentrated on a single trading target that is Atlassian, a software publisher based in Australia, and will be hosted on a website, thereby providing a platform for online access and interaction with the trading system.
 
 ## Application Structure
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:200px;height: 1000px;"> 
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:100px;height: 300px;"> 
 
 
 ### Python Packages
