@@ -34,26 +34,7 @@ import pandas as pd
 import warnings
 import os
 
-warnings.filterwarnings('ignore')
-
-def fetch_data(symbol, start_date, end_date):
-    tickerData = yf.Ticker(symbol)
-    df = tickerData.history(start=start_date, end=end_date)
-    df.reset_index(inplace=True)
-    df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.strftime('%Y-%m-%d')
-    if symbol == '^VIX':
-        df = df[['Date', 'Close']].rename(columns={'Close': 'VIX'})
-    elif symbol == '^DJI':
-        df = df[['Date', 'Close']].rename(columns={'Close': 'DJI'})
-    return df
-
-def fetch_company_details(tickerSymbol):
-    tickerData = yf.Ticker(tickerSymbol)
-    info = tickerData.info
-
-    company_details = info
-    return company_details
-
+........
 def create_dataframe(tickerSymbol='MSFT'):
     print('1.1) Starting stock data extraction')
 
@@ -75,6 +56,8 @@ def create_dataframe(tickerSymbol='MSFT'):
     company_details = fetch_company_details(tickerSymbol)
     
     return df_merged, company_details
+
+........
 ```
 
 ## Model Build
@@ -83,8 +66,8 @@ def create_dataframe(tickerSymbol='MSFT'):
 ## Interface and Output
 
 ### Locations
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/data_output.png" alt="data" style="width:300px;height: 140px;">
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Final_output.png" alt="final" style="width:300px;height: 140px;">  
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/data_output.png" alt="data" style="width:250px;height: 140px;">
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Final_output.png" alt="final" style="width:250px;height: 140px;">  
 
 ## Local Testing
 
