@@ -24,7 +24,7 @@ For our MBS Project assignment, we will run a stock predictor algorithm concentr
 ### :snake: Python Packages
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Packages" style="width:2200;height:400;"> 
 
-For our project, Python **2.** and **3.** are our core delivery.
+For our project, Python files **2.** and **3.** are our core delivery.
 
 [Script Directory :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/scripts)
 1. [Yahoo Finance Dataframe :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/yahoofinance.py)
@@ -36,9 +36,11 @@ For our project, Python **2.** and **3.** are our core delivery.
 7. [Send email :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py)
  
 ## Interface and Output
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Home" style="width:2200;height:400;"> 
+
 
 ### Output Locations
-
+For our project, Export **2.** is  key deliverable to review the performance of our ML model ouput.
 
 [Data output :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/01-data)
 1. [Yahoo Finance Dataframe :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/input_YahooFin.xlsx)
@@ -50,7 +52,7 @@ For our project, Python **2.** and **3.** are our core delivery.
 
 [Final Report output :file_folder::green_book:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/03-output)
 
-  
+
  
 ## Data Retrival
 
