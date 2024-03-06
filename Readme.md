@@ -21,11 +21,19 @@
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:700px;height: 300px;"> 
 
 
+### Python Packages
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Packages" style="width:700px;height: 300px;"> 
+
 ## Data Retrival
 
 ## Model Build
 
+
+
 ## Interface and Output
+
+### Locations
+
 
 ## Local Testing
 
