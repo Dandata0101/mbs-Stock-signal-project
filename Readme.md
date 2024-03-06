@@ -17,7 +17,9 @@
 
 ## Summary and Used Case
 
-## Application Strcuture
+## Application Structure
+<img src="https://github.com/Dandata0101/mbs-Stock-signal-project/blob/main/04-readme-Images/Appstructure.png" alt="Menu image" style="width:900px;height: 300px;"> 
+
 
 ## Data Retrival
 
