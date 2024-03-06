@@ -113,7 +113,7 @@ def create_dataframe(tickerSymbol='MSFT'):
 ```
 
 ## Local Testing
-From the main directory, there is a [test.py :snake:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/test.py) where you can test data, ML model and Final export. **Note**: Send function requires a token/secret key for it work, so make sure to to "**body**" and "**send**" before running.
+From the main directory, there is a [test.py :snake:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/test.py) where you can test data, ML model and Final export. **Note**: Send function requires a token/secret key for it work, so make sure to to "**body**" and "**send**" before running. To run the interface locally, run the [main.py :snake:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/main.py) file, open your browser and go to **http://localhost:8000**. 
 
 ```python:
 #testing area for functions
