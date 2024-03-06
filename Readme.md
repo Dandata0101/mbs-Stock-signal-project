@@ -42,7 +42,7 @@ For our project, Python files **2.** and **3.** are our core delivery.
 Our home page where you enter your stock symbol and adjust Hyperparameters, **note**: keeping the defaults will run the fastest.
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Home.png" alt="Home" style="width:2200;height:400;"> 
 
-Results 1 section shows basic information the the company and charts our Buy/Sell Signals.
+Results 1 section shows basic information the the company and charts our Buy/Sell Signals. At the top of the page, you have the option to email the report or download it to your desktop :floppy_disk: :arrow_right: :computer:.
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/results1.png" alt="Results1" style="width:2200;height:400;"> 
 
 Results 2 section show our final profit from our simulation and provides model performance Statistics.
