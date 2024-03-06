@@ -24,17 +24,16 @@ For our MBS Project assignment, we will run a stock predictor algorithm concentr
 ### Python Packages
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Packages" style="width:2200;height:100;"> 
 
-### Custom Python Packages :snake: [Script Directory :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/scripts)
-1. [Yahoo Finance Dataframe](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/yahoofinance.py) :dollar:  
-2. [**ML Buy/Sell Signal**](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_buysellfx.py) :robot:
-3. [Profit Calculation](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/profit_calc.py) :robot::currency_exchange:
-4. [Chart and Excel export](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_chart_export.py) :chart_with_upwards_trend:
-5. [Final Report](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py) :green_book:
-5. [Send email](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py) :email:
+### Custom Python Packages :snake: 
+[Script Directory :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/scripts)
+1. [Yahoo Finance Dataframe :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/yahoofinance.py)
+2. [**ML Buy/Sell Signal** :robot:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_buysellfx.py) 
+3. [**Profit Calculation** :robot::currency_exchange:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/profit_calc.py)
+4. [Chart and Excel export :chart_with_upwards_trend:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_chart_export.py) 
+5. [Final Report :green_book:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py) :green_book:
+5. [Send email :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py)
  
-
  
-
 ## Data Retrival
 
 ```python:
