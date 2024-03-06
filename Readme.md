@@ -22,7 +22,7 @@
 
 
 ### Python Packages
-<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Packages" style="width:700px;height: 300px;"> 
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Packages" style="width:500px;height: 200px;"> 
 
 ## Data Retrival
 
