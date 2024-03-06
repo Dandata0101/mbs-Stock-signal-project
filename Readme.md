@@ -31,7 +31,8 @@ For our MBS Project assignment, we will run a stock predictor algorithm concentr
 3. [**Profit Calculation** :robot::currency_exchange:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/profit_calc.py)
 4. [Chart and Excel export :chart_with_upwards_trend:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_chart_export.py) 
 5. [Final Report :green_book:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py) :green_book:
-5. [Send email :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py)
+6. [email body :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/EmailBody)
+7 . [Send email :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py)
  
  
 ## Data Retrival
