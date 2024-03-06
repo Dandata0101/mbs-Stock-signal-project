@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify, session, url_for, flash, redirect
+from flask import Flask, request, render_template, jsonify, session, url_for, flash, redirect,send_file
 import matplotlib
 matplotlib.use('Agg') 
 import os
@@ -102,6 +102,10 @@ def stock():
         # Set the tickerSymbol in session here
         session['tickerSymbol'] = stock_symbol  
         session['company_name'] = company_name
+        
+        file_name = f'{stock_symbol}_stock.xlsx'
+        session['export_file_name'] = file_name
+
 
         return render_template("stock.html", chart=chart_html,company_name=company_name,company_details=company_details, stock=stock_symbol,firstbuy=firstbuy,lastrecord=lastrecord, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
     
@@ -109,6 +113,19 @@ def stock():
         print(e)  # For debugging
         flash(f'Error: {str(e)}', 'error')  # Flash the error message
         return redirect(url_for('index'))  # Redirect to the index page
+
+@app.route('/download')
+def download_file():
+    file_name = session.get('export_file_name')
+    if file_name:
+        base_directory = os.path.join(os.getcwd(), '03-output')
+        full_path = os.path.join(base_directory, file_name)
+        if os.path.exists(full_path):
+            return send_file(full_path, as_attachment=True)
+        else:
+            return "File not found.", 404
+    else:
+        return "No file specified.", 400    
 
 @app.route('/ty', methods=['GET'])
 def thank_you():

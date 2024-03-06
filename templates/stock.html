@@ -165,12 +165,18 @@
       {% endif %}
     {% endwith %}
     
-    <form action="/ty" method="get" class="email-form">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <button type="submit">Send Detailed Analysis</button>
-    </form>
+    <div style="display: flex; align-items: center;">
+        <form action="/ty" method="get" style="display: flex; align-items: center; margin-right: 10px;">
+            <label for="email" style="margin-right: 10px;">Email:</label>
+            <input type="email" id="email" name="email" required style="margin-right: 10px;">
+            <button type="submit" style="padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-family: inherit; font-weight: normal; line-height: 1.5;">Send Detailed Analysis</button>        
+        
+        </form>
     
+        <a href="{{ url_for('download_file', stock_symbol=stock_symbol) }}" style="padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; text-decoration: none; cursor: pointer; font-size: 16px; display: flex; align-items: center; font-family: inherit; font-weight: normal; line-height: 1.5;">Download Export</a>
+    </div>
+    
+
 <!-- Company Info, First Buy Transaction, and Last Transaction Tables Side by Side -->
 <div class="tables-side-by-side">
     <!-- Company Info Table -->
