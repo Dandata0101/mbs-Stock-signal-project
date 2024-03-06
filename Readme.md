@@ -16,6 +16,8 @@
 
 
 ## Summary and Used Case
+We designed and implemented an algorithm trading strategy that can run on any stock. This algorithm is tailored to be adaptable in its approach, choosing between long or short positions to maximize profitability based on the current market conditions. The core of the solution lies in the development of a machine learning model based on a random forest classification model that stands for grid search cross-validation by using Yahoo Finance Python Package. 
+The solution will take place through a running stock predictor algorithm which is concentrated on a single trading target that is Atlassian, a software publisher based in Australia, and will be hosted on a website, thereby providing a platform for online access and interaction with the trading system.
 
 ## Application Structure
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:700px;height: 300px;"> 
