@@ -37,14 +37,20 @@ For our project, Python files **2.** and **3.** are our core delivery.
  
 ## Interface and Output
 
-### Interface :globe_with_meridians:
+### Interface :globe_with_meridians: [Our Web App](https://www.y-data.fr)
+
+Our home page where you enter your stock symbol and adjust Hyperparameters, **note**: keeping the defaults will run the fastest.
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Home.png" alt="Home" style="width:2200;height:400;"> 
+
+Results 1 section shows basic information the the company and charts our Buy/Sell Signals.
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/results1.png" alt="Results1" style="width:2200;height:400;"> 
+
+Results 2 section show our final profit from our simulation and provides model performance Statistics.
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/results2.png" alt="Results2" style="width:2200;height:400;"> 
 
 
 ### Output Locations
-For our project, Export **2.** is  key deliverable to review the performance of our ML model ouput.
+For our project, Export **2.** is  a key deliverable to review the performance of our ML model ouput.
 
 [Data output :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/01-data)
 1. [Yahoo Finance Dataframe :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/input_YahooFin.xlsx)
