@@ -113,7 +113,7 @@ def create_dataframe(tickerSymbol='MSFT'):
 ```
 
 ## Local Testing
-
+From the main directory, there is a [test.py :snake:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/test.py) where you can test data, ML model and Final export. **Note**: Send function requires a token/secret key for it work, so make sure to to "**body**" and "**send**" before running.
 
 ```python:
 #testing area for functions
@@ -132,15 +132,6 @@ email=["dan@y-data.co"]
 
 df,company_details=create_dataframe(tickerSymbol=stock)
 company_name=company_details['longName']
-print('~~~~~~~~~~~~~~~~~~~~~~~~~')
-print('testing py exceution')
-print('~~~~~~~~~~~~~~~~~~~~~~~~~')
-print('')
-print('~~~~~~~~~~~~~~~~~~~~~~~~~')
-print('Stock Symbol:',stock)
-print('CompanyName:',company_name)
-print('~~~~~~~~~~~~~~~~~~~~~~~~~')
-print('')
 
 test_df, accuracy, precision, recall, f1, feature_importances,importance_df,metrics_df=predict_trading_signals(df)
 profit=calculate_profit(test_df)
