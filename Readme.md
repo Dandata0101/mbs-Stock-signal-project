@@ -24,12 +24,12 @@ For our MBS Project assignment, we will run a stock predictor algorithm concentr
 ### :snake: Python Packages
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Function.png" alt="Packages" style="width:2200;height:400;"> 
 
-For our project, Python files **2.** and **3.** are our core delivery.
+For our project, Python files **2.**:star2: and **3.**:star2: are our core delivery.
 
 [Script Directory :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/scripts)
 1. [Yahoo Finance Dataframe :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/yahoofinance.py)
-2. [**ML Buy/Sell Signal** :robot:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_buysellfx.py) 
-3. [**Profit Calculation** :robot::currency_exchange:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/profit_calc.py)
+2. :star2:[**ML Buy/Sell Signal** :robot:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_buysellfx.py) 
+3. :star2:[**Profit Calculation** :robot::currency_exchange:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/profit_calc.py)
 4. [Chart and Excel export :chart_with_upwards_trend:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_chart_export.py) 
 5. [Final Report :green_book:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py)
 6. [email body :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/EmailBody)
@@ -50,11 +50,11 @@ Results 2 section show our final profit from our simulation and provides model p
 
 
 ### Output Locations
-For our project, Export **2.** is  a key deliverable to review the performance of our ML model ouput.
+For our project, Export **2.** :star2: is  a key deliverable to review the performance of our ML model ouput.
 
 [Data output :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/01-data)
 1. [Yahoo Finance Dataframe :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/input_YahooFin.xlsx)
-2. [**Data w Buy/Sell Signal & Profit calculation** :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/profitCalc_export.xlsx)
+2. :star2:[**Data w Buy/Sell Signal & Profit calculation** :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/profitCalc_export.xlsx)
 3. [Model Accuracy :robot: ](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/accuracy_export.xlsx)
 3. [Feature Importance :robot: ](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/feature_export.xlsx)
 4. [Grid Search Best Model :robot: ](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/bestmodel_export.xlsx)
