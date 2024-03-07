@@ -34,8 +34,8 @@ Last_transaction=Last_record(df=profit)
 #Final analysis delivered to the 03-out directory
 export = export_df_to_excel_with_chart(df=profit, tickerSymbol=stock)
 
-#requirs a MSFT Secret key to run, comment out this section when testing 
-Body=generate_email_body(tickerSymbol=company_name)
-send=send_email(email_body=Body,recipient_emails=email)
+#requires a MSFT Secret key to run, comment out this section when testing 
+#Body=generate_email_body(tickerSymbol=company_name)
+#send=send_email(email_body=Body,recipient_emails=email)
 
 
