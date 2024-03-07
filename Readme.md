@@ -27,7 +27,7 @@ For our test period, we start with a **$50K balance**. We buy/sell :100:% of the
 
 Details for custom python Package shown in the [Python Packages :snake:](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#snake-python-packages)
 
-Final delivery our test simulation be emails/downloaded from [Our Web App](https://www.y-data.fr) results page or retrived from the [Final report output directory :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/03-output). See **Interface** and **Output** sections for more detail.
+Final delivery our test simulation be emails/downloaded from [Our Web App :globe_with_meridians:](https://www.y-data.fr) results page or retrived from the [Final report output directory :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/03-output). See **Interface** and **Output** sections for more detail.
 
 ## Application Structure
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:600px;height: 400px;"> 
