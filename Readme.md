@@ -6,12 +6,13 @@
 ![Python - Version][PYTHON-url]
 
 ## Table of Content
-1. [Summary and Used Case](https://github.com/Dandata0101/mbs-Stock-singal-project#Summary-and-Used-Case)
-2. [Application Structure](https://github.com/Dandata0101/mbs-Stock-singal-project#Application-Structure)
-3. [Interface and Output](https://github.com/Dandata0101/mbs-Stock-singal-project#Interface-and-Output)
-3. [Data Retrival](https://github.com/Dandata0101/mbs-Stock-singal-project#Data-Retrival)
-5. [Model Build](https://github.com/Dandata0101/mbs-Stock-singal-project#Model-Build)
-6. [Local Testing](https://github.com/Dandata0101/mbs-Stock-singal-project#Local-Testing)
+1. [Summary and Used Case](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#summary-and-used-case)
+2. [Application Structure](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#application-structure)
+3. [Interface](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#interface-and-output)
+4. [Output](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#output-locations)
+5. [Data Retrival](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#data-retrival)
+6. [Model Build](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#model-build)
+7. [Local Testing](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#local-testing)
 
 ## Summary and Used Case
 We designed and implemented an algorithm trading platform that can run on any stock. This algorithm is adaptable, choosing between long or short positions and customizable hyperparameters to maximize profitability based on historical market conditions. The solution's core is a machine learning model based on a random forest classification model for grid search cross-validation using the Yahoo Finance Python Package to retrieve stock data. 
@@ -19,9 +20,8 @@ We designed and implemented an algorithm trading platform that can run on any st
 For our MBS Project assignment, we will run a stock predictor algorithm concentrated on a single trading target: **Atlassian**, a software publisher based in Australia. The algorithm will be hosted online, providing a platform for online access and interaction with the trading system. For testing purposes, we will provide steps to run individual custom Python packages for this project and how to run our Flask application locally.
 
 ### Simulation Setup
-
-**Training Period** :weight_lifting: Jan 2013~ Dec 2019 :spiral_calendar:
-**Test Period** :test_tube: Jan 2020 ~ Feb 2024 :spiral_calendar:
+- **Training Period** :weight_lifting: Jan 2013~ Dec 2019 :spiral_calendar:
+- **Test Period** :test_tube: Jan 2020 ~ Feb 2024 :spiral_calendar:
 
 For our test period, we start with a **$50K balance**. We buy/sell :100:% of the balance based on the Sell/Buy Signal of our :star2:[**Data ml_buysell.py function* :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/profitCalc_export.xlsx). A ledger is created in our [**Profit_calc.py** :robot:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_buysellfx.py) to track stock shares held and balance. If we retrain any shares at the end of the test period, we calculate the balance as the value of the shares held.
 
@@ -44,9 +44,10 @@ For our project, Python files **2.**:star2: and **3.**:star2: are our core deliv
 6. [email body :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/EmailBody)
 7. [Send email :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py)
  
-## Interface and Output
 
-### Interface :globe_with_meridians: [Our Web App](https://www.y-data.fr)
+## Interface :globe_with_meridians: 
+
+[Our Web App](https://www.y-data.fr)
 
 Our home page where you enter your stock symbol and adjust Hyperparameters, **note**: keeping the defaults will run the fastest.
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Home.png" alt="Home" style="width:2200;height:400;"> 
@@ -58,7 +59,7 @@ Results 2 section show our final profit from our simulation and provides model p
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/results2.png" alt="Results2" style="width:2200;height:400;"> 
 
 
-### Output Locations
+## Output Locations
 For our project, Export **2.** :star2: is  a key deliverable to review the performance of our ML model ouput.
 
 [Data output :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/01-data)
