@@ -25,9 +25,9 @@ For our MBS Project assignment, we will run a stock predictor algorithm concentr
 
 For our test period, we start with a **$50K balance**. We buy/sell :100:% of the balance based on the Sell/Buy Signal of our [**Data ml_buysell.py function** :robot:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/profitCalc_export.xlsx). A ledger is created in our [**Profit_calc.py** :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_buysellfx.py) to track stock shares held and balance. If we retain any shares at the end of the test period, we calculate the balance as the value of the shares held.
 
-Details for custom python Package shown in the [Python Packages](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#snake-python-packages)
+Details for custom python Package shown in the [Python Packages :snake:](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#snake-python-packages)
 
-Final delivery our test simulation be emails/downloaded from our web app or retrived from the [Final Report output](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/03-output). See **Interface** and **Output** sections for more detail.
+Final delivery our test simulation be emails/downloaded from our web app or retrived from the [Final report output directory :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/03-output). See **Interface** and **Output** sections for more detail.
 
 ## Application Structure
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/Appstructure.png" alt="Application" style="width:600px;height: 400px;"> 
