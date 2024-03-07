@@ -8,7 +8,7 @@
 ## Table of Content
 1. [Summary and Used Case](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#summary-and-used-case)
 2. [Application Structure](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#application-structure)
-3. [Interface](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#interface-and-output)
+3. [Interface](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#interface-globe_with_meridians)
 4. [Output](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#output-locations)
 5. [Data Retrival](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#data-retrival)
 6. [Model Build](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#model-build)
