@@ -113,6 +113,14 @@ def create_dataframe(tickerSymbol='MSFT'):
 
 ## X variables
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/xvariable.png" alt="Home" style="width:2200;height:400;"> 
+<span style="color: green;">:one:</span>
+<span style="color: green;">:two:</span>
+<span style="color: green;">:three:</span>
+<span style="color: green;">:four:</span>
+<span style="color: green;">:five:</span>
+<span style="color: green;">:six:</span>
+
+
 
 ## Y variables
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/yvariable.png" alt="Home" style="width:2200;height:400;"> 
