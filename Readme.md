@@ -125,7 +125,7 @@ def create_dataframe(tickerSymbol='MSFT'):
 <br>
 <span style="color: green;">:six:</span> <strong>df['Signal_Line']</strong>: A 9-day EMA of the MACD values. It acts as a trigger for buy and sell signals when it crosses the MACD line.<br>
 <br>
-<span style="color: green;">:seven:</span>  Volatility <strong>Index</strong> and <strong>Dow Jone index</strong> were added to account for anomalies.<br>
+<span style="color: green;">:seven:</span>  <strong>Volatility Index</strong> and <strong>Dow Jone index</strong> were added to account for anomalies.<br>
 
 ## Y variables
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/yvariable.png" alt="Home" style="width:2200;height:400;"> 
