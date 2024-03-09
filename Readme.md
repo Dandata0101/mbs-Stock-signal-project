@@ -11,11 +11,11 @@
 3. [Interface](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#interface-globe_with_meridians)
 4. [Output](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#output-locations)
 5. [Data Retrival](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#data-retrival)
-6. [Model Build](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#model-build)
 7. [Variables](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#Variables) 
    1. [x variables](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#x-variables)
    2. [Y variable](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#y-variable) 
-8. [Local Testing](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#local-testing)
+8. [Model Build](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#model-build)
+9. [Local Testing](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#local-testing)
 
 ## Summary and Used Case
 We designed and implemented an algorithm trading platform that can run on any stock. This algorithm is adaptable, choosing between long or short positions and customizable hyperparameters to maximize profitability based on historical market conditions. The solution's core is a machine learning model based on a random forest classification model for grid search cross-validation using the Yahoo Finance Python Package to retrieve stock data. 
