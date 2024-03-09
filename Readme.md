@@ -113,7 +113,7 @@ def create_dataframe(tickerSymbol='MSFT'):
 
 ## X variables
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/xvariable.png" alt="Home" style="width:2200;height:400;"> 
-<span style="color: green;">:one:</span> <strong>sdf['close_short']</strong> & <strong>df['close_long']</strong>: This represents a rolling average of the closing prices.<br>
+<span style="color: green;">:one:</span> <strong>df['close_short']</strong> & <strong>df['close_long']</strong>: This represents a rolling average of the closing prices.<br>
 <br>
 <span style="color: green;">:two:</span> <strong>delta</strong>: Represents the day-to-day change in the closing price, calculated by the .diff() function which computes the difference between consecutive elements in the DataFrame. <strong>gain</strong> & <strong>loss</strong>: A series representing the gains over a 14-day rolling window. It filters the delta to consider only positive changes. <strong>rs</strong>: The relative strength, calculated as the average gain over the average loss over a rolling window of 14 days.<br>
 <br>
