@@ -113,14 +113,14 @@ def create_dataframe(tickerSymbol='MSFT'):
 
 ## X variables
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/xvariable.png" alt="Home" style="width:2200;height:400;"> 
-<span style="color: green;">:one:</span> **df['close_short']** & **df['close_long']**: This represents a rolling average of the closing prices.<br>
-<span style="color: green;">:two:</span> **delta**: Represents the day-to-day change in the closing price, calculated by the .diff() function which computes the difference between consecutive elements in the DataFrame. **gain** & **loss**: A series representing the gains over a 14-day rolling window. It filters the delta to consider only positive changes. **rs**: The relative strength, calculated as the average gain over the average loss over a rolling window of 14 days. 
+<span style="color: green;">:one:</span> <strong>sdf['close_short']</strong> & <strong>df['close_long']</strong>: This represents a rolling average of the closing prices.<br>
+<span style="color: green;">:two:</span> <strong>delta</strong>: Represents the day-to-day change in the closing price, calculated by the .diff() function which computes the difference between consecutive elements in the DataFrame. <strong>gain</strong> & <strong>loss</strong>: A series representing the gains over a 14-day rolling window. It filters the delta to consider only positive changes. <strong>thisrs: The relative strength, calculated as the average gain over the average loss over a rolling window of 14 days. 
 <br>
-<span style="color: green;">:three:</span> **df['RSI']**: The Relative Strength Index, a momentum indicator that measures the magnitude of recent price changes to evaluate overbought or oversold conditions.<br>
-<span style="color: green;">:four:</span> **df['EMA12']** and **df['EMA26']**: These are Exponential Moving Averages with spans of 12 and 26 days, respectively. EMAs give more weight to recent prices and are used to identify trends.<br>
-<span style="color: green;">:five:</span> **df['MACD']**: The Moving Average Convergence Divergence, which is calculated by subtracting the 26-day EMA from the 12-day EMA. The MACD is a trend-following momentum indicator.<br>
-<span style="color: green;">:six:</span> **df['Signal_Line']**: A 9-day EMA of the MACD values. It acts as a trigger for buy and sell signals when it crosses the MACD line.<br>
-<span style="color: green;">:seven:</span>  Volatility Index and Dow Jone index were added to account for anomalies.<br>
+<span style="color: green;">:three:</span> <strong>df['RSI']</strong>: The Relative Strength Index, a momentum indicator that measures the magnitude of recent price changes to evaluate overbought or oversold conditions.<br>
+<span style="color: green;">:four:</span> <strong>df['EMA12']</strong> and <strong>df['EMA26']</strong>: These are Exponential Moving Averages with spans of 12 and 26 days, respectively. EMAs give more weight to recent prices and are used to identify trends.<br>
+<span style="color: green;">:five:</span> <strong>df['MACD']</strong>: The Moving Average Convergence Divergence, which is calculated by subtracting the 26-day EMA from the 12-day EMA. The MACD is a trend-following momentum indicator.<br>
+<span style="color: green;">:six:</span> <strong>df['Signal_Line']</strong>: A 9-day EMA of the MACD values. It acts as a trigger for buy and sell signals when it crosses the MACD line.<br>
+<span style="color: green;">:seven:</span>  Volatility <strong>Index</strong> and <strong>Dow Jone index</strong> were added to account for anomalies.<br>
 
 ## Y variables
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/yvariable.png" alt="Home" style="width:2200;height:400;"> 
