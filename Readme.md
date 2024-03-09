@@ -113,8 +113,7 @@ def create_dataframe(tickerSymbol='MSFT'):
 
 ........
 ```
-<br>
-<br>
+
 ## Variables
 ### X variables
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/xvariable.png" alt="Home" style="width:2200;height:400;"> 
@@ -132,6 +131,8 @@ def create_dataframe(tickerSymbol='MSFT'):
 <br>
 <span style="color: green;">:seven:</span>  <strong>Volatility Index</strong> and <strong>Dow Jone index</strong> were added to account for anomalies.<br>
 
+<br>
+<br>
 
 ### Y variables— Moving Average (SMA) crossover strategy 
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/yvariable.png" alt="Home" style="width:2200;height:400;"> 
