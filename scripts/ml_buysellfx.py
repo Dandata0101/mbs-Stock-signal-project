@@ -16,10 +16,6 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=20, param
 
 
     def add_indicators(df):
-        df['VIX'] = df['VIX']
-        df['DJI'] = df['DJI']
-        df['VIX_short'] = df['VIX'].rolling(window=5).mean()
-        df['VIX_long'] = df['VIX'].rolling(window=15).mean() 
         df['close_short'] = df['Close'].rolling(window=close_short_window).mean()
         df['close_long'] = df['Close'].rolling(window=close_long_window).mean()
         delta = df['Close'].diff()
@@ -31,7 +27,12 @@ def predict_trading_signals(df,close_short_window=5, close_long_window=20, param
         df['EMA26'] = df['Close'].ewm(span=26, adjust=False).mean()
         df['MACD'] = df['EMA12'] - df['EMA26']
         df['Signal_line'] = df['MACD'].ewm(span=9, adjust=False).mean()
-
+        
+        #Additional variables
+        df['DJI'] = df['DJI']
+        df['VIX'] = df['VIX']
+        df['VIX_short'] = df['VIX'].rolling(window=5).mean()
+        df['VIX_long'] = df['VIX'].rolling(window=15).mean()
         return df
 
     def label_data(df):

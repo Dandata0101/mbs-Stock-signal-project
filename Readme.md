@@ -111,6 +111,13 @@ def create_dataframe(tickerSymbol='MSFT'):
 ........
 ```
 
+## X variables
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/xvarible.png" alt="Home" style="width:2200;height:400;"> 
+
+## Y variables
+<img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/yvarible.png" alt="Home" style="width:2200;height:400;"> 
+
+
 ## Model Build
 
 ```python:
