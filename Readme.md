@@ -12,7 +12,10 @@
 4. [Output](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#output-locations)
 5. [Data Retrival](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#data-retrival)
 6. [Model Build](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#model-build)
-7. [Local Testing](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#local-testing)
+7. [Variables](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#Variables) 
+   1. [x variables](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#x-variables)
+   2. [Y variable](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#y-variable) 
+8. [Local Testing](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#local-testing)
 
 ## Summary and Used Case
 We designed and implemented an algorithm trading platform that can run on any stock. This algorithm is adaptable, choosing between long or short positions and customizable hyperparameters to maximize profitability based on historical market conditions. The solution's core is a machine learning model based on a random forest classification model for grid search cross-validation using the Yahoo Finance Python Package to retrieve stock data. 
@@ -110,8 +113,8 @@ def create_dataframe(tickerSymbol='MSFT'):
 
 ........
 ```
-
-## X variables
+## Variables
+### X variables
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/xvariable.png" alt="Home" style="width:2200;height:400;"> 
 <span style="color: green;">:one:</span> <strong>df['close_short']</strong> and <strong>df['close_long']</strong>: This represents a rolling average of the closing prices.<br>
 <br>
@@ -127,7 +130,7 @@ def create_dataframe(tickerSymbol='MSFT'):
 <br>
 <span style="color: green;">:seven:</span>  <strong>Volatility Index</strong> and <strong>Dow Jone index</strong> were added to account for anomalies.<br>
 
-## Y variables— Moving Average (SMA) crossover strategy 
+### Y variables— Moving Average (SMA) crossover strategy 
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/yvariable.png" alt="Home" style="width:2200;height:400;"> 
 The **Simple Moving Average (SMA) crossover strategy** is a technical analysis tool that uses the intersection of short-term and long-term SMAs to generate buy or sell signals. A Golden Cross, where the short-term SMA crosses above the long-term SMA, indicates a bullish signal suggesting it might be a good time to buy. Conversely, a Death Cross, where the short-term SMA crosses below the long-term SMA, signals bearish momentum, hinting at a potential sell or short opportunity. This strategy helps confirm trend direction and timing for entries and exits but is best used in conjunction with other indicators due to its nature as a lagging indicator and susceptibility to false signals in volatile markets.
 
