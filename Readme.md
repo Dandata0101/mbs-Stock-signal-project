@@ -73,7 +73,7 @@ For our project, Export **2.** :star2: is  a key deliverable to review the perfo
 
 This directory has the combined output of Signal charts, full data ouput and model performance in excel
 
-[Final Report output :file_folder::green_book:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/03-output)
+[Final Report output :green_book:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/03-output)
 
 
 ## Data Retrival
@@ -129,7 +129,7 @@ def create_dataframe(tickerSymbol='MSFT'):
 
 ## Y variables— Moving Average (SMA) crossover strategy 
 <img src="https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/04-readme-images/yvariable.png" alt="Home" style="width:2200;height:400;"> 
-The Simple Moving Average (SMA) crossover strategy is a technical analysis tool that uses the intersection of short-term and long-term SMAs to generate buy or sell signals. A Golden Cross, where the short-term SMA crosses above the long-term SMA, indicates a bullish signal suggesting it might be a good time to buy. Conversely, a Death Cross, where the short-term SMA crosses below the long-term SMA, signals bearish momentum, hinting at a potential sell or short opportunity. This strategy helps confirm trend direction and timing for entries and exits but is best used in conjunction with other indicators due to its nature as a lagging indicator and susceptibility to false signals in volatile markets.
+The **Simple Moving Average (SMA) crossover strategy** is a technical analysis tool that uses the intersection of short-term and long-term SMAs to generate buy or sell signals. A Golden Cross, where the short-term SMA crosses above the long-term SMA, indicates a bullish signal suggesting it might be a good time to buy. Conversely, a Death Cross, where the short-term SMA crosses below the long-term SMA, signals bearish momentum, hinting at a potential sell or short opportunity. This strategy helps confirm trend direction and timing for entries and exits but is best used in conjunction with other indicators due to its nature as a lagging indicator and susceptibility to false signals in volatile markets.
 
 ## Model Build
 
