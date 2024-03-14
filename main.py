@@ -25,17 +25,23 @@ def format_number_commas(value):
 app.template_filter('format_USD')(format_USD)
 app.template_filter('format_number_commas')(format_number_commas)
 
-
-
 @app.route('/')
-@app.route('/index')
-def index():
+
+#def home():
+# Now serving home.html as the landing page
+#    return render_template('home.html', title='Welcome')
+
+#<!--Start of Stock application------------------------------------------------------------------------------------->
+#<!--Start of Stock application------------------------------------------------------------------------------------->
+
+@app.route('/stockindex')
+def stockindex():
 
     default_params = {
         'close_short_window': 5,
         'close_long_window': 20,
     }
-    return render_template('index.html', title='Home - MBS Stock Analysis',default_params=default_params)
+    return render_template('stockindex.html', title='Home - MBS Stock Analysis',default_params=default_params)
 
 def parse_grid_search_params(request):
     """Parse grid search parameters from the request, providing defaults if necessary."""
@@ -71,12 +77,12 @@ def parse_grid_search_params(request):
 
     return param_grid,close_short_window, close_long_window
 
-@app.route('/stock', methods=['GET', 'POST'])
-def stock():
+@app.route('/stockresults', methods=['GET', 'POST'])
+def stockresults():
     stock_symbol = request.values.get('stock')
     if not stock_symbol:
         flash('Missing required query parameter: stock', 'error')
-        return redirect(url_for('index'))
+        return redirect(url_for('stockindex'))
 
     # Adjusted to use the new parsing function
     param_grid, close_short_window, close_long_window = parse_grid_search_params(request)
@@ -88,7 +94,7 @@ def stock():
         # Check if the data is empty, indicating an incorrect stock symbol
         if data.empty or 'longName' not in company_details:
             flash('Incorrect stock symbol, please provide a valid symbol', 'error')
-            return redirect(url_for('index'))
+            return redirect(url_for('stockindex'))
         
         company_name=company_details['longName']
         
@@ -107,12 +113,12 @@ def stock():
         session['export_file_name'] = file_name
 
 
-        return render_template("stock.html", chart=chart_html,company_name=company_name,company_details=company_details, stock=stock_symbol,firstbuy=firstbuy,lastrecord=lastrecord, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
+        return render_template("stockresults.html", chart=chart_html,company_name=company_name,company_details=company_details, stock=stock_symbol,firstbuy=firstbuy,lastrecord=lastrecord, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
     
     except Exception as e:
         print(e)  # For debugging
         flash(f'Error: {str(e)}', 'error')  # Flash the error message
-        return redirect(url_for('index'))  # Redirect to the index page
+        return redirect(url_for('stockindex'))  # Redirect to the index page
 
 @app.route('/download')
 def download_file():
@@ -141,10 +147,13 @@ def thank_you():
         email_body = generate_email_body(tickerSymbol=tickerSymbol)
         send_email(email_body=email_body, recipient_emails=[email_address])
         flash('Email sent successfully!', 'success') 
-        return redirect( url_for('index'))   # Redirect the user where you want them to see the flash message
+        return redirect( url_for('stockindex'))   # Redirect the user where you want them to see the flash message
     except Exception as e:
         return render_template('error.html', error=str(e))
 
 if __name__ == '__main__':
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
     serve(app, host="0.0.0.0", port=int(os.getenv('PORT', 8000)))
+
+#<!--End of Stock application------------------------------------------------------------------------------------->
+#<!--End of Stock application------------------------------------------------------------------------------------->
