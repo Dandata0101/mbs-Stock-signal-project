@@ -38,7 +38,7 @@ def generate_email_body(tickerSymbol):
             <li>Full data output by day.</li>
         </ul>
 
-        <a href="https://github.com/Dandata0101/mbs-Stock-singal-project" target="_blank">Click here for the project documentation on Github</a>
+        <a href="https://github.com/Dandata0101/mbs-Stock-signal-project" target="_blank">Click here for the project documentation on Github</a>
 
         <p> -----This is email sent using the Microsoft Graph API.</p>
 
