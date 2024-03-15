@@ -27,9 +27,15 @@ app.template_filter('format_number_commas')(format_number_commas)
 
 @app.route('/')
 
-#def home():
+def home():
 # Now serving home.html as the landing page
-#    return render_template('home.html', title='Welcome')
+    return render_template('home.html', title='Welcome')
+
+@app.route('/iframe-home-content')
+def iframe_home_content():
+    # This route serves the content that will go inside your iframe
+    # Assuming you have 'homeimages/results1.png' in your 'static' directory
+    return render_template('iframe-home-content.html')
 
 #<!--Start of Stock application------------------------------------------------------------------------------------->
 #<!--Start of Stock application------------------------------------------------------------------------------------->

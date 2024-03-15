@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2Z5T3TJT3P"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
@@ -13,7 +12,30 @@
     
     gtag('config', 'G-2Z5T3TJT3P');
     </script>
-      
+    <style>
+        .centered-content {
+            display: block;
+            margin-left: 40px;
+        }
+        .centered-content img {
+            width: 200px;
+            height: auto;
+            display: block;
+            margin: 0;
+            margin-left: 0;
+        }
+        .image-text-combo {
+            display: flex; /* Aligns items side by side */
+            align-items: center; /* Centers items vertically */
+            margin-left: 40px; /* Consistent with other content */
+        }
+        .image-text-combo img {
+            width: 250px; /* Adjust as needed */
+            height: auto;
+            margin-right: 20px; /* Space between image and text */
+        }
+
+    </style>
 </head>
 <body>
     <!-- Author Links -->
@@ -28,6 +50,30 @@
     <a href="https://github.com/Dandata0101/mbs-Stock-signal-project" target="_blank">
         <img src="https://img.shields.io/badge/Our_Project_Repo-Visit-blue?style=for-the-badge&logo=github&logoColor=white" alt="Our Project Repo">
     </a>
-    <br>
-    <a href="/stockindex">Go to Main Content</a></body>
+    
+    <br><br>
+    <br><br> 
+
+    <!-- Image and Text Combo with results1.png and click-through to stockindex -->
+    <div class="image-text-combo">
+        <a href="/stockindex">
+            <img src="{{ url_for('static', filename='homeimages/results1.png') }}" alt="Go to Main Content">
+        </a>
+        <div class="text">
+            <h3>BuySell App</h3>
+            <p>Our application that provides users with stock trading signals.</p>
+        </div>
+    </div>
+
+    <br><br> 
+    
+    <!-- Image and Text Combo -->
+    <div class="image-text-combo">
+        <img src="{{ url_for('static', filename='homeimages/comingsoon.png') }}" alt="Descriptive Text for New Image">
+        <div class="text">
+            <h3>New Project Pending</h3>
+            <p> Details coming soon....</p>
+        </div>
+    </div>
+</body>
 </html>

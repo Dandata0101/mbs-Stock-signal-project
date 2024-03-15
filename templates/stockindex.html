@@ -21,6 +21,12 @@
 
 
     <style>
+
+        body {
+            margin: 20px;
+            background-color: #fff;
+            color: #333;
+        }
         #loadingContainer {
             position: fixed;
             top: 50%;
@@ -108,6 +114,17 @@
             background-color: #f44336; /* Red */
         }
 
+        .home-link {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 8px;
+            background-color: #f0f0f0;
+            text-decoration: none;
+            color: black;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
         /* Specific style for success messages */
         .flash-message.success {
             background-color: #4CAF50; /* Green */
@@ -140,8 +157,9 @@
     <a href="https://github.com/Dandata0101/mbs-Stock-signal-project" target="_blank">
         <img src="https://img.shields.io/badge/Our_Project_Repo-Visit-blue?style=for-the-badge&logo=github&logoColor=white" alt="Our Project Repo">
     </a>
-    <br><br>
-    
+   <br>
+    <a href="/" class="home-link">Home</a>
+
     <!-- Flash Messages Section -->
     <div id="flash-messages">
         {% with messages = get_flashed_messages(with_categories=true) %}
