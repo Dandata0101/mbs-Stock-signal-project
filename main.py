@@ -2,13 +2,13 @@ from flask import Flask, request, render_template, jsonify, session, url_for, fl
 import matplotlib
 matplotlib.use('Agg') 
 import os
-from scripts.yahoofinance import create_dataframe
-from scripts.ml_buysellfx import predict_trading_signals
-from scripts.profit_calc import calculate_profit
-from scripts.ml_chart_export import plot_stock_signals, interactive_plot_stock_signals,first_buy_record, Last_record
-from scripts.excel_export import export_df_to_excel_with_chart
+from scripts_buysell.yahoofinance import create_dataframe
+from scripts_buysell.ml_buysellfx import predict_trading_signals
+from scripts_buysell.profit_calc import calculate_profit
+from scripts_buysell.ml_chart_export import plot_stock_signals, interactive_plot_stock_signals,first_buy_record, Last_record
+from scripts_buysell.excel_export import export_df_to_excel_with_chart
 from EmailBody.emailbody import generate_email_body
-from scripts.sendemail import send_email
+from scripts_buysell.sendemail import send_email
 from waitress import serve
 
 app = Flask(__name__)

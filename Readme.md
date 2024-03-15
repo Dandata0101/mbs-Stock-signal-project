@@ -26,7 +26,7 @@ For our MBS Project assignment, we will run a stock predictor algorithm concentr
 - **Training Period** :weight_lifting: Jan 2013~ Dec 2019 :spiral_calendar:
 - **Test Period** :test_tube: Jan 2020 ~ Feb 2024 :spiral_calendar:
 
-For our test period, we start with a **$50K balance**. We buy/sell :100:% of the balance based on the Sell/Buy Signal of our [Data ml_buysell.py function :robot:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/profitCalc_export.xlsx). A ledger is created in our [Profit_calc.py :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_buysellfx.py) to track stock shares held and balance. If we retain any shares at the end of the test period, we calculate the balance as the value of the shares held.
+For our test period, we start with a **$50K balance**. We buy/sell :100:% of the balance based on the Sell/Buy Signal of our [Data ml_buysell.py function :robot:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/01-data/profitCalc_export.xlsx). A ledger is created in our [Profit_calc.py :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts_buysell/ml_buysellfx.py) to track stock shares held and balance. If we retain any shares at the end of the test period, we calculate the balance as the value of the shares held.
 
 Details for custom python Package shown in the [Python Packages :snake:](https://github.com/Dandata0101/mbs-Stock-singal-project?tab=readme-ov-file#snake-python-packages)
 
@@ -41,13 +41,13 @@ Final delivery our test simulation be emails/downloaded from [Our Web App :globe
 For our project, Python files **2.**:star2: and **3.**:star2: are our core delivery.
 
 [Script Directory :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/scripts)
-1. [Yahoo Finance Dataframe :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/yahoofinance.py)
-2. :star2:[**ML Buy/Sell Signal** :robot:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_buysellfx.py) 
-3. :star2:[**Profit Calculation** :robot::currency_exchange:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/profit_calc.py)
-4. [Chart and Excel export :chart_with_upwards_trend:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/ml_chart_export.py) 
-5. [Final Report :green_book:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py)
+1. [Yahoo Finance Dataframe :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts_buysell/yahoofinance.py)
+2. :star2:[**ML Buy/Sell Signal** :robot:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts_buysell/ml_buysellfx.py) 
+3. :star2:[**Profit Calculation** :robot::currency_exchange:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts_buysell/profit_calc.py)
+4. [Chart and Excel export :chart_with_upwards_trend:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts_buysell/ml_chart_export.py) 
+5. [Final Report :green_book:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts_buysell/excel_export.py)
 6. [email body :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/EmailBody)
-7. [Send email :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts/excel_export.py)
+7. [Send email :email:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts_buysell/excel_export.py)
  
 
 ## Interface :globe_with_meridians: 
