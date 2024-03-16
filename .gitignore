@@ -3,4 +3,6 @@
 **pw-config.ini
 **/.vscode 
 .env
+**.csv
+**.parquet
 __pycache__
