@@ -2,7 +2,7 @@
 **.venv
 **pw-config.ini
 **/.vscode 
-.env
 **.csv
 **.parquet
+**.env
 __pycache__
