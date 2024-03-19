@@ -37,6 +37,10 @@ def iframe_home_content():
     # Assuming you have 'homeimages/results1.png' in your 'static' directory
     return render_template('iframe-home-content.html')
 
+@app.route('/tensor')
+def tensorboard():
+    return render_template('tensor.html')
+
 #<!--Start of Stock application------------------------------------------------------------------------------------->
 #<!--Start of Stock application------------------------------------------------------------------------------------->
 
