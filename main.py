@@ -28,12 +28,16 @@ app.template_filter('format_number_commas')(format_number_commas)
 
 def start_tensorboard(logdir, port=6006):
     """
-    Start TensorBoard in a subprocess.
+    Start TensorBoard in a subprocess, making it accessible over the network.
     :param logdir: Directory where TensorBoard will read logs.
     :param port: Port on which TensorBoard will run.
     """
-    command = ['tensorboard', '--logdir', logdir, '--port', str(port)]
+    command = ['tensorboard', '--logdir', logdir, '--bind_all', '--port', str(port)]
     subprocess.Popen(command)
+
+# Initialize TensorBoard
+logdir = 'logs/fit'
+start_tensorboard(logdir)
 
 # Initialize TensorBoard
 logdir = 'logs/fit'
@@ -50,10 +54,9 @@ def home():
 
 @app.route('/tensorboard')
 def tensorboard():
-    # The port and logdir should match the ones used to start TensorBoard
-    tensorboard_url = f"http://localhost:6006"
+    # Use the domain name and ensure the port matches the one used for TensorBoard
+    tensorboard_url = "http://y-data.fr:6006"
     return render_template('tensorboard.html', tensorboard_url=tensorboard_url)
-
 
 @app.route('/stockindex')
 def stockindex():
