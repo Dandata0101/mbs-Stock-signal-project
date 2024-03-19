@@ -10,6 +10,7 @@ from scripts_buysell.excel_export import export_df_to_excel_with_chart
 from EmailBody.emailbody import generate_email_body
 from scripts_buysell.sendemail import send_email
 from waitress import serve
+import subprocess
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
@@ -25,24 +26,34 @@ def format_number_commas(value):
 app.template_filter('format_USD')(format_USD)
 app.template_filter('format_number_commas')(format_number_commas)
 
+def start_tensorboard(logdir, port=6006):
+    """
+    Start TensorBoard in a subprocess.
+    :param logdir: Directory where TensorBoard will read logs.
+    :param port: Port on which TensorBoard will run.
+    """
+    command = ['tensorboard', '--logdir', logdir, '--port', str(port)]
+    subprocess.Popen(command)
+
+# Initialize TensorBoard
+logdir = 'logs/fit'
+start_tensorboard(logdir)
+
 @app.route('/')
 
 def home():
 # Now serving home.html as the landing page
     return render_template('home.html', title='Welcome')
 
-@app.route('/iframe-home-content')
-def iframe_home_content():
-    # This route serves the content that will go inside your iframe
-    # Assuming you have 'homeimages/results1.png' in your 'static' directory
-    return render_template('iframe-home-content.html')
+#<!--Start of Stock application------------------------------------------------------------------------------------->
+#<!--Start of Stock application------------------------------------------------------------------------------------->
 
-@app.route('/tensor')
+@app.route('/tensorboard')
 def tensorboard():
-    return render_template('tensor.html')
+    # The port and logdir should match the ones used to start TensorBoard
+    tensorboard_url = f"http://localhost:6006"
+    return render_template('tensorboard.html', tensorboard_url=tensorboard_url)
 
-#<!--Start of Stock application------------------------------------------------------------------------------------->
-#<!--Start of Stock application------------------------------------------------------------------------------------->
 
 @app.route('/stockindex')
 def stockindex():
@@ -121,7 +132,6 @@ def stockresults():
         
         file_name = f'{stock_symbol}_stock.xlsx'
         session['export_file_name'] = file_name
-
 
         return render_template("stockresults.html", chart=chart_html,company_name=company_name,company_details=company_details, stock=stock_symbol,firstbuy=firstbuy,lastrecord=lastrecord, accuracy=accuracy, feature_importances=importance_df.to_dict('records'))
     
