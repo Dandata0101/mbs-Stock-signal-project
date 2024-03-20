@@ -53,28 +53,11 @@ def show_tensorboard():
     return render_template('tensor.html', tensorboard_url=final_url)
 
 @app.route('/')
-
 def home():
 # Now serving home.html as the landing page
     return render_template('home.html', title='Welcome')
 
 #<!--Start of Stock application------------------------------------------------------------------------------------->
-#<!--Start of Stock application------------------------------------------------------------------------------------->
-
-@app.route('/tensorboard')
-def tensorboard():
-    # Use the global variable for TensorBoard's port
-    global tensorboard_port
-
-    # Ensure we have a port number; if not, default to some port or show an error
-    if tensorboard_port is None:
-        # Example: Show an error or redirect the user
-        return "TensorBoard is not running or the port is not available.", 503
-    else:
-        # Construct the URL dynamically
-        tensorboard_url = f"https://mbs-stock-singal-project.onrender.com/tensorboard"
-        return render_template('tensor.html', tensorboard_url=tensorboard_url)
-
 @app.route('/stockindex')
 def stockindex():
 
