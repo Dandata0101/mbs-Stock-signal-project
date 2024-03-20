@@ -15,6 +15,7 @@ import re
 import threading
 from dotenv import load_dotenv
 load_dotenv()
+import requests
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
@@ -30,11 +31,14 @@ def format_number_commas(value):
 app.template_filter('format_USD')(format_USD)
 app.template_filter('format_number_commas')(format_number_commas)
 
-# Global variable to store TensorBoard's URL
-tensorboard_url = None
+# Set the default TensorBoard URL for development; in production, this should be set via an environment variable
+default_tensorboard_url = "http://localhost:6006"
+# In production, the TENSORBOARD_BASE_URL environment variable should be set to "https://y-data.fr"
+TENSORBOARD_BASE_URL = os.getenv("TENSORBOARD_BASE_URL", default_tensorboard_url)
 
-# Event to indicate when the TensorBoard URL has been found
 url_found_event = threading.Event()
+# The full TensorBoard URL includes the base path to the TensorBoard route; this might not be necessary if your reverse proxy handles it
+tensorboard_url = TENSORBOARD_BASE_URL
 
 def find_tensorboard_port(process):
     global tensorboard_url
@@ -50,15 +54,32 @@ def find_tensorboard_port(process):
             break
 
 def start_tensorboard(logdir='logs/fit'):
-    command = ['tensorboard', '--logdir', logdir, '--bind_all']  # Add '--bind_all' here
+    command = ['tensorboard', '--logdir', logdir, '--port', '6006']  # Removed '--bind_all' for production
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, universal_newlines=True, bufsize=1)
     threading.Thread(target=find_tensorboard_port, args=(process,)).start()
 
 @app.route('/tensorboard')
 def show_tensorboard():
-    if not url_found_event.wait(timeout=10):  # Wait up to 10 seconds for the URL to become available
-        return "TensorBoard did not start in time or the URL could not be found.", 503
+    # In development, check if the TensorBoard URL is available; this may not be necessary in production if Render handles it
+    if TENSORBOARD_BASE_URL == default_tensorboard_url and not url_found_event.wait(timeout=10):
+        return "TensorBoard did not start in time, or the URL could not be found.", 503
+    # Provide the TensorBoard URL to the template; this could be directly the Render.com URL in production
     return render_template('tensor.html', tensorboard_url=tensorboard_url)
+
+@app.route('/healthcheck')
+def healthcheck():
+    try:
+        # Attempt to connect to the TensorBoard service
+        response = requests.get(tensorboard_url)
+        if response.status_code == 200:
+            return 'TensorBoard is up and running.', 200
+        else:
+            return f'TensorBoard check failed with status {response.status_code}.', 500
+    except requests.exceptions.RequestException as e:
+        # TensorBoard service is not reachable
+        return f'Error connecting to TensorBoard: {e}', 500
+
+#<!--Home page------------------------------------------------------------------------------------------------------>
 
 @app.route('/')
 def home():
