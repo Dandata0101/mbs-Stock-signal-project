@@ -13,6 +13,8 @@ from waitress import serve
 import subprocess
 import re
 import threading
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
@@ -28,29 +30,36 @@ def format_number_commas(value):
 app.template_filter('format_USD')(format_USD)
 app.template_filter('format_number_commas')(format_number_commas)
 
-#Global variable to store TensorBoard's port
-tensorboard_port = None
+# Global variable to store TensorBoard's URL
+tensorboard_url = None
 
-def find_tensorboard_port(log_output):
+# Event to indicate when the TensorBoard URL has been found
+url_found_event = threading.Event()
+
+def find_tensorboard_port(process):
     global tensorboard_url
-    for line in log_output.stdout:
-        print("TensorBoard Output: ", line)
-        if "TensorBoard 2" in line and "at http://localhost:" in line:
-            tensorboard_url = line.split("at ")[1].split(" ")[0].strip()
+    url_pattern = re.compile(r'http://localhost:\d+')
+    while True:
+        line = process.stdout.readline()
+        if not line:
+            break  # Process has terminated
+        match = url_pattern.search(line)
+        if match:
+            tensorboard_url = match.group()
+            url_found_event.set()  # Signal that the URL has been found
             break
 
 def start_tensorboard(logdir='logs/fit'):
-    command = ['tensorboard', '--logdir', logdir, '--bind_all', '--port', '0']
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, universal_newlines=True)
+    command = ['tensorboard', '--logdir', logdir, '--port', '6006']  # Removed '--bind_all' for production
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, universal_newlines=True, bufsize=1)
     threading.Thread(target=find_tensorboard_port, args=(process,)).start()
 
 @app.route('/tensorboard')
 def show_tensorboard():
-    if tensorboard_url is None:
-        return "TensorBoard is not running or the URL is not available.", 503
-    # Adjust URL based on environment
-    final_url = os.getenv('TENSORBOARD_URL', tensorboard_url)
-    return render_template('tensor.html', tensorboard_url=final_url)
+    if not url_found_event.wait(timeout=10):  # Wait up to 10 seconds for the URL to become available
+        return "TensorBoard did not start in time or the URL could not be found.", 503
+    return render_template('tensor.html', tensorboard_url=tensorboard_url)
+
 
 @app.route('/')
 def home():
@@ -175,6 +184,7 @@ def thank_you():
         return render_template('error.html', error=str(e))
 
 if __name__ == '__main__':
+    start_tensorboard()
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
     serve(app, host="0.0.0.0", port=int(os.getenv('PORT', 8000)))
 
