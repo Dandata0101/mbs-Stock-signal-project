@@ -32,7 +32,7 @@ app.template_filter('format_USD')(format_USD)
 app.template_filter('format_number_commas')(format_number_commas)
 
 # Set the default TensorBoard URL for development; in production, this should be set via an environment variable
-default_tensorboard_url = "http://localhost:6006"
+default_tensorboard_url = "http://y-data.fr/tensorboard"
 # In production, the TENSORBOARD_BASE_URL environment variable should be set to "https://y-data.fr"
 TENSORBOARD_BASE_URL = os.getenv("TENSORBOARD_BASE_URL", default_tensorboard_url)
 
