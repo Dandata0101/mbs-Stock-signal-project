@@ -59,6 +59,7 @@ def start_tensorboard(logdir):
 # Example of how to start TensorBoard
 logdir = 'logs/fit'
 start_tensorboard(logdir)
+
 @app.route('/')
 
 def home():
@@ -79,7 +80,7 @@ def tensorboard():
         return "TensorBoard is not running or the port is not available.", 503
     else:
         # Construct the URL dynamically
-        tensorboard_url = f"http://y-data.fr:{tensorboard_port}"
+        tensorboard_url = f"https://mbs-stock-singal-project.onrender.com:{tensorboard_port}"
         return render_template('tensorboard.html', tensorboard_url=tensorboard_url)
 
 @app.route('/stockindex')
@@ -202,5 +203,4 @@ if __name__ == '__main__':
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
     serve(app, host="0.0.0.0", port=int(os.getenv('PORT', 8000)))
 
-#<!--End of Stock application------------------------------------------------------------------------------------->
 #<!--End of Stock application------------------------------------------------------------------------------------->
