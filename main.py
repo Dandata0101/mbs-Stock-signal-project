@@ -19,7 +19,6 @@ import requests
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
-app.config['SERVER_NAME'] = 'y-data.fr'
 
 # Define the format_number function
 def format_USD(value):
@@ -33,9 +32,12 @@ app.template_filter('format_USD')(format_USD)
 app.template_filter('format_number_commas')(format_number_commas)
 
 # Set the default TensorBoard URL for development; in production, this should be set via an environment variable
-default_tensorboard_url = "http://tensorboard.y-data.fr"
+default_tensorboard_url = "http://y-data.fr/tensorboard"
+# In production, the TENSORBOARD_BASE_URL environment variable should be set to "https://y-data.fr"
 TENSORBOARD_BASE_URL = os.getenv("TENSORBOARD_BASE_URL", default_tensorboard_url)
+
 url_found_event = threading.Event()
+# The full TensorBoard URL includes the base path to the TensorBoard route; this might not be necessary if your reverse proxy handles it
 tensorboard_url = TENSORBOARD_BASE_URL
 
 def find_tensorboard_port(process):
@@ -52,35 +54,37 @@ def find_tensorboard_port(process):
             break
 
 def start_tensorboard(logdir='logs/fit'):
-    command = ['tensorboard', '--logdir', logdir, '--port', '6006']  # Removed '--bind_all' for production
+    command = ['tensorboard', '--logdir', logdir, '--port', '--bind_all']  # Removed '--bind_all' for production
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, universal_newlines=True, bufsize=1)
     threading.Thread(target=find_tensorboard_port, args=(process,)).start()
 
-@app.before_request
-def launch_tensorboard():
-    # Start TensorBoard as a background thread
-    threading.Thread(target=start_tensorboard, daemon=True).start()
+@app.route('/tensorboard')
+def show_tensorboard():
+    # In development, check if the TensorBoard URL is available; this may not be necessary in production if Render handles it
+    if TENSORBOARD_BASE_URL == default_tensorboard_url and not url_found_event.wait(timeout=10):
+        return "TensorBoard did not start in time, or the URL could not be found.", 503
+    # Provide the TensorBoard URL to the template; this could be directly the Render.com URL in production
+    return render_template('tensor.html', tensorboard_url=tensorboard_url)
 
-#<!--Homepage----------------------------------------------------------------------------------->
+@app.route('/healthcheck')
+def healthcheck():
+    try:
+        # Attempt to connect to the TensorBoard service
+        response = requests.get(tensorboard_url)
+        if response.status_code == 200:
+            return 'TensorBoard is up and running.', 200
+        else:
+            return f'TensorBoard check failed with status {response.status_code}.', 500
+    except requests.exceptions.RequestException as e:
+        # TensorBoard service is not reachable
+        return f'Error connecting to TensorBoard: {e}', 500
+
+#<!--Home page------------------------------------------------------------------------------------------------------>
+
 @app.route('/')
 def home():
 # Now serving home.html as the landing page
     return render_template('home.html', title='Welcome')
-
-# Subdomain route for TensorBoard
-@app.route('/', subdomain='tensorboard')
-def tensorboard_subdomain():
-    # Directly serve the TensorBoard interface if it's accessible through Flask
-    # This would require additional setup to properly proxy or serve TensorBoard
-    # Typically, you would not serve TensorBoard through Flask like this
-    return render_template('tensor.html')  # You would need a dedicated template for TensorBoard
-
-# Route for embedding TensorBoard in an iframe, which should not be necessary
-# if you're serving TensorBoard directly on a subdomain
-@app.route('/tensorboard')
-def show_tensorboard():
-    # Redirect to the subdomain for TensorBoard
-    return redirect(url_for('tensorboard_subdomain', _external=True, _scheme='https'))
 
 #<!--Start of Stock application------------------------------------------------------------------------------------->
 @app.route('/stockindex')
@@ -200,15 +204,16 @@ def thank_you():
         return render_template('error.html', error=str(e))
 
 if __name__ == '__main__':
-    # Explicitly configure the Flask app's debug mode
-    app.debug = os.getenv('FLASK_DEBUG', 'false').lower() in ['true', '1']
-    print("Debug mode:", app.debug)  # Temporary line for debugging
+    # Start TensorBoard
+    start_tensorboard()
 
-    # Explicitly set the port number
-    port = int(os.getenv('PORT', '8000'))
-    print("Serving on port:", port)  # Temporary line for debugging
+    # Configure the Flask app's debug mode based on the FLASK_DEBUG environment variable
+    app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
 
-    # Run the app with the Waitress server
-    serve(app, host='0.0.0.0', port=port)
+    # Get the port number from the PORT environment variable
+    port = int(os.getenv('PORT', 8000))
+
+    # Run the app with Waitress server on the specified host and port
+    serve(app, host="0.0.0.0", port=port)
 
 #<!--End of Stock application------------------------------------------------------------------------------------->
