@@ -50,7 +50,7 @@ def find_tensorboard_port(process):
             break
 
 def start_tensorboard(logdir='logs/fit'):
-    command = ['tensorboard', '--logdir', logdir, '--port', '6006']  # Removed '--bind_all' for production
+    command = ['tensorboard', '--logdir', logdir, '--bind_all']  # Add '--bind_all' here
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, universal_newlines=True, bufsize=1)
     threading.Thread(target=find_tensorboard_port, args=(process,)).start()
 
