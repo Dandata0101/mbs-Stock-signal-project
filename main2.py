@@ -28,7 +28,7 @@ def start_tensorboard(logdir, port=6006):
 def show_tensorboard():
     # Dynamically generate the TensorBoard URL based on its port
     tensorboard_port = 6006  # Ensure this matches the port used in start_tensorboard
-    tensorboard_url = f'http://y-data.fr:{tensorboard_port}'
+    tensorboard_url = f'http://localhost:6006'
     return render_template('tensor.html', tensorboard_url=tensorboard_url)
 
 if __name__ == '__main__':
