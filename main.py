@@ -60,7 +60,6 @@ def show_tensorboard():
         return "TensorBoard did not start in time or the URL could not be found.", 503
     return render_template('tensor.html', tensorboard_url=tensorboard_url)
 
-
 @app.route('/')
 def home():
 # Now serving home.html as the landing page
@@ -184,8 +183,16 @@ def thank_you():
         return render_template('error.html', error=str(e))
 
 if __name__ == '__main__':
+    # Start TensorBoard
     start_tensorboard()
+
+    # Configure the Flask app's debug mode based on the FLASK_DEBUG environment variable
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
-    serve(app, host="0.0.0.0", port=int(os.getenv('PORT', 8000)))
+
+    # Get the port number from the PORT environment variable
+    port = int(os.getenv('PORT', 8000))
+
+    # Run the app with Waitress server on the specified host and port
+    serve(app, host="0.0.0.0", port=port)
 
 #<!--End of Stock application------------------------------------------------------------------------------------->
