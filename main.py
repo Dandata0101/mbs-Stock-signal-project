@@ -32,33 +32,25 @@ app.template_filter('format_number_commas')(format_number_commas)
 tensorboard_port = None
 
 def find_tensorboard_port(log_output):
-    """
-    Find the TensorBoard port in the log output.
-    """
-    global tensorboard_port
-    for line in iter(log_output.readline, b''):
-        print("TensorBoard Output: ", line.decode('utf-8'))
-        match = re.search(r'TensorBoard 2.* at http://.*:(\d+)', line.decode('utf-8'))
-        if match:
-            tensorboard_port = int(match.group(1))
-            print("TensorBoard is running on port: ", tensorboard_port)
+    global tensorboard_url
+    for line in log_output.stdout:
+        print("TensorBoard Output: ", line)
+        if "TensorBoard 2" in line and "at http://localhost:" in line:
+            tensorboard_url = line.split("at ")[1].split(" ")[0].strip()
             break
 
-def start_tensorboard(logdir):
-    """
-    Start TensorBoard in a subprocess, allowing it to automatically select a free port.
-    Extract and print the selected port.
-    :param logdir: Directory where TensorBoard will read logs.
-    """
-    command = ['tensorboard', '--logdir', logdir, '--bind_all']
-    tensorboard_process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+def start_tensorboard(logdir='logs/fit'):
+    command = ['tensorboard', '--logdir', logdir, '--bind_all', '--port', '0']
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, universal_newlines=True)
+    threading.Thread(target=find_tensorboard_port, args=(process,)).start()
 
-    # Start a new thread to read the output and find the port
-    threading.Thread(target=find_tensorboard_port, args=(tensorboard_process.stdout,)).start()
-
-# Example of how to start TensorBoard
-logdir = 'logs/fit'
-start_tensorboard(logdir)
+@app.route('/tensorboard')
+def show_tensorboard():
+    if tensorboard_url is None:
+        return "TensorBoard is not running or the URL is not available.", 503
+    # Adjust URL based on environment
+    final_url = os.getenv('TENSORBOARD_URL', tensorboard_url)
+    return render_template('tensor.html', tensorboard_url=final_url)
 
 @app.route('/')
 
@@ -80,8 +72,8 @@ def tensorboard():
         return "TensorBoard is not running or the port is not available.", 503
     else:
         # Construct the URL dynamically
-        tensorboard_url = f"https://mbs-stock-singal-project.onrender.com:{tensorboard_port}"
-        return render_template('tensorboard.html', tensorboard_url=tensorboard_url)
+        tensorboard_url = f"https://mbs-stock-singal-project.onrender.com/tensorboard"
+        return render_template('tensor.html', tensorboard_url=tensorboard_url)
 
 @app.route('/stockindex')
 def stockindex():
