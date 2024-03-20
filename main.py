@@ -26,7 +26,7 @@ def format_number_commas(value):
 app.template_filter('format_USD')(format_USD)
 app.template_filter('format_number_commas')(format_number_commas)
 
-def start_tensorboard(logdir, port=6006):
+def start_tensorboard(logdir, port=6007):
     """
     Start TensorBoard in a subprocess, making it accessible over the network.
     :param logdir: Directory where TensorBoard will read logs.
@@ -55,7 +55,7 @@ def home():
 @app.route('/tensorboard')
 def tensorboard():
     # Use the domain name and ensure the port matches the one used for TensorBoard
-    tensorboard_url = "http://y-data.fr:6006"
+    tensorboard_url = "http://y-data.fr:6007"
     return render_template('tensorboard.html', tensorboard_url=tensorboard_url)
 
 @app.route('/stockindex')
