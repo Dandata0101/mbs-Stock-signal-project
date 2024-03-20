@@ -21,14 +21,15 @@ def start_tensorboard(logdir, port=6006):
     :param logdir: Directory where TensorBoard will read logs.
     :param port: Port on which TensorBoard will run.
     """
-    command = ['tensorboard', '--logdir', logdir, '--port', str(port)]
+    command = ['tensorboard', '--logdir', logdir, '--port', str(port), '--bind_all']
     subprocess.Popen(command)
 
-tensorboard_url='http://y-data.fr'
 @app.route('/')
 def show_tensorboard():
-    # For testing purposes, directly render the template with the known working URL
-    return render_template('tensor.html', tensorboard_url='tensorboard_url')
+    # Dynamically generate the TensorBoard URL based on its port
+    tensorboard_port = 6006  # Ensure this matches the port used in start_tensorboard
+    tensorboard_url = f'http://y-data.fr:{tensorboard_port}'
+    return render_template('tensor.html', tensorboard_url=tensorboard_url)
 
 if __name__ == '__main__':
     # Initialize and start TensorBoard
@@ -39,7 +40,7 @@ if __name__ == '__main__':
     # Configure the Flask app's debug mode based on the FLASK_DEBUG environment variable
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
 
-    # Get the port number from the PORT environment variable
+    # Get the port number from the PORT environment variable for the Flask app
     port = int(os.getenv('PORT', 8000))
 
     # Serve the Flask app with Waitress on the specified host and port
