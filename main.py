@@ -11,6 +11,8 @@ from EmailBody.emailbody import generate_email_body
 from scripts_buysell.sendemail import send_email
 from waitress import serve
 import subprocess
+import re
+import threading
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
@@ -26,23 +28,37 @@ def format_number_commas(value):
 app.template_filter('format_USD')(format_USD)
 app.template_filter('format_number_commas')(format_number_commas)
 
-def start_tensorboard(logdir, port=6007):
+#Global variable to store TensorBoard's port
+tensorboard_port = None
+
+def find_tensorboard_port(log_output):
     """
-    Start TensorBoard in a subprocess, making it accessible over the network.
+    Find the TensorBoard port in the log output.
+    """
+    global tensorboard_port
+    for line in iter(log_output.readline, b''):
+        print("TensorBoard Output: ", line.decode('utf-8'))
+        match = re.search(r'TensorBoard 2.* at http://.*:(\d+)', line.decode('utf-8'))
+        if match:
+            tensorboard_port = int(match.group(1))
+            print("TensorBoard is running on port: ", tensorboard_port)
+            break
+
+def start_tensorboard(logdir):
+    """
+    Start TensorBoard in a subprocess, allowing it to automatically select a free port.
+    Extract and print the selected port.
     :param logdir: Directory where TensorBoard will read logs.
-    :param port: Port on which TensorBoard will run.
     """
-    command = ['tensorboard', '--logdir', logdir, '--bind_all', '--port', str(port)]
-    subprocess.Popen(command)
+    command = ['tensorboard', '--logdir', logdir, '--bind_all']
+    tensorboard_process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-# Initialize TensorBoard
+    # Start a new thread to read the output and find the port
+    threading.Thread(target=find_tensorboard_port, args=(tensorboard_process.stdout,)).start()
+
+# Example of how to start TensorBoard
 logdir = 'logs/fit'
 start_tensorboard(logdir)
-
-# Initialize TensorBoard
-logdir = 'logs/fit'
-start_tensorboard(logdir)
-
 @app.route('/')
 
 def home():
@@ -54,9 +70,17 @@ def home():
 
 @app.route('/tensorboard')
 def tensorboard():
-    # Use the domain name and ensure the port matches the one used for TensorBoard
-    tensorboard_url = "http://y-data.fr:6007"
-    return render_template('tensorboard.html', tensorboard_url=tensorboard_url)
+    # Use the global variable for TensorBoard's port
+    global tensorboard_port
+
+    # Ensure we have a port number; if not, default to some port or show an error
+    if tensorboard_port is None:
+        # Example: Show an error or redirect the user
+        return "TensorBoard is not running or the port is not available.", 503
+    else:
+        # Construct the URL dynamically
+        tensorboard_url = f"http://y-data.fr:{tensorboard_port}"
+        return render_template('tensorboard.html', tensorboard_url=tensorboard_url)
 
 @app.route('/stockindex')
 def stockindex():
