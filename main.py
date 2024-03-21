@@ -31,6 +31,8 @@ def format_number_commas(value):
 app.template_filter('format_USD')(format_USD)
 app.template_filter('format_number_commas')(format_number_commas)
 
+
+'''
 # Set the default TensorBoard URL for development; in production, this should be set via an environment variable
 default_tensorboard_url = "http://y-data.fr/tensorboard"
 # In production, the TENSORBOARD_BASE_URL environment variable should be set to "https://y-data.fr"
@@ -78,6 +80,7 @@ def healthcheck():
     except requests.exceptions.RequestException as e:
         # TensorBoard service is not reachable
         return f'Error connecting to TensorBoard: {e}', 500
+'''
 
 #<!--Home page------------------------------------------------------------------------------------------------------>
 
@@ -205,7 +208,6 @@ def thank_you():
 
 if __name__ == '__main__':
     # Start TensorBoard
-    start_tensorboard()
 
     # Configure the Flask app's debug mode based on the FLASK_DEBUG environment variable
     app.debug = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
