@@ -40,7 +40,7 @@ Final delivery our test simulation be emails/downloaded from [Our Web App :globe
 
 For our project, Python files **2.**:star2: and **3.**:star2: are our core delivery.
 
-[Script Directory :file_folder:](https://github.com/Dandata0101/mbs-Stock-singal-project/tree/main/scripts)
+[Script Directory :file_folder:](https://github.com/Dandata0101/mbs-Stock-signal-project/tree/main/scripts_buysell)
 1. [Yahoo Finance Dataframe :dollar:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts_buysell/yahoofinance.py)
 2. :star2:[**ML Buy/Sell Signal** :robot:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts_buysell/ml_buysellfx.py) 
 3. :star2:[**Profit Calculation** :robot::currency_exchange:](https://github.com/Dandata0101/mbs-Stock-singal-project/blob/main/scripts_buysell/profit_calc.py)
